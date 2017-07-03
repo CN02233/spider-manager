@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="../../utils/local-utils/requirement.css"/>
+    <script src="../../utils/local-utils/requirement.js"></script>
+
+    <!--<link rel="import" href="/index.html">-->
+    <script>
+
+        var ajax_support = ajax_support.createNew();
+
+        ajax_support.sendAjaxRequest("/sys/user/userMenuList.do",null,"userMenuList");
+
+        function userMenuList(menuListData){
+            console.info("menu list data :"+JSON.stringify(menuListData));
+        }
+
+    </script>
+
+</head>
+<body>
+main page has loaded.
+</body>
+</html>
