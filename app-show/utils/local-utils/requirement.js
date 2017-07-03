@@ -1,1 +1,0 @@
-document.write('<script type="text/javascript" src="其他.js"></script>');
