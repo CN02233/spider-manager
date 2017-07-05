@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface MenuService {
 
-    List<Menu> getMenuList4User(String user_nm);
-
     List<Menu> listMenuByPage(int currPage,int pageSize);
 
     List<Menu> getMenuList4Role(int role_id);

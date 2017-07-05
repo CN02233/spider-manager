@@ -20,12 +20,6 @@ public class MenuServiceImpTest extends AbstractTestService{
     private MenuService menuService;
 
     @Test
-    public void getMenuList4User() throws Exception {
-        List<Menu> result = menuService.getMenuList4User("scq");
-        System.out.print(result.toString());
-    }
-
-    @Test
     public void listMenuByPage() throws Exception {
 
     }

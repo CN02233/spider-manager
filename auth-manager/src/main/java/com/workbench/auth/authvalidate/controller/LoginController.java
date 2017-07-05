@@ -1,15 +1,11 @@
-package com.webapp.spider.sys.login;
+package com.workbench.auth.authvalidate.controller;
 
 import com.google.common.base.Strings;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.sun.istack.internal.NotNull;
 import com.webapp.support.JsonpSupport;
 import com.webapp.support.SessionSupport;
-import com.workbench.auth.authvalidate.LoginService;
+import com.workbench.auth.authvalidate.service.LoginService;
 import com.workbench.auth.authvalidate.bean.LoginResult;
-import com.workbench.auth.user.UserService;
-import com.workbench.auth.user.entity.User;
+import com.workbench.auth.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.RequestWrapper;
-import java.util.Enumeration;
 
 /**
  * Created by pc on 2017/6/30.

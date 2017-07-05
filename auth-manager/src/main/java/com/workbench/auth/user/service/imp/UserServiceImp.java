@@ -1,14 +1,18 @@
-package com.workbench.auth.user.imp;
+package com.workbench.auth.user.service.imp;
 
+import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.User;
-import com.workbench.auth.user.UserService;
+import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.dao.IUserServiceDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by pc on 2017/6/29.
@@ -39,16 +43,25 @@ public class UserServiceImp implements UserService {
         return allUser;
     }
 
-    public void createUser(User user){
-
+    public User createUser(User user){
+        SimpleDateFormat format = new SimpleDateFormat("ssSSS");
+        StringBuilder builder = new StringBuilder();
+        builder.append(format.format(Calendar.getInstance().getTime()));
+        builder.append(new Random().nextInt(50));
+        int user_id = new Integer(builder.toString());
+        user_id = user_id<<(new Random().nextInt(5));
+        user.setUser_id(user_id);
+        logger.debug("save user info {}",user);
+        userServiceDao.saveNewUser(user);
+        return user;
     }
 
     public void updateUser(User user){
 
     }
 
-    public void delUser(User user){
-
+    public void delUserById(int user_id){
+        userServiceDao.delUserById(user_id);
     }
 
     public User getUserByUserId(Integer userId){
@@ -61,5 +74,13 @@ public class UserServiceImp implements UserService {
         User resultUser = userServiceDao.checkUserByUserNm(userName);
         logger.debug(resultUser.toString());
         return resultUser;
+    }
+
+
+    public List<Menu> getMenuList4User(String user_nm) {
+
+        List<Menu> allMenuList = userServiceDao.getMenuList4User(user_nm);
+
+        return allMenuList;
     }
 }

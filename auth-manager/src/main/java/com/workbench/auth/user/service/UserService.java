@@ -1,5 +1,6 @@
-package com.workbench.auth.user;
+package com.workbench.auth.user.service;
 
+import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.User;
 
 import java.util.List;
@@ -15,14 +16,16 @@ public interface UserService {
 
     List<User> listUsersForPage(int currPage,int pageSize);
 
-    void createUser(User user);
+    User createUser(User user);
 
     void updateUser(User user);
 
-    void delUser(User user);
+    void delUserById(int user_id);
 
     User getUserByUserId(Integer userId);
 
     User getUserByUserNm(String userName);
+
+    List<Menu> getMenuList4User(String user_nm);
 
 }

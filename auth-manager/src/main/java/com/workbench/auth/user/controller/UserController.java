@@ -1,11 +1,10 @@
-package com.webapp.spider.sys.user;
+package com.workbench.auth.user.controller;
 
-import com.webapp.spider.sys.JsonpResult;
 import com.webapp.support.JsonpSupport;
 import com.webapp.support.SessionSupport;
+import com.webapp.support.jsonp.AuthResult;
 import com.workbench.auth.menu.entity.Menu;
-import com.workbench.auth.menu.service.MenuService;
-import com.workbench.auth.user.UserService;
+import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -28,9 +26,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private MenuService menuService;
 
     @RequestMapping("listUserPage")
     @ResponseBody
@@ -49,18 +44,18 @@ public class UserController {
 //        }
 
         User user = SessionSupport.checkoutUserFromSession(request);
-        JsonpResult jsonpResult = JsonpResult.getInstance();
+        AuthResult authResult = AuthResult.getInstance();
         if(user!=null){
-            List<Menu> allMenu = menuService.getMenuList4User(user.getUser_name());
-            jsonpResult.setResult(JsonpResult.RESULT.SUCCESS);
-            jsonpResult.setResult_msg("获取菜单数据成功");
-            jsonpResult.setResultData(allMenu);
+            List<Menu> allMenu = userService.getMenuList4User(user.getUser_name());
+            authResult.setResult(AuthResult.RESULT.SUCCESS);
+            authResult.setResult_msg("获取菜单数据成功");
+            authResult.setResultData(allMenu);
         }else{
-            jsonpResult.setResult(JsonpResult.RESULT.FAILD);
-            jsonpResult.setFaild_reason("USER_NOT_LOGIN");
-            jsonpResult.setResult_msg("用户未登录,请重新登录");
+            authResult.setResult(AuthResult.RESULT.FAILD);
+            authResult.setFaild_reason("USER_NOT_LOGIN");
+            authResult.setResult_msg("用户未登录,请重新登录");
         }
-        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonpResult);
+        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), authResult);
 
         logger.debug("get user menu list,result jsonp value :{}",resultJson);
 

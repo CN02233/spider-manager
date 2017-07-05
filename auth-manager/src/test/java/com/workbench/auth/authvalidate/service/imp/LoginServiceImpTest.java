@@ -1,12 +1,10 @@
-package com.workbench.auth.authvalidate.imp;
+package com.workbench.auth.authvalidate.service.imp;
 
 import com.AbstractTestService;
-import com.workbench.auth.authvalidate.LoginService;
+import com.workbench.auth.authvalidate.service.LoginService;
 import org.junit.Test;
 
 import javax.annotation.Resource;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by pc on 2017/6/29.

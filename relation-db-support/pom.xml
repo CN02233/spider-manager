@@ -65,6 +65,8 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+
+        <!--spring表达式语言-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
@@ -79,6 +81,8 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+
+        <!-- spring java message service 消息队列标准 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jms</artifactId>
@@ -93,6 +97,8 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+
+        <!--java bean与xml转换-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>

@@ -9,7 +9,7 @@ var ajax_support = {
         ajax_support.sendAjaxRequest = function(url,params,callBackFunction){
             var realUrl = url + "?web_call_back=" + callBackFunction;
             $.ajax({
-                url:HOST+realUrl,
+                url:SERVICE_HOST+realUrl,
                 type:'get',
                 data:params,
                 xhrFields:{withCredentials:true},

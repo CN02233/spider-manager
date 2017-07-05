@@ -1,4 +1,4 @@
-package com.workbench.auth.authvalidate;
+package com.workbench.auth.authvalidate.service;
 
 import com.workbench.auth.authvalidate.bean.LoginResult;
 import org.springframework.stereotype.Service;

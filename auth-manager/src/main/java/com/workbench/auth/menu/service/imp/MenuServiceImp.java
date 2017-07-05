@@ -18,12 +18,6 @@ public class MenuServiceImp implements MenuService{
     @Autowired
     private IMenuDao menuDao;
 
-    public List<Menu> getMenuList4User(String user_nm) {
-
-        List<Menu> allMenuList = menuDao.getMenuList4User(user_nm);
-
-        return allMenuList;
-    }
 
     public List<Menu> listMenuByPage(int currPage, int pageSize) {
         return null;

@@ -1,9 +1,9 @@
-package com.workbench.auth.authvalidate.imp;
+package com.workbench.auth.authvalidate.service.imp;
 
 import com.google.common.base.MoreObjects;
-import com.workbench.auth.authvalidate.LoginService;
+import com.workbench.auth.authvalidate.service.LoginService;
 import com.workbench.auth.authvalidate.bean.LoginResult;
-import com.workbench.auth.user.UserService;
+import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,5 +1,6 @@
 package com.workbench.auth.user.dao;
 
+import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.User;
 import org.apache.ibatis.annotations.*;
 
@@ -40,7 +41,23 @@ public interface IUserServiceDao {
 
     @Select(query_user_columns + " FROM "+TABLE_NAME)
     @Options(useCache = false)
-    List<User> listUsersForPage(int currPage, int pageSize);
+    List<User> listUsersForPage(@Param("currPage") int currPage, @Param("pageSize") int pageSize);
+
+    @Insert("INSERT INTO "+TABLE_NAME+" (user_id,user_name,user_type,reg_date,user_status,last_login_time) " +
+            " VALUE (#{user_id},#{user_name},#{user_type},now(),#{user_status},#{last_login_time})")
+    @Options(useCache = false)
+    void saveNewUser(User user);
+
+    @Delete("DELETE FROM "+TABLE_NAME+" WHERE user_id = #{user_id}")
+    @Options(useCache = false)
+    void delUserById(int user_id);
+
+    @Select("select am.* from user u " +
+            "inner join user_role_assign ura on u.user_id = ura.user_id and u.user_name=#{user_nm} " +
+            "inner join user_role_privilege urp on ura.user_role_id = urp.user_role_id " +
+            "inner join app_module am on urp.module_id = am.module_id")
+    @Options(useCache = false)
+    List<Menu> getMenuList4User(String user_nm);
 
 //    @Select(query_user_columns + " FROM "+TABLE_NAME+" " +
 //            "WHERE user_nm=#{username} AND user_pwd=password(#{password})")
