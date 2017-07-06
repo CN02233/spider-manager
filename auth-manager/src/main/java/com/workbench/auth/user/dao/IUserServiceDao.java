@@ -60,6 +60,10 @@ public interface IUserServiceDao {
     @Options(useCache = false)
     List<Menu> getMenuList4User(String user_nm);
 
+    @Update("update "+TABLE_NAME+" set user_name=#{user_name} ,user_type=#{user_type},user_status=#{user_status} where user_id=#{user_id}")
+    @Options(useCache = false)
+    void updateSave(User user);
+
 //    @Select(query_user_columns + " FROM "+TABLE_NAME+" " +
 //            "WHERE user_nm=#{username} AND user_pwd=password(#{password})")
 //    @Options(useCache = false)

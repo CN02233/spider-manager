@@ -90,12 +90,28 @@ public class UserController {
         return resultJson;
     }
 
+    @RequestMapping("getUserByUserId")
+    @ResponseBody
     public String getUserByUserId(Integer user_id,HttpServletRequest request){
         User user = userService.getUserByUserId(user_id);
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(JsonResult.RESULT.SUCCESS);
         jsonResult.setResult_msg("获取成功");
         jsonResult.setResultData(user);
+        logger.debug("jsonResult information after delete :{}",jsonResult.toString());
+        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
+
+        return resultJson;
+    }
+
+    @RequestMapping("updateSaveUser")
+    @ResponseBody
+    public String updateSaveUser(User user,HttpServletRequest request){
+        userService.updateUser(user);
+
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("保存成功");
         logger.debug("jsonResult information after delete :{}",jsonResult.toString());
         String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
 

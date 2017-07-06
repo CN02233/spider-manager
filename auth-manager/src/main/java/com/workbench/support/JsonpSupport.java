@@ -3,6 +3,7 @@ package com.webapp.support;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+import com.webapp.support.jsonp.JsonResult;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,6 +27,16 @@ public class JsonpSupport {
             web_call_back = (String) request.getAttribute("web_call_back");
         }
         return web_call_back;
+    }
+
+    public static String makeJsonpResponse(JsonResult.RESULT result,String resultMsg,String failReason,Object resultData,HttpServletRequest request){
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(result);
+        jsonResult.setResult_msg(resultMsg);
+        jsonResult.setFaild_reason(failReason);
+        jsonResult.setResultData(resultData);
+        return objectToJsonp(jsonpCallbackFunctionName(request),jsonResult);
+
     }
 
 }

@@ -1,6 +1,9 @@
 package com.workbench.auth.user.service.imp;
 
 import com.AbstractTestService;
+import com.webapp.support.JsonpSupport;
+import com.webapp.support.json.JsonSupport;
+import com.webapp.support.jsonp.JsonResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
@@ -54,7 +57,19 @@ public class UserServiceImpTest extends AbstractTestService {
 
     @Test
     public void updateUser() throws Exception {
+        User user = new User();
+        user.setUser_id(1);
+        user.setUser_name("scq-n2");
+        user.setUser_type(1);
+        user.setUser_status("1");
 
+        userService.updateUser(user);
+
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("保存成功");
+
+        System.out.println(JsonSupport.objectToJson(jsonResult));
     }
 
     @Test

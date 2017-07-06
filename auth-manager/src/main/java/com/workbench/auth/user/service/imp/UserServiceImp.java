@@ -64,7 +64,7 @@ public class UserServiceImp implements UserService {
     }
 
     public void updateUser(User user){
-
+        userServiceDao.updateSave(user);
     }
 
     public void delUserById(int user_id){
