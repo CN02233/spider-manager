@@ -1,8 +1,7 @@
 package com.workbench.auth.user.service.imp;
 
 import com.workbench.auth.user.dao.IUserRoleDao;
-import com.workbench.auth.user.dao.IUserServiceDao;
-import com.workbench.auth.user.entity.Role;
+import com.workbench.auth.role.entity.Role;
 import com.workbench.auth.user.entity.UserRole;
 import com.workbench.auth.user.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

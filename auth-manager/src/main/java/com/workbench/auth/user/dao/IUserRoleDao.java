@@ -1,6 +1,6 @@
 package com.workbench.auth.user.dao;
 
-import com.workbench.auth.user.entity.Role;
+import com.workbench.auth.role.entity.Role;
 import com.workbench.auth.user.entity.UserRole;
 import org.apache.ibatis.annotations.*;
 

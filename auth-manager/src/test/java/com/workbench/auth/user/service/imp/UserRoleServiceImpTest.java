@@ -1,10 +1,9 @@
 package com.workbench.auth.user.service.imp;
 
 import com.AbstractTestService;
-import com.webapp.support.JsonpSupport;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
-import com.workbench.auth.user.entity.Role;
+import com.workbench.auth.role.entity.Role;
 import com.workbench.auth.user.entity.UserRole;
 import com.workbench.auth.user.service.UserRoleService;
 import org.junit.Test;
@@ -12,8 +11,6 @@ import org.junit.Test;
 import javax.annotation.Resource;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by pc on 2017/7/6.

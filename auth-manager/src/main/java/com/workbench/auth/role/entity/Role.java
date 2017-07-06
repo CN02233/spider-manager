@@ -1,4 +1,4 @@
-package com.workbench.auth.user.entity;
+package com.workbench.auth.role.entity;
 
 /**
  * Created by pc on 2017/7/6.

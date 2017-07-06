@@ -1,6 +1,6 @@
 package com.workbench.auth.user.service;
 
-import com.workbench.auth.user.entity.Role;
+import com.workbench.auth.role.entity.Role;
 import com.workbench.auth.user.entity.UserRole;
 
 import java.util.List;

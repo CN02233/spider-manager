@@ -2,7 +2,7 @@ package com.workbench.auth.user.controller;
 
 import com.webapp.support.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
-import com.workbench.auth.user.entity.Role;
+import com.workbench.auth.role.entity.Role;
 import com.workbench.auth.user.entity.UserRole;
 import com.workbench.auth.user.service.UserRoleService;
 import org.slf4j.Logger;

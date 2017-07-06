@@ -1,5 +1,7 @@
 package com.workbench.auth.user.entity;
 
+import com.workbench.auth.role.entity.Role;
+
 /**
  * Created by pc on 2017/7/6.
  */
