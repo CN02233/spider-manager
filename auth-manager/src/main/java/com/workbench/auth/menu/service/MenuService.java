@@ -1,7 +1,7 @@
 package com.workbench.auth.menu.service;
 
 import com.workbench.auth.menu.entity.Menu;
-import com.workbench.auth.menu.entity.RoleMenu;
+import com.workbench.auth.role.entity.RoleMenu;
 
 import java.util.List;
 

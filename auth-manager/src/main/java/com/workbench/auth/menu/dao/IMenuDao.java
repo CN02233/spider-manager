@@ -1,9 +1,7 @@
 package com.workbench.auth.menu.dao;
 
 import com.workbench.auth.menu.entity.Menu;
-import com.workbench.auth.menu.entity.RoleMenu;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import com.workbench.auth.role.entity.RoleMenu;
 
 import java.util.List;
 

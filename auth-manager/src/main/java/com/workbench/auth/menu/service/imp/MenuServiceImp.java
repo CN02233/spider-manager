@@ -2,7 +2,7 @@ package com.workbench.auth.menu.service.imp;
 
 import com.workbench.auth.menu.dao.IMenuDao;
 import com.workbench.auth.menu.entity.Menu;
-import com.workbench.auth.menu.entity.RoleMenu;
+import com.workbench.auth.role.entity.RoleMenu;
 import com.workbench.auth.menu.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
