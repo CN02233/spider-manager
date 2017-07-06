@@ -26,8 +26,11 @@ public class UserServiceImpTest extends AbstractTestService {
 
     @Test
     public void listAllUser() throws Exception {
-//        userService.listAllUser();
+        userService.listAllUser();
+    }
 
+    @Test
+    public void listUsersForPage(){
         List<User> result = userService.listUsersForPage(1, 8);
     }
 

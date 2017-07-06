@@ -3,6 +3,7 @@ package com.webapp.support.jsonp;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+import com.webapp.support.json.JsonSupport;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,10 +15,7 @@ public class JsonpSupport {
     public static String objectToJsonp(String jsonp_callback,Object object){
         Preconditions.checkNotNull(object);
         jsonp_callback = Strings.isNullOrEmpty(jsonp_callback)?"callback":jsonp_callback;
-        Gson gson = new Gson();
-
-
-        return new StringBuilder().append(jsonp_callback).append("(").append(gson.toJson(object)).append(")").toString();
+        return new StringBuilder().append(jsonp_callback).append("(").append(JsonSupport.objectToJson(object)).append(")").toString();
     }
 
     public static String jsonpCallbackFunctionName(HttpServletRequest request){

@@ -2,7 +2,7 @@ package com.workbench.auth.user.controller;
 
 import com.webapp.support.JsonpSupport;
 import com.webapp.support.SessionSupport;
-import com.webapp.support.jsonp.AuthResult;
+import com.webapp.support.jsonp.JsonResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
@@ -44,18 +44,18 @@ public class UserController {
 //        }
 
         User user = SessionSupport.checkoutUserFromSession(request);
-        AuthResult authResult = AuthResult.getInstance();
+        JsonResult jsonResult = JsonResult.getInstance();
         if(user!=null){
             List<Menu> allMenu = userService.getMenuList4User(user.getUser_name());
-            authResult.setResult(AuthResult.RESULT.SUCCESS);
-            authResult.setResult_msg("获取菜单数据成功");
-            authResult.setResultData(allMenu);
+            jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+            jsonResult.setResult_msg("获取菜单数据成功");
+            jsonResult.setResultData(allMenu);
         }else{
-            authResult.setResult(AuthResult.RESULT.FAILD);
-            authResult.setFaild_reason("USER_NOT_LOGIN");
-            authResult.setResult_msg("用户未登录,请重新登录");
+            jsonResult.setResult(JsonResult.RESULT.FAILD);
+            jsonResult.setFaild_reason("USER_NOT_LOGIN");
+            jsonResult.setResult_msg("用户未登录,请重新登录");
         }
-        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), authResult);
+        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
 
         logger.debug("get user menu list,result jsonp value :{}",resultJson);
 
@@ -63,4 +63,42 @@ public class UserController {
 
     }
 
+
+    @RequestMapping("saveNewUser")
+    @ResponseBody
+    public String saveNewUser(User user,HttpServletRequest request){
+        userService.createUser(user);
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("保存成功");
+        logger.debug("user bean information after create :{}, and json value is 【{}】",user.toString(),jsonResult.toString());
+        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
+
+        return resultJson;
+    }
+
+    @RequestMapping("delUserByUserId")
+    @ResponseBody
+    public String delUserByUserId(Integer user_id,HttpServletRequest request){
+        userService.delUserById(user_id);
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("删除成功");
+        logger.debug("jsonResult information after delete :{}",jsonResult.toString());
+        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
+
+        return resultJson;
+    }
+
+    public String getUserByUserId(Integer user_id,HttpServletRequest request){
+        User user = userService.getUserByUserId(user_id);
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("获取成功");
+        jsonResult.setResultData(user);
+        logger.debug("jsonResult information after delete :{}",jsonResult.toString());
+        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
+
+        return resultJson;
+    }
 }

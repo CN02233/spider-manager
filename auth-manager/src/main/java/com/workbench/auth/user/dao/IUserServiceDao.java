@@ -1,5 +1,6 @@
 package com.workbench.auth.user.dao;
 
+import com.github.pagehelper.Page;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.User;
 import org.apache.ibatis.annotations.*;
@@ -41,7 +42,7 @@ public interface IUserServiceDao {
 
     @Select(query_user_columns + " FROM "+TABLE_NAME)
     @Options(useCache = false)
-    List<User> listUsersForPage(@Param("currPage") int currPage, @Param("pageSize") int pageSize);
+    Page<User> listUsersForPage(@Param("currPage") int currPage, @Param("pageSize") int pageSize);
 
     @Insert("INSERT INTO "+TABLE_NAME+" (user_id,user_name,user_type,reg_date,user_status,last_login_time) " +
             " VALUE (#{user_id},#{user_name},#{user_type},now(),#{user_status},#{last_login_time})")

@@ -4,14 +4,14 @@ package com.webapp.support.jsonp;
 /**
  * Created by pc on 2017/7/5.
  */
-public class AuthResult {
-    private AuthResult.RESULT result;
+public class JsonResult {
+    private JsonResult.RESULT result;
     private String result_msg;
     private String faild_reason;
     private Object resultData;
 
-    public static AuthResult getInstance(){
-        return new AuthResult();
+    public static JsonResult getInstance(){
+        return new JsonResult();
     }
 
     public String getResult_msg() {
@@ -30,11 +30,11 @@ public class AuthResult {
         this.resultData = resultData;
     }
 
-    public AuthResult.RESULT getResult() {
+    public JsonResult.RESULT getResult() {
         return result;
     }
 
-    public void setResult(AuthResult.RESULT result) {
+    public void setResult(JsonResult.RESULT result) {
         this.result = result;
     }
 

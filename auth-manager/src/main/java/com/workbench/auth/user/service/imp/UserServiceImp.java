@@ -1,5 +1,11 @@
 package com.workbench.auth.user.service.imp;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.webapp.support.json.JsonSupport;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.User;
 import com.workbench.auth.user.service.UserService;
@@ -38,8 +44,9 @@ public class UserServiceImp implements UserService {
     }
 
     public List<User> listUsersForPage(int currPage,int pageSize){
-        List<User> allUser = userServiceDao.listUsersForPage(currPage,pageSize);
-        logger.debug("check user result {}",allUser.toString());
+        Page<User> allUser = userServiceDao.listUsersForPage(currPage,pageSize);
+        PageResult pageResult = PageResult.pageHelperList2PageResult(allUser);
+        logger.debug("check user result {}", JsonSupport.objectToJson(pageResult));
         return allUser;
     }
 
