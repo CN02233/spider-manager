@@ -1,5 +1,6 @@
 package com.workbench.auth.menu.service;
 
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.role.entity.RoleMenu;
 
@@ -10,13 +11,14 @@ import java.util.List;
  */
 public interface MenuService {
 
-    List<Menu> listMenuByPage(int currPage,int pageSize);
+    PageResult listMenuByPage(int currPage, int pageSize);
 
-    List<Menu> getMenuList4Role(int role_id);
+    void saveNewMenu(Menu menu);
 
-    void saveNewRoleMenu(RoleMenu roleMenu);
+    void updateMenu(Menu menu);
 
-    void deleteRoleMenu(RoleMenu roleMenu);
+    void delMenuById(int menu_id);
 
-    void deleteAllMenu4Role(int role_id);
+    Menu getMenu(int module_id);
+
 }

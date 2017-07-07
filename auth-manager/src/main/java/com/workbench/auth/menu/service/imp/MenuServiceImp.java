@@ -1,5 +1,7 @@
 package com.workbench.auth.menu.service.imp;
 
+import com.github.pagehelper.Page;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.dao.IMenuDao;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.role.entity.RoleMenu;
@@ -19,23 +21,29 @@ public class MenuServiceImp implements MenuService{
     private IMenuDao menuDao;
 
 
-    public List<Menu> listMenuByPage(int currPage, int pageSize) {
-        return null;
+    public PageResult listMenuByPage(int currPage, int pageSize) {
+        Page<Menu> menuPage = menuDao.listMenuByPage(currPage,pageSize);
+        PageResult pageResult = PageResult.pageHelperList2PageResult(menuPage);
+        return pageResult;
     }
 
-    public List<Menu> getMenuList4Role(int role_id) {
-        return null;
+    public Menu getMenu(int module_id){
+        return menuDao.getMenu(module_id);
     }
 
-    public void saveNewRoleMenu(RoleMenu roleMenu) {
-
+    @Override
+    public void saveNewMenu(Menu menu) {
+        menuDao.saveNewMenu(menu);
     }
 
-    public void deleteRoleMenu(RoleMenu roleMenu) {
-
+    @Override
+    public void updateMenu(Menu menu) {
+        menuDao.updateMenu(menu);
     }
 
-    public void deleteAllMenu4Role(int role_id) {
-
+    @Override
+    public void delMenuById(int menu_id) {
+        menuDao.delMenuById(menu_id);
     }
+
 }

@@ -1,47 +1,108 @@
 package com.workbench.auth.menu.service.imp;
 
 import com.AbstractTestService;
+import com.webapp.support.json.JsonSupport;
+import com.webapp.support.jsonp.JsonResult;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.menu.service.MenuService;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-import java.util.List;
-
+import static java.awt.SystemColor.menu;
 import static org.junit.Assert.*;
 
 /**
- * Created by pc on 2017/7/3.
+ * Created by SongCQ on 2017/7/7.
  */
-public class MenuServiceImpTest extends AbstractTestService{
+public class MenuServiceImpTest extends AbstractTestService {
 
-    @Resource
+    @Autowired
     private MenuService menuService;
 
     @Test
     public void listMenuByPage() throws Exception {
+        PageResult resultMenu = menuService.listMenuByPage(2, 8);
+
+
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("获取成功");
+        jsonResult.setFaild_reason(null);
+        jsonResult.setResultData(resultMenu);
+
+        System.out.println(JsonSupport.objectToJson(jsonResult));
+    }
+
+    @Test
+    public void getMenuById() {
+        Menu menu = menuService.getMenu(5);
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("获取成功");
+        jsonResult.setFaild_reason(null);
+        jsonResult.setResultData(menu);
+
+        System.out.println(JsonSupport.objectToJson(jsonResult));
+    }
+
+    @Test
+    public void saveNewMenu() throws Exception {
+        for(int i=100000;i<100009;i++){
+            Menu menu = new Menu();
+            menu.setModule_id(i);
+            menu.setSuper_module_id(0);
+            menu.setModule_name("测试菜单"+i);
+            menuService.saveNewMenu(menu);
+
+        }
+
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("保存成功");
+        jsonResult.setFaild_reason(null);
+
+        System.out.println(JsonSupport.objectToJson(jsonResult));
 
     }
 
     @Test
-    public void getMenuList4Role() throws Exception {
+    public void updateMenu() throws Exception {
+        for(int i=100000;i<100009;i++){
+            Menu menu = new Menu();
+            menu.setModule_id(i);
+            menu.setSuper_module_id(0);
+            menu.setModule_name("测试菜单---"+i);
+            menuService.updateMenu(menu);
 
+        }
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("保存成功");
+        jsonResult.setFaild_reason(null);
+
+        System.out.println(JsonSupport.objectToJson(jsonResult));
     }
 
     @Test
-    public void saveNewRoleMenu() throws Exception {
+    public void delMenuById() throws Exception {
+        for(int i=100000;i<100009;i++){
+//            Menu menu = new Menu();
+//            menu.setModule_id(i);
+//            menu.setSuper_module_id(0);
+//            menu.setModule_name("测试菜单"+i);
+            menuService.delMenuById(i);
 
-    }
+        }
 
-    @Test
-    public void deleteRoleMenu() throws Exception {
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(JsonResult.RESULT.SUCCESS);
+        jsonResult.setResult_msg("删除成功");
+        jsonResult.setFaild_reason(null);
 
-    }
-
-    @Test
-    public void deleteAllMenu4Role() throws Exception {
-
+        System.out.println(JsonSupport.objectToJson(jsonResult));
     }
 
 }
