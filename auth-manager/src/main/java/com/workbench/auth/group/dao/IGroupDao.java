@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 /**
  * Created by SongCQ on 2017/7/7.
  */
-public interface IUserGroupDao {
+public interface IGroupDao {
 
     @Select("select * from user_group")
     @Options(useCache = false)

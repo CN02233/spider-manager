@@ -1,7 +1,7 @@
 package com.workbench.auth.group.service.imp;
 
 import com.github.pagehelper.Page;
-import com.workbench.auth.group.dao.IUserGroupDao;
+import com.workbench.auth.group.dao.IGroupDao;
 import com.workbench.auth.group.entity.Group;
 import com.workbench.auth.group.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class GroupServiceImp implements GroupService {
 
     @Autowired
-    private IUserGroupDao userGroupDao;
+    private IGroupDao userGroupDao;
 
     @Override
     public Page<Group> listUserGroupPage(int currPage, int pageSize) {
