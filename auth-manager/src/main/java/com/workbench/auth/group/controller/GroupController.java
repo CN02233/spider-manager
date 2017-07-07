@@ -3,6 +3,7 @@ package com.workbench.auth.group.controller;
 import com.github.pagehelper.Page;
 import com.webapp.support.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.group.entity.Group;
 import com.workbench.auth.group.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,22 @@ public class GroupController {
     @ResponseBody
     public String listUserGroupPage(int currPage, int pageSize, HttpServletRequest request){
         Page<Group> userGrpPage = groupService.listUserGroupPage(currPage, pageSize);
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,userGrpPage,request);
+        PageResult pageResult = PageResult.pageHelperList2PageResult(userGrpPage);
+        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
 
-    @RequestMapping("saveNewUserGroup")
+    @RequestMapping("getUserGroup")
+    @ResponseBody
+    public String  getUserGroup(int user_group_id, HttpServletRequest request){
+        Group group = groupService.getUserGroup(user_group_id);
+        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,group,request);
+//        logger.debug("jsonResult information after delete :{}",resultJson);
+        return resultJson;
+    }
+
+    @RequestMapping("saveNewGroup")
     @ResponseBody
     public String  saveNewUserGroup(Group group, HttpServletRequest request){
         groupService.saveNewUserGroup(group);

@@ -36,4 +36,9 @@ public class GroupServiceImp implements GroupService {
     public void delUserGroup(int user_group_id) {
         userGroupDao.delUserGroup(user_group_id);
     }
+
+    @Override
+    public Group getUserGroup(int user_group_id) {
+        return userGroupDao.getUserGroup(user_group_id);
+    }
 }

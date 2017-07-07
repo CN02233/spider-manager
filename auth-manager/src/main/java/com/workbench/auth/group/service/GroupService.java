@@ -16,4 +16,5 @@ public interface GroupService {
 
     void delUserGroup(int user_group_id);
 
+    Group getUserGroup(int user_group_id);
 }

@@ -27,4 +27,7 @@ public interface IGroupDao {
     @Options(useCache = false)
     void delUserGroup(int user_group_id);
 
+    @Select("select * from user_group where user_group_id=#{user_group_id}")
+    @Options(useCache = false)
+    Group getUserGroup(int user_group_id);
 }

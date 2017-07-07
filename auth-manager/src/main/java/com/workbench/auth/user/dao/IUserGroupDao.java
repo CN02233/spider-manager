@@ -1,10 +1,7 @@
 package com.workbench.auth.user.dao;
 
 import com.workbench.auth.group.entity.Group;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,9 +17,9 @@ public interface IUserGroupDao {
 
     @Insert("insert into user_group_member (user_id,user_group_id) values (#{user_id},#{user_group_id})")
     @Options(useCache = false)
-    void saveUserGroup(int user_id, int user_group_id);
+    void saveUserGroup(@Param("user_id") int user_id,@Param("user_group_id")  int user_group_id);
 
     @Delete("delete from user_group_member where user_id=#{user_id} and user_group_id=#{user_group_id}")
     @Options(useCache = false)
-    void delUserGroup(int user_id, int user_group_id);
+    void delUserGroup(@Param("user_id") int user_id,@Param("user_group_id")  int user_group_id);
 }
