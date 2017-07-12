@@ -28,6 +28,13 @@ var ajax_support = {
             });
         };
 
+        ajax_support.ajax_result_success = function(result_json){
+            if(result_json.result=="SUCCESS"){
+                return true;
+            }else{
+                return false;
+            }
+        };
 
         return ajax_support;
     }

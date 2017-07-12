@@ -33,7 +33,7 @@ public class UserServiceImp implements UserService {
 
     public User checkUser(String userNm, String password) {
         User resultUser = userServiceDao.checkUserByUserNm(userNm);
-        logger.debug("check user result {}",resultUser.toString());
+        logger.debug("check user result {}",resultUser);
         return resultUser;
     }
 
