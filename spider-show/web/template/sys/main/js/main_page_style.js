@@ -137,6 +137,14 @@ function menu_show(){
             $(".sign_out_img").removeClass("menu_img_expansion");
 
             $("#menu_div").animate({width:'100px'},"slow",function(){
+                $(".son_menu_area").hide();
+                $(".menu_img_li").show(1000);
+                $(".split_label").show(1000);
+                $(".sign_out_li").show();
+                var $show_sons = $(".son_menu_area[show_sons='Y']");
+                if($show_sons.length>0){
+                    $show_sons.attr("show_sons","N");
+                }
                 init_main_page_style();
             });
         }
@@ -191,6 +199,7 @@ function make_menu(menu_data){
             var module_id = menu_data["module_id"];
             var super_module_id = menu_data["super_module_id"];
             var module_name =menu_data["module_name"];
+            var module_url= menu_data['module_url'];
 
             if(super_module_id=='0'){//一级菜单
                 var li_obj = $("<li></li>");
@@ -222,13 +231,13 @@ function make_menu(menu_data){
                     // console.log("2级菜单...."+super_menu_aliase);
                     var $son_menu_li = $("#"+super_menu_aliase+"_sons");
                     var son_menu_length = $son_menu_li.length;
-                    console.log("son_menu_length...."+son_menu_length);
+                    // console.log("son_menu_length...."+son_menu_length);
                     if(son_menu_length<1){
                         $son_menu_li = $("<li id='"+super_menu_aliase+"_sons' class='son_menu_area'></li>");
-                        $son_menu_li.append(" <label class=' base_float son_menu'>"+module_name+"</label>");
+                        $son_menu_li.append(" <label class=' base_float son_menu' menu_url='"+module_url+"'>"+module_name+"</label>");
                         $("#"+super_menu_aliase+"_split").before($son_menu_li);
                     }else{
-                        $son_menu_li.append(" <label class=' base_float son_menu'>"+module_name+"</label>");
+                        $son_menu_li.append(" <label class=' base_float son_menu' menu_url='"+module_url+"'>"+module_name+"</label>");
                     }
 
                     if(son_menu_map[super_menu_aliase]!=null){
@@ -251,12 +260,21 @@ function make_menu(menu_data){
 
                 init_main_page_style();
 
+                $(".son_menu").click(function(){
+                    var menu_url = $(this).attr("menu_url");
+                    show_menu_page(menu_url);
+                })
             }
         });
 
         // console.log($("#menu_list").html());
     }
 
+}
+
+function show_menu_page(menu_url){
+    console.log("show_menu_page  "+projectName+menu_url);
+    $(".main_frame").attr("src",projectName+menu_url);
 }
 
 function get_menu_aliase(menu_id){
@@ -274,3 +292,4 @@ function get_menu_aliase(menu_id){
         return "auth";
     }
 }
+

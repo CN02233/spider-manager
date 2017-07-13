@@ -10,6 +10,7 @@ public class Menu {
     private int module_id;
     private int super_module_id;
     private String module_name;
+    private String module_url;
 
     public int getModule_id() {
         return module_id;
@@ -35,8 +36,16 @@ public class Menu {
         this.module_name = module_name;
     }
 
+    public String getModule_url() {
+        return module_url;
+    }
+
+    public void setModule_url(String module_url) {
+        this.module_url = module_url;
+    }
+
     public String toString(){
         return MoreObjects.toStringHelper(this).add("module_id",this.getModule_id()).add("module_name",this.getModule_name())
-                .add("super_module_id",this.getSuper_module_id()).toString();
+                .add("super_module_id",this.getSuper_module_id()).add("module_url",this.getModule_url()).toString();
     }
 }
