@@ -82,7 +82,7 @@ function sum_split_li_height(first_menu_length){
         }
     }
 
-    console.log("menu_area_div "+menu_area_div+"--real_menu_height"+real_menu_height+"--root_menu_show"+root_menu_show+"--"+root_menu_split);
+    // console.log("menu_area_div "+menu_area_div+"--real_menu_height"+real_menu_height+"--root_menu_show"+root_menu_show+"--"+root_menu_split);
     $(".menu_img_li").height(root_menu_show);
     $(".menu_img").height(root_menu_show);
     $(".root_menu_font").height(root_menu_show);
@@ -93,13 +93,14 @@ function sum_split_li_height(first_menu_length){
 }
 
 function build_son_menu(parent_menu_id,son_menu_length){
+    // console.log("开始初始化"+parent_menu_id+"下的子菜单,子菜单个数"+son_menu_length);
     if(son_menu_length!=null&&son_menu_length>0){
         var root_menu_height = $("#"+parent_menu_id).height();
         var sonMenuMargin = (root_menu_height-16)/2;
         $(".son_menu").height(root_menu_height);
         $(".son_menu").css("margin-top",sonMenuMargin);
         $(".son_menu").css("margin-bottom",sonMenuMargin);
-
+        // console.log("子菜单参数:"+root_menu_height+"--"+sonMenuMargin)
         $("#"+parent_menu_id+"_sons").height((2*sonMenuMargin+root_menu_height)*son_menu_length);
     }
 }
@@ -158,16 +159,18 @@ function menu_click(clickObj){
         }
         console.log("show sons value "+show_sons+" menu_id"+menu_id);
         if(show_sons!=null&&show_sons=='Y'){
-            $("#"+menu_id+"_sons").hide();
-            $(".menu_img_li").show();
-            $(".split_label").show();
+            $("#"+menu_id+"_sons").hide(1000);
+            $(".menu_img_li").show(1000);
+            $(".split_label").show(1000);
+            $(".sign_out_li").show();
 
             $(clickObj).attr("show_sons","N");
         }else{
-            $("#"+menu_id+"_sons").show();
+            $("#"+menu_id+"_sons").show(1000);
 
-            $(".split_label").hide();
+            $(".split_label").hide(1000);
             $(".menu_img_li[id!='"+menu_id+"'][id!='sign_out_area']").hide();
+            $(".sign_out_li").hide();
             $(clickObj).attr("show_sons","Y");
         }
     // });
@@ -182,6 +185,8 @@ function make_menu(menu_data){
     var resultData = menu_data["resultData"];
     if(resultData.length>0){
         var root_menu_length = 0;
+        var son_menu_map = new Object();
+        var root_menu_aliase = new Array();
         $.each(resultData,function(i,menu_data){
             var module_id = menu_data["module_id"];
             var super_module_id = menu_data["super_module_id"];
@@ -206,6 +211,7 @@ function make_menu(menu_data){
                 $("#sign_out_area").before(li_obj);
                 $("#sign_out_area").before("<li id='"+menu_aliase+"_split' class='split_label'></li>");
                 root_menu_length++;
+                root_menu_aliase.push(menu_aliase);
 
             }else{//二级菜单
                 var $super_menu_obj = $(".menu_img_li[menu_id='"+super_module_id+"']");
@@ -213,11 +219,7 @@ function make_menu(menu_data){
 
                 }else{
                     var super_menu_aliase = get_menu_aliase(super_module_id);
-                    console.log("2级菜单...."+super_menu_aliase);
-                // <li id='gather_sons' class='son_menu_area'>
-                //         <label class=' base_float son_menu'>页面浏览</label>
-                //         <label class='son_menu'>页面浏览</label>
-                //         </li>;
+                    // console.log("2级菜单...."+super_menu_aliase);
                     var $son_menu_li = $("#"+super_menu_aliase+"_sons");
                     var son_menu_length = $son_menu_li.length;
                     console.log("son_menu_length...."+son_menu_length);
@@ -229,6 +231,11 @@ function make_menu(menu_data){
                         $son_menu_li.append(" <label class=' base_float son_menu'>"+module_name+"</label>");
                     }
 
+                    if(son_menu_map[super_menu_aliase]!=null){
+                        son_menu_map[super_menu_aliase] = son_menu_map[super_menu_aliase]+1;
+                    }else{
+                        son_menu_map[super_menu_aliase] = 1;
+                    }
                 }
             }
 
@@ -236,13 +243,18 @@ function make_menu(menu_data){
                 $(".root_menu_font").hide();
                 $(".sign_out_font").hide();
                 sum_split_li_height(root_menu_length);
-                build_son_menu("gather",2);
+
+                $.each(root_menu_aliase,function(i,aliase_nm){
+                    var son_menu_count = son_menu_map[aliase_nm];
+                    build_son_menu(aliase_nm,son_menu_count);
+                });
+
                 init_main_page_style();
 
             }
         });
 
-        console.log($("#menu_list").html());
+        // console.log($("#menu_list").html());
     }
 
 }
@@ -258,5 +270,7 @@ function get_menu_aliase(menu_id){
         return "resource";
     }else if(menu_id==5){
         return "user_manage";
+    }else if(menu_id==6){
+        return "auth";
     }
 }
