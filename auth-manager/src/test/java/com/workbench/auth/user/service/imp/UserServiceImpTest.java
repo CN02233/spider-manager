@@ -1,9 +1,11 @@
 package com.workbench.auth.user.service.imp;
 
 import com.AbstractTestService;
-import com.webapp.support.JsonpSupport;
+import com.github.pagehelper.Page;
+import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
@@ -34,7 +36,7 @@ public class UserServiceImpTest extends AbstractTestService {
 
     @Test
     public void listUsersForPage(){
-        List<User> result = userService.listUsersForPage(1, 8);
+        Page<User> result = userService.listUsersForPage(1, 8);
     }
 
     @Test

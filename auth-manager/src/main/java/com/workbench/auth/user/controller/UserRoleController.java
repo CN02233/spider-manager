@@ -1,6 +1,6 @@
 package com.workbench.auth.user.controller;
 
-import com.webapp.support.JsonpSupport;
+import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.workbench.auth.role.entity.Role;
 import com.workbench.auth.user.entity.UserRole;

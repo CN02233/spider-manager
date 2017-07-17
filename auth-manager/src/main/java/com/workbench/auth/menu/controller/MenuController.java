@@ -1,7 +1,7 @@
 package com.workbench.auth.menu.controller;
 
-import com.webapp.support.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
+import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.menu.service.MenuService;

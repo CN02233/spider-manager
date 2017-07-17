@@ -43,10 +43,10 @@ public class UserServiceImp implements UserService {
         return allUser;
     }
 
-    public List<User> listUsersForPage(int currPage,int pageSize){
+    public Page<User> listUsersForPage(int currPage,int pageSize){
         Page<User> allUser = userServiceDao.listUsersForPage(currPage,pageSize);
-        PageResult pageResult = PageResult.pageHelperList2PageResult(allUser);
-        logger.debug("check user result {}", JsonSupport.objectToJson(pageResult));
+//        PageResult pageResult = PageResult.pageHelperList2PageResult(allUser);
+//        logger.debug("check user result {}", JsonSupport.objectToJson(pageResult));
         return allUser;
     }
 

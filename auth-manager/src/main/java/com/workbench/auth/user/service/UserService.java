@@ -1,5 +1,7 @@
 package com.workbench.auth.user.service;
 
+import com.github.pagehelper.Page;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.User;
 
@@ -14,7 +16,7 @@ public interface UserService {
 
     List<User> listAllUser();
 
-    List<User> listUsersForPage(int currPage,int pageSize);
+    Page<User> listUsersForPage(int currPage, int pageSize);
 
     User createUser(User user);
 

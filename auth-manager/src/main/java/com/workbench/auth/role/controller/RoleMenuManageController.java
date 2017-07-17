@@ -1,6 +1,6 @@
 package com.workbench.auth.role.controller;
 
-import com.webapp.support.JsonpSupport;
+import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.role.dao.IRoleManageDao;

@@ -1,8 +1,8 @@
 package com.workbench.auth.authvalidate.controller;
 
 import com.google.common.base.Strings;
-import com.webapp.support.JsonpSupport;
-import com.webapp.support.SessionSupport;
+import com.webapp.support.jsonp.JsonpSupport;
+import com.webapp.support.session.SessionSupport;
 import com.workbench.auth.authvalidate.service.LoginService;
 import com.workbench.auth.authvalidate.bean.LoginResult;
 import com.workbench.auth.user.service.UserService;

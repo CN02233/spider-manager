@@ -1,7 +1,7 @@
 package com.workbench.auth.group.controller;
 
 import com.github.pagehelper.Page;
-import com.webapp.support.JsonpSupport;
+import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
 import com.workbench.auth.group.entity.Group;

@@ -1,18 +1,13 @@
 
 var modal_support = modal_support.createNew();
+var ajax_support = ajax_support.createNew();
+var paging_data = paging_data.crateNew();
 
 $(document).ready(function(){
-    init_modal_alter();
+    // init_modal_alter();
+    paging_data.make_paging_data("/sys/user/listUserPage.do");
 });
 
-function init_modal_alter(){
-    console.log("init modal alter.....");
-    modal_support.make_alter("<p>This is user page.....</p>"+
-        "<p>Isn't show????</p>",call_back_test);
-    console.log("init modal alter end.....");
-
-}
-
-function call_back_test(){
-    alert("call back is running....");
+function page_callback(dataList){
+    // console.log("call back function is running...."+JSON.stringify(dataList));
 }

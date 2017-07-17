@@ -4,14 +4,14 @@
 var modal_support = {
     createNew: function(){
         var modal_support = {};
-        console.log("modal support init function has running....");
+        // console.log("modal support init function has running....");
         /**
          * 弹出窗方法
          * @param showMsg 需要显示在弹窗中的信息，支持HTML
          * @param callBack 弹窗点击确认后的回调方法
          */
         modal_support.make_alter = function(showMsg,callBack){
-            console.log("make alter is running...show message is "+showMsg);
+            // console.log("make alter is running...show message is "+showMsg);
             var modal_html_code =
                 "<div class='modal fade ' id='modal_alter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>"+
                 "<div class='modal-dialog modal_root'>"+

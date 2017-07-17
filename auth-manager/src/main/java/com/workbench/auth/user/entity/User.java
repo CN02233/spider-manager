@@ -12,7 +12,7 @@ import java.util.List;
  * Created by pc on 2017/6/29.
  */
 public class User {
-    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private int user_id;
     private String user_name;
     private int user_type;

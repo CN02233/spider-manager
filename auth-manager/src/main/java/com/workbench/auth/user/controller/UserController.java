@@ -1,8 +1,10 @@
 package com.workbench.auth.user.controller;
 
-import com.webapp.support.JsonpSupport;
-import com.webapp.support.SessionSupport;
+import com.github.pagehelper.Page;
+import com.webapp.support.jsonp.JsonpSupport;
+import com.webapp.support.session.SessionSupport;
 import com.webapp.support.jsonp.JsonResult;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
@@ -29,9 +31,11 @@ public class UserController {
 
     @RequestMapping("listUserPage")
     @ResponseBody
-    public List<User> getUserByPage(int currPage,int pageSize){
-        List<User> userPageList = userService.listUsersForPage(currPage, pageSize);
-        return userPageList;
+    public String getUserByPage(int currPage, int pageSize,HttpServletRequest request){
+        Page<User> userPageList = userService.listUsersForPage(currPage, pageSize);
+        PageResult pageResult = PageResult.pageHelperList2PageResult(userPageList);
+        String result = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
+        return result;
     }
 
     @RequestMapping("userMenuList")
