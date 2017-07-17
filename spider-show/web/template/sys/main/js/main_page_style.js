@@ -165,7 +165,7 @@ function menu_click(clickObj){
         if(sons_length<1){
             return;
         }
-        console.log("show sons value "+show_sons+" menu_id"+menu_id);
+        // console.log("show sons value "+show_sons+" menu_id"+menu_id);
         if(show_sons!=null&&show_sons=='Y'){
             $("#"+menu_id+"_sons").hide(1000);
             $(".menu_img_li").show(1000);
@@ -273,7 +273,7 @@ function make_menu(menu_data){
 }
 
 function show_menu_page(menu_url){
-    console.log("show_menu_page  "+projectName+menu_url);
+    // console.log("show_menu_page  "+projectName+menu_url);
     $(".main_frame").attr("src",projectName+menu_url);
 }
 

@@ -5,6 +5,7 @@
     <title>Title</title>
     <link type="text/css" rel="stylesheet" href="../../../utils/local-utils/requirement.css"/>
     <script src="../../../utils/local-utils/requirement.js"></script>
+    <script src="./js/user_mg_main.js"></script>
 </head>
 
 <style>
@@ -40,29 +41,5 @@
     }
 </style>
 
-<h2>创建模态框（Modal）</h2>
-<!-- 按钮触发模态框 -->
-<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#modal_alter'>
-    开始演示模态框
-</button>
-<!-- 模态框（Modal） -->
-<div class='modal fade ' id='modal_alter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-    <div class='modal-dialog modal_root'>
-        <div class='modal-content'>
-            <div class=' modal_wrapper modal-body'>
-                <div class=" modal_cell">
-                    <p>在这里添加一些文本在这里添加一些文本</p>
-                    <p>在这里添加一些文本</p>
-                </div>
-            </div>
-
-            <div class='modal-footer'>
-                <button type='button' class='btn btn-primary' onclick='modal_alter_confirm_click()'>
-                    确定
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
 </body>
 </html>
