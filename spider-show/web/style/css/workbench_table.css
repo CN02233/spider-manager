@@ -1,12 +1,15 @@
 
+/**
+*表格
+*/
 .table_area{
     padding-top:10px;
     padding-bottom:10px;
-    border-top:1px solid black;
+    /*border-top:1px solid black;*/
 }
 
 .workbench_table{
-    width:90%;   
+    width:90%;
     margin-left:5%;
     border:1px solid #ddd;
     /*-moz-border-radius:5px;*/
@@ -32,4 +35,16 @@
 
 .workbench_table tr:hover{
     background-color: #2b669a;
+}
+
+/**
+*检索栏或操作栏按钮
+*/
+
+.seach_area{
+    /*padding-left:5%;*/
+    /*padding-right:5%;*/
+    /*padding-top:10px;*/
+    padding:10px 5% 0px 5% ;
+    width:90%;
 }
