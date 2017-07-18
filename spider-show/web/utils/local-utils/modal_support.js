@@ -9,9 +9,11 @@ var modal_support = {
          * 弹出窗方法
          * @param showMsg 需要显示在弹窗中的信息，支持HTML
          * @param callBack 弹窗点击确认后的回调方法
+         * @param callBackParam 弹窗点击确认后回调方法中的参数
          */
-        modal_support.make_alter = function(showMsg,callBack){
+        modal_support.make_alter = function(showMsg,callBack,callBackParam){
             // console.log("make alter is running...show message is "+showMsg);
+
             var modal_html_code =
                 "<div class='modal fade ' id='modal_alter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>"+
                 "<div class='modal-dialog modal_root'>"+
@@ -22,7 +24,7 @@ var modal_support = {
                 "</div>"+
                 "</div>"+
                 "<div class='modal-footer'>"+
-                "<button type='button' class='btn btn-primary' onclick='modal_alter_confirm_click("+callBack+")'>"+
+                "<button type='button' class='btn btn-primary' onclick='modal_alter_confirm_click("+callBack+","+JSON.stringify(callBackParam)+")'>"+
                 "确定"+
                 "</button>"+
                 "</div>"+
@@ -37,9 +39,10 @@ var modal_support = {
     }
 }
 
-function modal_alter_confirm_click(call_back_function){
+function modal_alter_confirm_click(call_back_function,callBackParam){
+    // console.log(callBackParam);
     $('#modal_alter').modal('hide');
     if(call_back_function!=null)
-        call_back_function();
+        call_back_function(callBackParam);
     // $("#modal_alter").remove();
 }

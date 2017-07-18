@@ -12,11 +12,17 @@ function userMenuList(menuDataResult){
     if(ajax_support.ajax_result_success(menuDataResult)){
         make_menu(menuDataResult);
     }else{
-        alert(menuDataResult.result_msg);
-        modal_support.make_alter(menuDataResult.result_msg,null);
-        if(menuDataResult.faild_reason == "USER_NOT_LOGIN"){
-            page_support.forward_new_page("/template/sys/login/login.html");
-        }
+        // alert(menuDataResult.result_msg);
+        modal_support.make_alter(menuDataResult.result_msg,auth_failed,menuDataResult);
+
+    }
+}
+
+function auth_failed(menuDataResult){
+    // alert("here is running......");
+    console.log("alter callback is running...."+JSON.stringify(menuDataResult));
+    if(menuDataResult.faild_reason == "USER_NOT_LOGIN"){
+        page_support.forward_new_page("/template/sys/login/login.html");
     }
 }
 

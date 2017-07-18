@@ -5,3 +5,7 @@ html,body{
     height:100%;
     width:100%;
 }
+
+.show_border{
+    border:1px solid black;
+}
