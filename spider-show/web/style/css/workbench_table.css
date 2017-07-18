@@ -1,0 +1,35 @@
+
+.table_area{
+    padding-top:10px;
+    padding-bottom:10px;
+    border-top:1px solid black;
+}
+
+.workbench_table{
+    width:90%;   
+    margin-left:5%;
+    border:1px solid #ddd;
+    /*-moz-border-radius:5px;*/
+    /*-webkit-border-radius:5px;*/
+    /*!*border-radius:50px;*!*/
+    /*border-radius: 5px;*/
+    /*border-spacing: 0;*/
+    /*border-collapse: collapse !important;*/
+    /*border-collapse: separate  !important;*/
+    text-align: center;
+
+}
+
+.workbench_table th{
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.workbench_table td,.workbench_table th{
+    border:0.5px solid #ddd!important;
+    height:35px;
+}
+
+.workbench_table tr:hover{
+    background-color: #2b669a;
+}

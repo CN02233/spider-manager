@@ -1,5 +1,7 @@
 @import "../public-utils/bootstrap.3.3.7/css/bootstrap.min.css";
 @import "../public-utils/bootstrap.3.3.7/css/bootstrap.min.css.map";
+@import "../../style/css/workbench_table.css";
+@import "../../style/css/paging_data.css";
 
 html,body{
     height:100%;
