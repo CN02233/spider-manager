@@ -1,4 +1,6 @@
 
+@import "./paging_data.css";
+
 /**
 *表格
 */
@@ -11,7 +13,7 @@
 .workbench_table{
     width:90%;
     margin-left:5%;
-    border:1px solid #ddd;
+    /*border:1px solid #ddd;*/
     /*-moz-border-radius:5px;*/
     /*-webkit-border-radius:5px;*/
     /*!*border-radius:50px;*!*/
@@ -23,18 +25,35 @@
 
 }
 
-.workbench_table th{
-    background-color: #f2f2f2;
-    text-align: center;
+.workbench_table>tbody>tr{
+    height:60px;
 }
 
-.workbench_table td,.workbench_table th{
-    border:0.5px solid #ddd!important;
+.workbench_table_colorful{
+    background-color: #CFDAEE;
+}
+
+.workbench_table th{
+    /*background-color: #f2f2f2;*/
+    background-color: #F0F4FD;
+    text-align: center;
+    height:40px;
+    color:#7E92B7;
+    font-style:normal;
+    font-weight:normal;
+}
+
+.workbench_table td{
+    /*border:0.5px solid #ddd!important;*/
     height:35px;
 }
 
 .workbench_table tr:hover{
-    background-color: #2b669a;
+    /*background-color: #2b669a;*/
+}
+
+.workbench_table_operation{
+    cursor:pointer;
 }
 
 /**
@@ -48,3 +67,4 @@
     padding:10px 5% 0px 5% ;
     width:90%;
 }
+
