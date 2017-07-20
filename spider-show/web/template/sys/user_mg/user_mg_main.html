@@ -4,41 +4,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link type="text/css" rel="stylesheet" href="../../../utils/local-utils/requirement.css"/>
+    <link type="text/css" rel="stylesheet" href="../../../style/css/workbench_table.css"/>
+
     <script src="../../../utils/local-utils/requirement.js"></script>
+    <script src="../../../utils/local-utils/workbench_table.js"></script>
     <script src="./js/user_mg_main.js"></script>
 </head>
 
-<style>
-    .modal_root{
-        width:400px;
-    }
 
-    .modal_wrapper{
-        display:table;
-        width:100%;
-        min-height: 300px;
-        /*width:300px;*/
-        /*height:300px;*/
-        /*background:#000;*/
-        margin:0 auto;
-        /*color:red;*/
-    }
+<div id="seach_area" class="show_border seach_area">
+    <div id="seach_div">
 
-    .modal_cell{
-        display:table-cell;
-        vertical-align:middle;
-        text-align: center;
-        width:100%;
-    }
+    </div>
+    <div id="operation_div">
+        <button id="add_user_btn" type="button" onclick="add_user()" class="btn btn-primary" >
+            新增用户
+        </button>
+    </div>
 
-    .modal_btn_grp{
-        margin-top:10px;
-        float:left;
-    }
-</style>
 
-<div id="seach_area" class=""></div>
-<div id="table_area" class=" table_area">
+</div>
+<div id="table_area" class="show_border table_area">
     <table id="user_table" class="workbench_table">
         <thead>
             <tr>
@@ -52,42 +38,15 @@
             </tr>
         </thead>
         <tbody>
-            <!--<tr>-->
-                <!--<td>aaa</td>-->
-                <!--<td>aaa</td>-->
-                <!--<td>aaa</td>-->
-                <!--<td>aaa</td>-->
-                <!--<td>aaa</td>-->
-            <!--</tr>-->
         </tbody>
 
     </table>
 
 </div>
-<div id="paging_area" class=" paging_area">
-    <ul class=" paging pagination">
+<div id=" paging_area" class=" paging_area">
+    <ul class=" paging ">
     </ul>
 </div>
-
-
-
-    <!--<ul class="paging pagination" page-size="8" now-page-no="2">-->
-        <!--<li>-->
-            <!--<a href="#" aria-label="Previous" class="paging_previous">-->
-                <!--<span aria-hidden="true">&laquo;</span>-->
-            <!--</a>-->
-        <!--</li>-->
-        <!--<li><a class="paging_li" curr-page="1" href="#">1</a></li>-->
-        <!--<li><a class="paging_li" curr-page="2" href="#">2</a></li>-->
-        <!--<li><a class="paging_li" curr-page="3" href="#">3</a></li>-->
-        <!--<li><a class="paging_li" curr-page="4" href="#">4</a></li>-->
-        <!--<li><a class="paging_li" curr-page="5" href="#">5</a></li>-->
-        <!--<li>-->
-            <!--<a href="#" aria-label="Next" class="paging_next">-->
-                <!--<span aria-hidden="true">&raquo;</span>-->
-            <!--</a>-->
-        <!--</li>-->
-    <!--</ul>-->
 
 </body>
 </html>

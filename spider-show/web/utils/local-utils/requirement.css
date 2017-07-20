@@ -16,3 +16,7 @@ html,body{
 .base_float{
     float:left;
 }
+
+.base_float_top{
+    float:top;
+}

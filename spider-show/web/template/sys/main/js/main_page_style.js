@@ -1,6 +1,7 @@
 /**
  * Created by SongCQ on 2017/7/7.
  */
+var has_show_menu_page = false;
 
 $(document).ready(function(){
     init_main_page_style();
@@ -107,8 +108,9 @@ function build_son_menu(parent_menu_id,son_menu_length){
 
 function menu_show(){
     $("#menu_area_div").click(function(){
+        console.log("menu_show function is running....");
         var isCollapse = $(".menu_div_collapse").length>0?true:false;
-        if(isCollapse){//菜单折叠状态
+        if(isCollapse&&!has_show_menu_page){//菜单折叠状态
             $("#menu_div").animate({width:'210px'},"slow",function(){
                 $("#menu_div").removeClass("menu_div_collapse");
                 $("#menu_div").addClass("menu_div_expansion");
@@ -122,34 +124,39 @@ function menu_show(){
 
             });
         }
+        has_show_menu_page = false;
     });
     $("div[id='logo_div'],div[id='sign_out_div'],div[id='main_div'],div[id='title_div'],iframe[id='main_frame']").click(function(){
         var isCollapse = $(".menu_div_collapse").length>0?true:false;
         if(!isCollapse){
-
-            $("#menu_div").removeClass("menu_div_expansion");
-            $("#menu_div").addClass("menu_div_collapse");
-            $(".root_menu_font").hide();
-            $(".sign_out_font").hide();
-            $(".menu_img").removeClass("menu_img_expansion");
-            $(".menu_img_li").removeClass("expansion_mounse_over");
-            $(".menu_img_li").removeAttr("onclick");
-            $(".sign_out_img").removeClass("menu_img_expansion");
-
-            $("#menu_div").animate({width:'100px'},"slow",function(){
-                $(".son_menu_area").hide();
-                $(".menu_img_li").show(1000);
-                $(".split_label").show(1000);
-                $(".sign_out_li").show();
-                var $show_sons = $(".son_menu_area[show_sons='Y']");
-                if($show_sons.length>0){
-                    $show_sons.attr("show_sons","N");
-                }
-                init_main_page_style();
-            });
+            collapseMenu();
         }
     });
 
+}
+
+function collapseMenu(){
+    console.log("collapseMenu  is running...");
+    $("#menu_div").removeClass("menu_div_expansion");
+    $("#menu_div").addClass("menu_div_collapse");
+    $(".root_menu_font").hide();
+    $(".sign_out_font").hide();
+    $(".menu_img").removeClass("menu_img_expansion");
+    $(".menu_img_li").removeClass("expansion_mounse_over");
+    $(".menu_img_li").removeAttr("onclick");
+    $(".sign_out_img").removeClass("menu_img_expansion");
+
+    $("#menu_div").animate({width:'100px'},"slow",function(){
+        $(".son_menu_area").hide();
+        $(".menu_img_li").show(1000);
+        $(".split_label").show(1000);
+        $(".sign_out_li").show();
+        var $show_sons = $(".son_menu_area[show_sons='Y']");
+        if($show_sons.length>0){
+            $show_sons.attr("show_sons","N");
+        }
+        init_main_page_style();
+    });
 }
 
 /**
@@ -158,6 +165,7 @@ function menu_show(){
  * @param clickObj
  */
 function menu_click(clickObj){
+    console.log("menu_click is running....");
     // $(".menu_img_li").unbind("click").click(function(){
         var menu_id = $(clickObj).attr("id");
         var show_sons = $(clickObj).attr("show_sons");
@@ -275,7 +283,10 @@ function make_menu(menu_data){
 function show_menu_page(menu_url){
     // console.log("show_menu_page  "+projectName+menu_url);
     $(".main_frame").attr("src",projectName+menu_url);
+    // collapseMenu();
+    // has_show_menu_page = true;
 }
+
 
 function get_menu_aliase(menu_id){
     if(menu_id==1){

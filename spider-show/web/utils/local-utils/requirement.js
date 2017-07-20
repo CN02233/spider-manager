@@ -12,4 +12,3 @@ document.write('<script type="text/javascript" src="'+projectName+'/utils/public
 document.write('<script type="text/javascript" src="'+projectName+'/utils/local-utils/page_data_support.js"></script>');
 document.write('<script type="text/javascript" src="'+projectName+'/utils/local-utils/page_support.js"></script>');
 document.write('<script type="text/javascript" src="'+projectName+'/utils/local-utils/modal_support.js"></script>');
-document.write('<script type="text/javascript" src="'+projectName+'/utils/local-utils/paging_data.js"></script>');

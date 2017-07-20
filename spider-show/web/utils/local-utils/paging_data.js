@@ -49,11 +49,14 @@ function page_data_callback(resonse_data){
                     $paging.attr("page-size", pageSize);
                     $paging.attr("now-page-no", currPage);
                 }else{
-                    $paging.append("<li><a href='#' aria-label='Previous' onclick='goToPage(this)' class='paging_previous'><span aria-hidden='true'>&laquo;</span></a></li>");
+                    // $paging.append("<li class='paging_pre_next'><a href='#' aria-label='Previous' onclick='goToPage(this)' class='paging_previous'><span aria-hidden='true'>&laquo;</span></a></li>");
+                    $paging.append("<li class='paging_pre'><a href='#' aria-label='Previous' onclick='goToPage(this)'><span aria-hidden='true'>&nbsp;</span></a></li>");
                     for(var i=1;i<(totalPage+1);i++){
                         $paging.append("<li><a class='paging_li' curr-page='"+i+"' onclick='goToPage(this)' href='#'>"+i+"</a></li>");
                     }
-                    $paging.append("<li><a href='#' aria-label='Next' onclick='goToPage(this)' class='paging_next'><span aria-hidden='true'>&raquo;</span></a></li>");
+                    $paging.append("<li class='paging_next'><a href='#' aria-label='Next' onclick='goToPage(this)'><span aria-hidden='true'>&nbsp;</span></a></li>");
+
+                    // $paging.append("<li class='paging_next'><a href='#' aria-label='Next' onclick='goToPage(this)' class='paging_next'><span aria-hidden='true'>&nbsp;</span></a></li>");
                     $paging.attr("page-size",pageSize);
                     $paging.attr("now-page-no",currPage);
                     $paging.attr("total-page",totalPage);
@@ -101,4 +104,7 @@ function goToPage(aObj){
 
     paging_data.make_paging_data(url,params,pageSize,currPage);
     $paging.attr("now-page-no",currPage);
+
+    $(".paging_li_check").removeClass("paging_li_check");
+    $("a[curr-page='"+currPage+"']").addClass("paging_li_check");
 }

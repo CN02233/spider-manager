@@ -6,10 +6,12 @@ var ajax_support = {
     createNew: function(){
         var ajax_support = {};
 
+        ajax_support.DEFUALT_PAGE_SIZE = 10;//默认每页显示条数
+
         ajax_support.sendAjaxRequestSimple = function(url,params){
             $.ajax({
                 url:SERVICE_HOST+url,
-                type:'get',
+                type:'post',
                 data:params,
                 xhrFields:{withCredentials:true},
                 dataType:'jsonp',
@@ -44,7 +46,7 @@ var ajax_support = {
         ajax_support.sendAjaxRequestByPage = function(url,param,pageSize,currPage,callBackFunction){
             // console.log("sendAjaxRequestByPage is running....");
             if(pageSize==null||pageSize==''){
-                pageSize = 8;
+                pageSize = this.DEFUALT_PAGE_SIZE;
             }
             if(currPage==null||currPage==''){
                 currPage = 1;
@@ -59,8 +61,22 @@ var ajax_support = {
             if(result_json.result=="SUCCESS"){
                 return true;
             }else{
+                if(result_json.faild_reason == "USER_NOT_LOGIN"){
+                    modal_support.make_alter(result_json.result_msg,auth_failed);
+                }else if(result_json.faild_reason == "USERNM_NOT_FOUND"){
+                    modal_support.make_alter(result_json.result_msg,auth_failed);
+                }
+
+                function auth_failed(){
+                    page_support.forward_new_page("/template/sys/login/login.html");
+                }
+
                 return false;
             }
+        };
+
+        ajax_support.get_result_data = function(result_json){
+            return result_json.resultData;
         };
 
         return ajax_support;

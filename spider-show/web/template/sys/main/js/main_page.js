@@ -11,10 +11,6 @@ function userMenuList(menuDataResult){
     // console.info("menu list data :"+JSON.stringify(menuDataResult));
     if(ajax_support.ajax_result_success(menuDataResult)){
         make_menu(menuDataResult);
-    }else{
-        // alert(menuDataResult.result_msg);
-        modal_support.make_alter(menuDataResult.result_msg,auth_failed,menuDataResult);
-
     }
 }
 
