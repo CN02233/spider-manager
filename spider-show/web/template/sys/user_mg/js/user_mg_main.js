@@ -16,14 +16,14 @@ $(document).ready(function(){
     searchElements.push(userIdElement);
     searchElements.push(userNmElement);
 
-    var searchInfoObj = tableSearchCreater.searchInfoObject("/sys/user/listUserPage.do",searchElements,true,add_user);
+    var searchInfoObj = tableSearchCreater.searchInfoObject("/sys/user/listUserPage.do",searchElements,true,true,"add_user()");
     tableSearchCreater.createSearch(searchInfoObj);
 
     paging_data.make_paging_data("/sys/user/listUserPage.do");
 
-    $("#add_user_btn").click(function(){
-        add_user();
-    });
+    // $("#add_user_btn").click(function(){
+    //     add_user();
+    // });
 });
 
 function page_callback(dataList){
@@ -47,6 +47,7 @@ function page_callback(dataList){
 
 function add_user(){
     // var userId_modal = modal_support.getModalEditObject("user_id","用户ID","text");
+    console.log("add user is running");
     modal_support_alter.makeEditModalByColumn("新增用户",makeUserInfoColumn(),addUserSave);
 
 }

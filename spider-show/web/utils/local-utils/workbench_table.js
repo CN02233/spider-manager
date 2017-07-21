@@ -122,11 +122,11 @@ var workbench_table = {
 
             if(needAddBtn){
                 $seach_area.append("<div id='operation_div' class=' base_float_right operation_div'>"+
-                    "<button id='table_add_btn' type='button' class='add_button' >新增</button>"+
+                    "<button id='table_add_btn' type='button' onclick='"+addFunction+"' class='add_button' >新增</button>"+
                     "</div>");
-                $("#table_add_btn").click(function(){
-                    addFunction();
-                });
+                // $("#table_add_btn").click(function(){
+                //     addFunction();
+                // });
             }
 
             $.each(searchElements,function(i,elementObj){

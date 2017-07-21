@@ -41,8 +41,8 @@ public interface IUserServiceDao {
     List<User> listAllUser();
 
     @Select("<script>"+query_user_columns + " FROM "+TABLE_NAME +
-            "<if test=\"user_name != null and user_name!=''\">where user_name like concat('%',#{user_name},'%')</if>"+
-            "  <if test=\"user_id != 0\"> or user_id = #{user_id} </if> " +
+            " where user_name like concat('%',#{user_name},'%')"+
+            "  <if test=\"user_id != 0\"> and user_id = #{user_id} </if> " +
             "</script>" )
     @Options(useCache = false)
     Page<User> listUsersForPage(@Param("currPage") int currPage, @Param("pageSize") int pageSize
