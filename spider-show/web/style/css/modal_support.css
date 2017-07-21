@@ -3,6 +3,11 @@
     width:400px;
 }
 
+.modal_top{
+    z-index: 20086;
+    position: relative;
+}
+
 .modal_wrapper{
     display:table;
     width:100%;

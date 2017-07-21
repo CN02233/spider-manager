@@ -79,7 +79,7 @@ public class UserServiceImp implements UserService {
 
     public User getUserByUserNm(String userName){
         User resultUser = userServiceDao.checkUserByUserNm(userName);
-        logger.debug(resultUser.toString());
+        logger.debug(resultUser!=null?resultUser.toString():"user is null");
         return resultUser;
     }
 

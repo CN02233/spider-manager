@@ -16,7 +16,7 @@ var modal_support = {
             // console.log("make alter is running...show message is "+showMsg);
 
             var modal_html_code =
-                "<div class='modal fade ' id='modal_alter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>"+
+                "<div class='modal fade modal_top' id='modal_alter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>"+
                 "<div class='modal-dialog modal_root'>"+
                 "<div class='modal-content'>"+
                 "<div class=' modal_wrapper modal-body'>"+
@@ -41,7 +41,7 @@ var modal_support = {
 
             $("#edit_modal").remove();
             var modal_html_code =
-                "<div class='modal fade' id='"+modal_name+"' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>"+
+                "<div class='modal fade modal_top' id='"+modal_name+"' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>"+
                 "<div class='modal-dialog'>"+
                 " <div class='modal-content'>"+
                 " <div class='modal-header'>"+

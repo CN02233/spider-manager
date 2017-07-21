@@ -3,6 +3,9 @@
 .paging_area{
     text-align: center;
     padding:0 5% 0 5%;
+    height:80px;
+    position: absolute;
+    width:100%;
 }
 .paging{
     height:35px;
@@ -13,19 +16,20 @@
 }
 
 .paging>li{
-    width:30px;
-    height:30px;
+    width:40px;
+    height:40px;
     border:2px solid #DBE1ED;
     -moz-border-radius: 30px;
     -webkit-border-radius: 30px;
     border-radius: 30px;
     list-style: none;
     text-align: center;
-    line-height: 25px;
+    line-height: 40px;
     /*float:left;*/
     margin:0 0px 0 10px;
     display:inline-block;
     padding:0;
+    font-size: 18px;
 }
 
 
@@ -36,9 +40,9 @@
 
 .paging_pre,.paging_next{
     border:0 !important;
-    width:35px !important;
-    height:35px !important;
-    line-height: 30px !important;
+    width:50px !important;
+    height:50px !important;
+    line-height: 50px !important;
     font-size: 20px;
     /*padding:3px 5px 0 5px !important;*/
     /*line-height: 25px !important;*/
@@ -50,10 +54,10 @@
 
 .paging_pre{
     background: url("../image/btnlef_btn_listt.png") no-repeat;
-    background-size: 35px 35px;
+    background-size: 50px 50px;
 }
 .paging_next{
     background: url("../image/btnright_btn_list.png") no-repeat;
-    background-size: 35px 35px;
+    background-size: 50px 50px;
     text-decoration:none;
 }

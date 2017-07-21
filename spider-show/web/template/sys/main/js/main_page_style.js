@@ -283,8 +283,8 @@ function make_menu(menu_data){
 function show_menu_page(menu_url){
     // console.log("show_menu_page  "+projectName+menu_url);
     $(".main_frame").attr("src",projectName+menu_url);
-    // collapseMenu();
-    // has_show_menu_page = true;
+    collapseMenu();
+    has_show_menu_page = true;
 }
 
 

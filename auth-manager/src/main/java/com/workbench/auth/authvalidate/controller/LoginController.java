@@ -5,6 +5,7 @@ import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.session.SessionSupport;
 import com.workbench.auth.authvalidate.service.LoginService;
 import com.workbench.auth.authvalidate.bean.LoginResult;
+import com.workbench.auth.user.entity.User;
 import com.workbench.auth.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,13 @@ public class LoginController {
             validateResult.setResult_code(LoginResult.LOGIN_RESULT.USERNM_NOT_NULL);
         }else{
             validateResult = loginService.validate(user_name, user_pwd);
-            SessionSupport.addUserToSession(request,userService.getUserByUserNm(user_name));
+            User user = userService.getUserByUserNm(user_name);
+            if(user==null){
+                validateResult = new LoginResult();
+                validateResult.setValidate_result("当前登录/操作的用户不存在");
+                validateResult.setResult_code(LoginResult.LOGIN_RESULT.USERNM_NOT_FOUND);
+            }else
+                SessionSupport.addUserToSession(request,userService.getUserByUserNm(user_name));
         }
 
         String jsonpMsg = JsonpSupport.objectToJsonp(web_call_back, validateResult);
