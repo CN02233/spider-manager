@@ -118,7 +118,7 @@ var modal_support = {
                     $tr.append("<td class='input_area_div'>" +
                         "<select id='"+column_id+"' "+readOnlyAttr+" class='form-control modal_input'></select>" +
                         "</td>");
-                    $("#"+column_id).append("<option>请选择</option>");
+                    $("#"+column_id).append("<option value=''>请选择</option>");
                     if(column_list!=null){
                         $.each(column_list,function(i,options){
                             var options_value = options["options_value"];

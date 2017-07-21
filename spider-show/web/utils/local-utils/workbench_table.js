@@ -107,17 +107,21 @@ var workbench_table = {
             var paging = searchInfoObject.paging;
             var ajaxCallBack = searchInfoObject.ajaxCallBack;
 
+            var noNeedSearch = false;
             if(searchElements!=null&&searchElements.length>0&&searchUrl!=null){}
-            else return;
+            else{
+                noNeedSearch = true;
+                if(!needAddBtn){
+                    return;
+                }
+            }
 
             var $seach_area = $(".seach_area");
             $seach_area.append(
                     "<div id='seach_div' class=' base_float seach_div'>"+
                         "<div class=' base_float search_condition_area'>"+
                         "</div>"+
-                        "<div class=' base_float_right search_btn_area'>"+
-                            "<button id='search_btn' type='button' class='search_button' >查询</button>"+
-                        "</div>"+
+                        "<div class=' base_float_right search_btn_area'></div>"+
                     "</div>");
 
             if(needAddBtn){
@@ -128,6 +132,12 @@ var workbench_table = {
                 //     addFunction();
                 // });
             }
+
+            if(noNeedSearch){
+                return;
+            }
+
+            $(".search_btn_area").append("<button id='search_btn' type='button' class='search_button' >查询</button>");
 
             $.each(searchElements,function(i,elementObj){
                 // <input type="text" class="search_input" id="user_id" placeholder="请输入用户ID" />

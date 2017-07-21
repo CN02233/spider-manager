@@ -7,6 +7,8 @@ import com.workbench.auth.group.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by SongCQ on 2017/7/7.
  */
@@ -20,6 +22,11 @@ public class GroupServiceImp implements GroupService {
     public Page<Group> listUserGroupPage(int currPage, int pageSize) {
         Page<Group> pageResult = userGroupDao.listUserGroupPage(currPage, pageSize);
         return pageResult;
+    }
+
+    @Override
+    public List<Group> listSuperGroup() {
+        return  userGroupDao.listSuperGroup();
     }
 
     @Override

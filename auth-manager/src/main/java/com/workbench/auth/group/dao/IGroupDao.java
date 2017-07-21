@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.workbench.auth.group.entity.Group;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * Created by SongCQ on 2017/7/7.
  */
@@ -30,4 +32,8 @@ public interface IGroupDao {
     @Select("select * from user_group where user_group_id=#{user_group_id}")
     @Options(useCache = false)
     Group getUserGroup(int user_group_id);
+
+    @Select("select * from user_group where super_user_group_id=0")
+    @Options(useCache = false)
+    List<Group> listSuperGroup();
 }

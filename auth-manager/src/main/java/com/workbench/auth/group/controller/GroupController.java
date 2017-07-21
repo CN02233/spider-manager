@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by SongCQ on 2017/7/7.
@@ -29,6 +30,15 @@ public class GroupController {
         Page<Group> userGrpPage = groupService.listUserGroupPage(currPage, pageSize);
         PageResult pageResult = PageResult.pageHelperList2PageResult(userGrpPage);
         String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
+//        logger.debug("jsonResult information after delete :{}",resultJson);
+        return resultJson;
+    }
+
+    @RequestMapping("listSuperGroup")
+    @ResponseBody
+    public String listSuperGroup(HttpServletRequest request){
+        List<Group> list = groupService.listSuperGroup();
+        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,list,request);
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
