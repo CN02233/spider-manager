@@ -40,9 +40,13 @@ public interface IUserServiceDao {
     @Options(useCache = false)
     List<User> listAllUser();
 
-    @Select(query_user_columns + " FROM "+TABLE_NAME)
+    @Select("<script>"+query_user_columns + " FROM "+TABLE_NAME +
+            "<if test=\"user_name != null and user_name!=''\">where user_name like concat('%',#{user_name},'%')</if>"+
+            "  <if test=\"user_id != 0\"> or user_id = #{user_id} </if> " +
+            "</script>" )
     @Options(useCache = false)
-    Page<User> listUsersForPage(@Param("currPage") int currPage, @Param("pageSize") int pageSize);
+    Page<User> listUsersForPage(@Param("currPage") int currPage, @Param("pageSize") int pageSize
+            ,@Param("user_id") int user_id,@Param("user_name") String user_name);
 
     @Insert("INSERT INTO "+TABLE_NAME+" (user_id,user_name,user_type,reg_date,user_status,last_login_time) " +
             " VALUE (#{user_id},#{user_name},#{user_type},now(),#{user_status},#{last_login_time})")

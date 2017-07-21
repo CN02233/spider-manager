@@ -31,8 +31,8 @@ public class UserController {
 
     @RequestMapping("listUserPage")
     @ResponseBody
-    public String getUserByPage(int currPage, int pageSize,HttpServletRequest request){
-        Page<User> userPageList = userService.listUsersForPage(currPage, pageSize);
+    public String getUserByPage(int currPage, int pageSize,User user,HttpServletRequest request){
+        Page<User> userPageList = userService.listUsersForPage(currPage, pageSize,user);
         PageResult pageResult = PageResult.pageHelperList2PageResult(userPageList);
         String result = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
         return result;

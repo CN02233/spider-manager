@@ -7,6 +7,18 @@ var edit_modal_name = null;
 
 $(document).ready(function(){
     // init_modal_alter();
+    //初始化查询条件区域
+    var tableSearchCreater = workbench_table.tableSearchCreater();
+
+    var userIdElement = tableSearchCreater.searchElementObject("user_id","请输入用户ID");
+    var userNmElement = tableSearchCreater.searchElementObject("user_name","请输入用户名");
+    var searchElements = new Array();
+    searchElements.push(userIdElement);
+    searchElements.push(userNmElement);
+
+    var searchInfoObj = tableSearchCreater.searchInfoObject("/sys/user/listUserPage.do",searchElements,true,add_user);
+    tableSearchCreater.createSearch(searchInfoObj);
+
     paging_data.make_paging_data("/sys/user/listUserPage.do");
 
     $("#add_user_btn").click(function(){

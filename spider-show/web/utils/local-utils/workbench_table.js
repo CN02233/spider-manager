@@ -69,7 +69,125 @@ var workbench_table = {
         return table_support;
     },
 
-    createTableSearch:function(){
+    tableSearchCreater:function() {
+        var tableSearchCreater = {};
+
+        tableSearchCreater.searchInfoObject = function(searchUrl,searchElement,paging,needAddBtn,addFunction,ajaxCallBack){
+            var searchInfo = {};
+            searchInfo.searchUrl = searchUrl;
+            searchInfo.searchElement = searchElement;
+            paging!=null&&!paging?searchInfo.paging=false:searchInfo.paging = true;
+            needAddBtn!=null&&!needAddBtn?searchInfo.needAddBtn = false:searchInfo.needAddBtn = true;
+            needAddBtn?searchInfo.addFunction = addFunction:searchInfo.addFunction = null;
+            paging!=null&&!paging?searchInfo.ajaxCallBack = null:searchInfo.ajaxCallBack = ajaxCallBack;
+            return searchInfo;
+        };
+
+        tableSearchCreater.searchElementObject = function(element_id,elementPlaceHolder,element_type,select_options){
+            var searchElement = {};
+            searchElement.element_id = element_id;
+            searchElement.elementPlaceHolder = elementPlaceHolder;
+            element_type!=null?searchElement.element_type = element_type:searchElement.element_type ="text";//text select
+            element_type!=null&&element_type=='select'?searchElement.select_options = select_options:searchElement.select_options = null;
+            return searchElement;
+        };
+
+        tableSearchCreater.selectOptionObject = function(optionValue,optionText){
+            var selectOption = {};
+            selectOption.optionValue = optionValue;
+            selectOption.optionText = optionText;
+            return selectOption;
+        };
+
+        tableSearchCreater.createSearch = function(searchInfoObject){
+            var searchElements = searchInfoObject.searchElement;
+            var searchUrl = searchInfoObject.searchUrl;
+            var needAddBtn = searchInfoObject.needAddBtn;
+            var addFunction = searchInfoObject.addFunction;
+            var paging = searchInfoObject.paging;
+            var ajaxCallBack = searchInfoObject.ajaxCallBack;
+
+            if(searchElements!=null&&searchElements.length>0&&searchUrl!=null){}
+            else return;
+
+            var $seach_area = $(".seach_area");
+            $seach_area.append(
+                    "<div id='seach_div' class=' base_float seach_div'>"+
+                        "<div class=' base_float search_condition_area'>"+
+                        "</div>"+
+                        "<div class=' base_float_right search_btn_area'>"+
+                            "<button id='search_btn' type='button' class='search_button' >查询</button>"+
+                        "</div>"+
+                    "</div>");
+
+            if(needAddBtn){
+                $seach_area.append("<div id='operation_div' class=' base_float_right operation_div'>"+
+                    "<button id='table_add_btn' type='button' class='add_button' >新增</button>"+
+                    "</div>");
+                $("#table_add_btn").click(function(){
+                    addFunction();
+                });
+            }
+
+            $.each(searchElements,function(i,elementObj){
+                // <input type="text" class="search_input" id="user_id" placeholder="请输入用户ID" />
+                var element_id = elementObj.element_id;
+                var elementPlaceHolder = elementObj.elementPlaceHolder;
+                var element_type = elementObj.element_type;
+                var select_options = elementObj.select_options;
+
+                if(element_type=='text')
+                    $(".search_condition_area").append("<input type='text' class='search_input' id='"+element_id+"' placeholder='"+elementPlaceHolder+"' />");
+                else if(element_type=='select'){
+                    var $selectObj = $("<select class='search_input' id='"+element_id+"'><option>请选择</option></select>");
+                    $.each(select_options,function(s,optionObj){
+                        var optionValue = optionObj.optionValue;
+                        var optionText = optionObj.optionText;
+                        $selectObj.append("<option value='"+optionValue+"'>"+optionText+"</option>");
+                    });
+                    $(".search_condition_area").append($selectObj);
+                }
+            });
+
+            $("#search_btn").click(function(){
+                var $seach_area = $(".seach_area");
+                var allInputText = $seach_area.find("input[type='text']");
+                var allInputSelect = $seach_area.find("select");
+
+                var paramObj = new Object();
+
+                if(allInputText!=null&&allInputText.length>0){
+                    $.each(allInputText,function(q,inputText){
+                        var elementId = $(inputText).attr("id");
+                        var elementVal = $(inputText).val();
+                        if(elementVal!=null&&elementVal!='')
+                            paramObj[elementId] = elementVal;
+                    });
+                }
+
+                if(allInputSelect!=null&&allInputSelect.length>0){
+                    $.each(allInputSelect,function(q,selectText){
+                        var elementId = $(selectText).attr("id");
+                        var elementVal = $(selectText).val();
+                        if(elementVal!=null&&elementVal!='')
+                            paramObj[elementId] = elementVal;
+                    });
+                }
+
+                // console.log("查询条件内容"+JSON.stringify(paramObj));
+                if(paging){
+                    paging_data.make_paging_data(searchUrl,paramObj);
+                }else{
+                    ajax_support.sendAjaxRequest(searchUrl,paramObj,ajaxCallBack);
+                }
+            });
+        }
+
+        return tableSearchCreater;
+    },
+
+
+    makeTableSearch:function(){
         var table_search_support = {};
 
         table_search_support.bodyHeight = $(document.body).height();
@@ -131,7 +249,7 @@ var workbench_table = {
  * 初始化 搜索栏 列表 分页 的高度和宽度
  */
 $(document).ready(function(){
-    var table_search_support = workbench_table.createTableSearch();
+    var table_search_support = workbench_table.makeTableSearch();
 
     table_search_support.initSearchArea();
     table_search_support.initTableArea();
@@ -154,7 +272,7 @@ function showAllSearchInput(){
 function hideSearchInput(){
     $("#showAllSearchInput").remove();
     $("#hideSearchInput").remove();
-    var table_search_support = workbench_table.createTableSearch();
+    var table_search_support = workbench_table.makeTableSearch();
     table_search_support.initSearchArea();
     $(".seach_area").removeAttr("style");
 
