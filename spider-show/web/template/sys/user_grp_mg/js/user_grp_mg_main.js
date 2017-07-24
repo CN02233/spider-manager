@@ -33,9 +33,11 @@ function page_callback(dataList){
     var view_operation = table_support.operationsByName("查看", ["user_group_id"], "viewGroup(this)");
     var edit_operation = table_support.operationsByName("编辑", ["user_group_id"], "editGroup(this)");
     var delete_operation = table_support.operationsByName("删除", ["user_group_id"], "deleteGroup(this)");
+    var team_operation = table_support.operationsByName("成员", ["user_group_id"], "teamList(this)");
     operationArray.push(view_operation);
     operationArray.push(edit_operation);
     operationArray.push(delete_operation);
+    operationArray.push(team_operation);
 
     table_support.makeTable("user_grp_table",columnNames,dataList,operationArray);
 
@@ -164,4 +166,13 @@ function editUserGroupInfo(groupObj){
         // $("#"+edit_modal_name).find("input[last_login_time]").val(last_login_time);
     }
 
+}
+
+
+function teamList(viewUserObj){
+    var page_support_tmp = page_support.createNew();
+    var groupId = $(viewUserObj).attr("user_group_id");
+    page_support_tmp.forward_new_page("/template/sys/user_grp_mg/user_grp_teamer.html?user_group_id="+groupId+"&test=ttt");
+    // edit_modal_name = modal_support_alter.makeEditModalByColumn("用户组成员管理",makeUserInfoColumn("view"));
+    // ajax_support.sendAjaxRequest("/sys/group/getUserGroup.do",{"user_group_id":$(viewUserObj).attr("user_group_id")},"editUserGroupInfo");
 }
