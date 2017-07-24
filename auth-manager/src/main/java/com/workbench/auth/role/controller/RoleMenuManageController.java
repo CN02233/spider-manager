@@ -1,7 +1,9 @@
 package com.workbench.auth.role.controller;
 
+import com.github.pagehelper.Page;
 import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
+import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.role.dao.IRoleManageDao;
 import com.workbench.auth.role.dao.IRoleMenuDao;
@@ -36,6 +38,27 @@ public class RoleMenuManageController {
                 JsonResult.RESULT.SUCCESS, "获取成功", null, roleMenuList, request);
 
         return jsonpResult;
+    }
+
+    @RequestMapping("getMenuOutRole")
+    @ResponseBody
+    public String getMenuOutRole(int user_role_id, HttpServletRequest request){
+        List<Menu> roleMenuList = roleMenuManageService.getMenuOutRole(user_role_id);
+
+        String jsonpResult = JsonpSupport.makeJsonpResponse(
+                JsonResult.RESULT.SUCCESS, "获取成功", null, roleMenuList, request);
+
+        return jsonpResult;
+    }
+
+    @RequestMapping("pagingMenuByRole")
+    @ResponseBody
+    public String pagingMenuByRole(int user_role_id,int currPage,int pageSize, HttpServletRequest request){
+        Page<Menu> roleMenuPage = roleMenuManageService.pagingMenuByRole(user_role_id,currPage,pageSize);
+        PageResult pageResult = PageResult.pageHelperList2PageResult(roleMenuPage);
+        String result = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
+
+        return result;
     }
 
     @RequestMapping("saveMenuForRole")

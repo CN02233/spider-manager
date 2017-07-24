@@ -69,4 +69,15 @@ public class RoleManageController {
 
         return jsonpResponse;
     }
+
+    @RequestMapping("deleteRole")
+    @ResponseBody
+    public String deleteRole(int user_role_id, HttpServletRequest request){
+        roleManageService.deleteRole(user_role_id);
+
+        String jsonpResponse = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS, "删除成功", null, null, request);
+        logger.debug("deleteRole value is {}",jsonpResponse);
+
+        return jsonpResponse;
+    }
 }

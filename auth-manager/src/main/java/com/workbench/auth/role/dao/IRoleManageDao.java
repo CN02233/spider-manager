@@ -26,4 +26,8 @@ public interface IRoleManageDao {
     @Update("update user_role set user_role_name=#{user_role_name} where user_role_id=#{user_role_id}")
     @Options(useCache = false)
     void updateSaveRole(Role role);
+
+    @Delete("delete from user_role where user_role_id=#{user_role_id}")
+    @Options(useCache = false)
+    void deleteRole(int user_role_id);
 }

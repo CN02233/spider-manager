@@ -25,6 +25,13 @@ public class RoleMenuManageServiceImp implements RoleMenuManageService{
     }
 
     @Override
+    public Page<Menu> pagingMenuByRole(int role_id, int currPage, int pageSize) {
+        Page<Menu> result = roleMenuDao.pagingMenuByRole(role_id, currPage, pageSize);
+        return roleMenuDao.pagingMenuByRole(role_id,currPage,pageSize);
+    }
+
+
+    @Override
     public void saveMenuForRole(RoleMenu roleMenu) {
         roleMenuDao.saveMenuForRole(roleMenu);
     }
@@ -37,5 +44,10 @@ public class RoleMenuManageServiceImp implements RoleMenuManageService{
     @Override
     public void delMenuByRoleId(int role_id) {
         roleMenuDao.delMenuByRoleId(role_id);
+    }
+
+    @Override
+    public List<Menu> getMenuOutRole(int user_role_id) {
+        return roleMenuDao.getMenuOutRole(user_role_id);
     }
 }

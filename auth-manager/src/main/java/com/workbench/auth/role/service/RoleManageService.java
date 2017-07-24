@@ -17,4 +17,6 @@ public interface RoleManageService {
     void saveNewRole(Role role);
 
     void updateSaveRole(Role role);
+
+    void deleteRole(int user_role_id);
 }

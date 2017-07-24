@@ -38,4 +38,9 @@ public class UserRoleServiceImp implements UserRoleService {
     public void delUserRole(UserRole userRole) {
         iUserRoleDao.delUserRole(userRole);
     }
+
+    @Override
+    public void getUserByRoleId(int user_role_id) {
+
+    }
 }

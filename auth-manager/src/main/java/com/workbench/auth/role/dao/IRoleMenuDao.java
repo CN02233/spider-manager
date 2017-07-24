@@ -1,5 +1,6 @@
 package com.workbench.auth.role.dao;
 
+import com.github.pagehelper.Page;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.role.entity.RoleMenu;
 import org.apache.ibatis.annotations.*;
@@ -28,4 +29,15 @@ public interface IRoleMenuDao {
     @Options(useCache = false)
     void delMenuByRoleId(int role_id);
 
+    @Select("select am.* from user_role_privilege urp inner join app_module am on " +
+            "urp.module_id = am.module_id and urp.user_role_id = #{user_role_id}")
+    @Options(useCache = false)
+    Page<Menu> pagingMenuByRole(@Param("user_role_id") int user_role_id, @Param("currPage")  int currPage, @Param("pageSize")  int pageSize);
+
+    @Select("select result.* from ( " +
+            "SELECT urp.user_role_id,am.* FROM user_role_privilege urp right join app_module am on urp.user_role_id=#{user_role_id} and urp.module_id = am.module_id ) " +
+            "result " +
+            "where result.user_role_id is null;")
+    @Options(useCache = false)
+    List<Menu> getMenuOutRole(int user_role_id);
 }

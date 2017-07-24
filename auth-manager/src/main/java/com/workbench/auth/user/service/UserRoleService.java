@@ -17,4 +17,6 @@ public interface UserRoleService {
     void updateUserRole(UserRole userRole,int old_user_role_id);
 
     void delUserRole(UserRole userRole);
+
+    void getUserByRoleId(int user_role_id);
 }

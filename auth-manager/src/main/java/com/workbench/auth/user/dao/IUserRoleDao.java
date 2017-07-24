@@ -24,6 +24,10 @@ public interface IUserRoleDao {
     @Options(useCache = false)
     void delUserRole(UserRole userRole);
 
+    @Delete("delete from user_role_assign where user_role_id=#{user_role_id}")
+    @Options(useCache = false)
+    void delUserRoleByRoleId(int user_role_id);
+
     @Update("update user_role_assign set user_role_id=#{user_role_id} where user_id=#{user_id} and user_role_id=#{old_user_role_id}")
     @Options(useCache = false)
     void updateUserRole(@Param("user_id")int user_id,@Param("user_role_id")int user_role_id,@Param("old_user_role_id")int  old_user_role_id);
