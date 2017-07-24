@@ -16,7 +16,8 @@ var paging_data = {
          */
         paging_data.make_paging_data = function(url,params,pageSize,currPage){
             console.log("ajax_support "+ajax_support);
-            if(ajax_support==null){
+
+            if(ajax_support!=null&&ajax_support.isRoot()!=null&&ajax_support.isRoot()){
                 ajax_support = ajax_support.createNew();
             }
             $(".paging").attr("back_url",url);

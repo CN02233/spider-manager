@@ -172,7 +172,7 @@ function editUserGroupInfo(groupObj){
 function teamList(viewUserObj){
     var page_support_tmp = page_support.createNew();
     var groupId = $(viewUserObj).attr("user_group_id");
-    page_support_tmp.forward_new_page("/template/sys/user_grp_mg/user_grp_teamer.html?user_group_id="+groupId+"&test=ttt");
+    page_support_tmp.forward_new_page("/template/sys/user_grp_mg/user_grp_teamer.html?user_group_id="+groupId);
     // edit_modal_name = modal_support_alter.makeEditModalByColumn("用户组成员管理",makeUserInfoColumn("view"));
     // ajax_support.sendAjaxRequest("/sys/group/getUserGroup.do",{"user_group_id":$(viewUserObj).attr("user_group_id")},"editUserGroupInfo");
 }

@@ -1,6 +1,8 @@
 package com.workbench.auth.user.dao;
 
+import com.github.pagehelper.Page;
 import com.workbench.auth.group.entity.Group;
+import com.workbench.auth.user.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -22,4 +24,7 @@ public interface IUserGroupDao {
     @Delete("delete from user_group_member where user_id=#{user_id} and user_group_id=#{user_group_id}")
     @Options(useCache = false)
     void delUserGroup(@Param("user_id") int user_id,@Param("user_group_id")  int user_group_id);
+
+    @Select("SELECT distinct u.* FROM spider_db.user_group_member ugm inner join user u on ugm.user_id=u.user_id and ugm.user_group_id=#{group_id}")
+    Page<User> listUsersByGroupId(@Param("group_id")  int group_id,@Param("currPage")  int currPage,@Param("pageSize")  int pageSize);
 }

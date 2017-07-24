@@ -79,7 +79,15 @@ var ajax_support = {
             return result_json.resultData;
         };
 
+        ajax_support.isRoot = function(){
+            return false;
+        }
+
         return ajax_support;
+    },
+
+    isRoot : function(){
+        return true;
     }
 
 }
