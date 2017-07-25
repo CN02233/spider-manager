@@ -6,6 +6,7 @@ import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.page.PageResult;
 import com.workbench.auth.role.entity.Role;
 import com.workbench.auth.role.service.RoleManageService;
+import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
