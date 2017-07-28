@@ -43,7 +43,7 @@ public class UserServiceImpTest extends AbstractTestService {
 
     @Test
     public void createAndDelUser() throws Exception {
-        List<User> saveuserList = new ArrayList<>();
+        List<User> saveuserList = new ArrayList();
         for(int i=0;i<20;i++){
             User user = new User();
             user.setUser_name("Test"+i);

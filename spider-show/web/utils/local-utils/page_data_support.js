@@ -15,13 +15,6 @@ var ajax_support = {
                 data:params,
                 xhrFields:{withCredentials:true},
                 dataType:'jsonp',
-                // jsonp:'jsonpcallback ',
-                // success:function(data){
-                //     console.log("success is running...");
-                //     console.log(data);
-                //     if(callBackFunction!=null)
-                //         callBackFunction();
-                // },
                 error:function(data){
                     console.log("brower get one error....."+data);
                 }
@@ -33,6 +26,12 @@ var ajax_support = {
             // console.log("sendAjaxRequest is running....");
             var realUrl = url + "?web_call_back=" + callBackFunction;
             this.sendAjaxRequestSimple(realUrl,params);
+        };
+
+        ajax_support.sendJsonAjaxRequest = function(url,params,callBackFunction){
+            var jsonStr = JSON.stringify(params);
+            var realUrl = url + "?web_call_back=" + callBackFunction+"&isJson=Y";
+            this.sendAjaxRequestSimple(realUrl,{"jsonObj":jsonStr});
         };
 
         /**

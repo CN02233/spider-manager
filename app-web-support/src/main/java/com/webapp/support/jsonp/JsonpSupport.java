@@ -39,13 +39,16 @@ public class JsonpSupport {
     }
 
     public static String makeJsonpResponse(JsonResult.RESULT result,String resultMsg,String failReason,Object resultData,HttpServletRequest request){
+        return objectToJsonp(jsonpCallbackFunctionName(request),makeJsonpResult(result, resultMsg, failReason, resultData));
+    }
+
+    public static JsonResult makeJsonpResult(JsonResult.RESULT result,String resultMsg,String failReason,Object resultData){
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(result);
         jsonResult.setResult_msg(resultMsg);
         jsonResult.setFaild_reason(failReason);
         jsonResult.setResultData(resultData);
-        return objectToJsonp(jsonpCallbackFunctionName(request),jsonResult);
-
+        return jsonResult;
     }
 
 }

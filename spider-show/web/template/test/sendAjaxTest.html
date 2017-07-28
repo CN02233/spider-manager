@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../utils/local-utils/requirement.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            var ajaxSupport = ajax_support.createNew();
+            var paramArray = new Array();
+
+            var sendParam = new Object();
+            sendParam['page_id'] = "1";
+            sendParam['job_id'] = "1";
+            sendParam['user_id'] = "1";
+            sendParam['field_name'] = "field_name";
+            sendParam['field_datatype'] = "13";
+            sendParam['parent_field_id'] = "1";
+            sendParam['combine_field_value'] = "1";
+            sendParam['field_locate_id'] = "1";
+            var pageFieldLocateObj = new Object();
+            pageFieldLocateObj['field_locate_pattern'] = "field_locate_pattern";
+            pageFieldLocateObj['field_ext_pattern'] = "field_ext_pattern";
+            sendParam['pageFieldLocate'] = pageFieldLocateObj;
+            paramArray.push(sendParam);
+
+//            var jsonStr = JSON.stringify(JSON.stringify(paramArray));
+//            console.info(jsonStr);
+
+//            ajaxSupport.sendAjaxRequest("/crawler/pageMg/newSaveFields.do",{"sendData":paramArray},"testCallBackFunction");
+            ajaxSupport.sendJsonAjaxRequest("/crawler/pageMg/newSaveFields.do",paramArray,"testCallBackFunction");
+        });
+
+        function testCallBackFunction(resultData){
+            console.log(JSON.stringify(resultData));
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
