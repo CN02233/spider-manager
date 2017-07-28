@@ -1,11 +1,21 @@
 package com.webapp.support.session;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by pc on 2017/7/3.
  */
 public class SessionSupport {
+
+    public static <T>T checkoutUserFromSession(){
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        return checkoutUserFromSession(request);
+    }
+
     public static <T>T checkoutUserFromSession(HttpServletRequest request){
         Object userObj = request.getSession().getAttribute("user");
         if(userObj!=null)
