@@ -43,7 +43,7 @@ public class JsonpAspect {
 
 
     @Around("annotationJsonpCallback()")
-    public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable{
+    public String doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable{
         try{
             Object object= null;
             if(checkIsJsonMsg()) {//发用数据是否为JSON报文
@@ -103,8 +103,10 @@ public class JsonpAspect {
             return jsonpCallBackStr;
         }catch(Exception e){
             e.printStackTrace();
-            JsonResult exceptionResult = JsonpSupport.makeJsonpResult(JsonResult.RESULT.FAILD, "系统异常", "异常原因:" + e.getMessage(), null);
-            return exceptionResult;
+            String jsonpCallBackStr = JsonpSupport.objectToJsonp(getJsonpCallbackName(),
+                    JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.FAILD, "系统异常", "异常原因:" + e.toString(), null));
+
+            return jsonpCallBackStr;
         }
 
     }

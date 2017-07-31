@@ -1,6 +1,8 @@
 package com.webapp.support.jsonp;
 
 
+import com.webapp.support.json.JsonSupport;
+
 /**
  * Created by pc on 2017/7/5.
  */
@@ -49,5 +51,9 @@ public class JsonResult {
     public enum RESULT{
         SUCCESS,
         FAILD
+    }
+
+    public String toString(){
+        return JsonSupport.objectToJson(this);
     }
 }

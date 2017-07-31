@@ -10,26 +10,56 @@
             var ajaxSupport = ajax_support.createNew();
             var paramArray = new Array();
 
+//            var sendParam = new Object();
+//            sendParam['page_id'] = "1";
+//            sendParam['job_id'] = "1";
+//            sendParam['user_id'] = "1";
+//            sendParam['field_name'] = "field_name";
+//            sendParam['field_datatype'] = "13";
+//            sendParam['parent_field_id'] = "1";
+//            sendParam['combine_field_value'] = "1";
+//            sendParam['field_locate_id'] = "1";
+//            var pageFieldLocateObj = new Object();
+//            pageFieldLocateObj['field_locate_pattern'] = "field_locate_pattern";
+//            pageFieldLocateObj['field_ext_pattern'] = "field_ext_pattern";
+//            sendParam['pageFieldLocate'] = pageFieldLocateObj;
+//            paramArray.push(sendParam);
+//
+//            ajaxSupport.sendJsonAjaxRequest("/crawler/pageMg/newSaveFields.do",paramArray,"testCallBackFunction");
+
+
             var sendParam = new Object();
             sendParam['page_id'] = "1";
             sendParam['job_id'] = "1";
             sendParam['user_id'] = "1";
-            sendParam['field_name'] = "field_name";
-            sendParam['field_datatype'] = "13";
-            sendParam['parent_field_id'] = "1";
-            sendParam['combine_field_value'] = "1";
-            sendParam['field_locate_id'] = "1";
-            var pageFieldLocateObj = new Object();
-            pageFieldLocateObj['field_locate_pattern'] = "field_locate_pattern";
-            pageFieldLocateObj['field_ext_pattern'] = "field_ext_pattern";
-            sendParam['pageFieldLocate'] = pageFieldLocateObj;
+            sendParam['link_locate_pattern'] = "link_locate_pattern";
+            sendParam['link_ext_pattern'] = "link_ext_pattern";
+            sendParam['next_page_id'] = "1";
             paramArray.push(sendParam);
 
-//            var jsonStr = JSON.stringify(JSON.stringify(paramArray));
-//            console.info(jsonStr);
+            ajaxSupport.sendJsonAjaxRequest("/crawler/pageMg/newSaveLinks.do",paramArray,"testCallBackFunction");
 
-//            ajaxSupport.sendAjaxRequest("/crawler/pageMg/newSaveFields.do",{"sendData":paramArray},"testCallBackFunction");
-            ajaxSupport.sendJsonAjaxRequest("/crawler/pageMg/newSaveFields.do",paramArray,"testCallBackFunction");
+//            var paramObj = new Object();
+//            paramObj['job_id'] = 15;
+//            paramObj['page_name'] = 'TT ';
+//            paramObj['page_type'] = 1;
+//            paramObj['data_format'] = 1;
+//            paramObj['is_multi_page'] = 1;
+//            paramObj['paginate_element'] = 'TRTRTR';
+//            paramObj['load_indicator'] = 'TRTRTR';
+//            paramObj['page_interval'] = 14;
+//            paramObj['max_page_num'] = 14;
+//            paramObj['save_page_source'] = 14;
+//            paramObj['data_file'] = 'data_file';
+//            ajaxSupport.sendAjaxRequest('/crawler/pageMg/newSaveCrawlerPage.do',paramObj,'testCallBackFunction');
+
+//            var paramObj = new Object();
+//            paramObj['page_id']=1;
+//            paramObj['job_id']=1;
+//            paramObj['user_id']=1;
+//            ajaxSupport.sendAjaxRequest('/crawler/pageMg/listPageLink.do',paramObj,'testCallBackFunction');
+
+
         });
 
         function testCallBackFunction(resultData){

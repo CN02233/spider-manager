@@ -21,7 +21,10 @@ public class JsonpSupport {
         ObjectMapper mapper = new ObjectMapper();
         String jsonValue = null;
         try {
-            jsonValue = mapper.writeValueAsString(object);
+            if(object instanceof String){
+                jsonValue = (String) object;
+            }else
+                jsonValue = mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -49,6 +52,11 @@ public class JsonpSupport {
         jsonResult.setFaild_reason(failReason);
         jsonResult.setResultData(resultData);
         return jsonResult;
+    }
+
+    public static String makeJsonpResultStr(JsonResult.RESULT result,String resultMsg,String failReason,Object resultData){
+        JsonResult jsonResult = makeJsonpResult(result, resultMsg, failReason, resultData);
+        return jsonResult.toString();
     }
 
 }
