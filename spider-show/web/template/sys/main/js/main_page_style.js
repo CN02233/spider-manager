@@ -135,7 +135,7 @@ function menu_show(){
 
 }
 
-function collapseMenu(){
+function collapseMenu(menu_url){
     console.log("collapseMenu  is running...");
     $("#menu_div").removeClass("menu_div_expansion");
     $("#menu_div").addClass("menu_div_collapse");
@@ -156,6 +156,8 @@ function collapseMenu(){
             $show_sons.attr("show_sons","N");
         }
         init_main_page_style();
+        if(menu_url!=null&&menu_url!='')
+            $(".main_frame").attr("src",projectName+menu_url);
     });
 }
 
@@ -281,9 +283,8 @@ function make_menu(menu_data){
 }
 
 function show_menu_page(menu_url){
-    // console.log("show_menu_page  "+projectName+menu_url);
-    $(".main_frame").attr("src",projectName+menu_url);
-    collapseMenu();
+    console.log("show_menu_page  "+projectName+menu_url);
+    collapseMenu(menu_url);
     has_show_menu_page = true;
 }
 

@@ -14,7 +14,13 @@ var workbench_table = {
             $.each(dataList,function(i,dataObj){
                 var $tr = $("<tr></tr>");
                 $.each(paramNames,function(pi,paramName){
-                   var paramValue = dataObj[paramName];
+                    var paramValue = null;
+                    if(paramName.split(".").length>1){
+                        var paramPart = paramName.split(".");
+                        paramValue = dataObj[paramPart[0]][paramPart[1]];
+                    }else{
+                        paramValue = dataObj[paramName];
+                    }
                    if(i%2==0){
                        $tr.attr("class","workbench_table_colorful");
                    }
@@ -149,7 +155,9 @@ var workbench_table = {
                 if(element_type=='text')
                     $(".search_condition_area").append("<input type='text' class='search_input' id='"+element_id+"' placeholder='"+elementPlaceHolder+"' />");
                 else if(element_type=='select'){
-                    var $selectObj = $("<select class='search_input' id='"+element_id+"'><option>请选择</option></select>");
+                    var $selectObj = $("<select class='search_input' id='"+element_id+"'>" +
+                        // "<option>请选择</option>" +
+                        "</select>");
                     $.each(select_options,function(s,optionObj){
                         var optionValue = optionObj.optionValue;
                         var optionText = optionObj.optionText;
@@ -191,6 +199,8 @@ var workbench_table = {
                     ajax_support.sendAjaxRequest(searchUrl,paramObj,ajaxCallBack);
                 }
             });
+
+            initTablePageArea();
         }
 
         return tableSearchCreater;
@@ -209,14 +219,16 @@ var workbench_table = {
             var $seach_div = $(".seach_div");
             var $search_condition_area = $(".search_condition_area");
 
-            console.log("search_condition_area val "+$search_condition_area.width());
+            console.log("search_condition_area val "+$search_condition_area.outerWidth()+"|"
+                +$search_condition_area.innerWidth()+"|"+$search_condition_area.width());
 
             if($search_condition_area.height()>$seach_div.height()){
-                var $search_condition_area_width = $search_condition_area.width();
-                var search_width = $(".search_input").width();
-                console.log($search_condition_area_width/(search_width+30));
-                var maxInputCount_EachRow = Math.floor($search_condition_area_width/(search_width+30));
 
+                var $search_condition_area_width = $search_condition_area.width();
+                var search_width = $(".search_input").outerWidth();
+                // console.log($search_condition_area_width/(search_width+30));
+                var maxInputCount_EachRow = Math.floor($search_condition_area_width/(search_width+30));
+                // console.log("maxInputCount_EachRow value is "+maxInputCount_EachRow);
                 var allInput = $(".search_input");
                 $.each(allInput,function(i,inputObj){
                     if((i+1)>maxInputCount_EachRow){
@@ -259,14 +271,18 @@ var workbench_table = {
  * 初始化 搜索栏 列表 分页 的高度和宽度
  */
 $(document).ready(function(){
+    initTablePageArea();
+    //
+
+});
+
+function initTablePageArea(){
     var table_search_support = workbench_table.makeTableSearch();
 
     table_search_support.initSearchArea();
     table_search_support.initTableArea();
     table_search_support.initPagingArea();
-    //
-
-});
+}
 
 function showAllSearchInput(){
     var $seach_area = $(".seach_area");

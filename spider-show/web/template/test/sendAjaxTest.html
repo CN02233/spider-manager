@@ -4,60 +4,25 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="../../utils/local-utils/requirement.js"></script>
+    <script src="../../utils/local-utils/workbench_table.js"></script>
+
 
     <script>
         $(document).ready(function(){
             var ajaxSupport = ajax_support.createNew();
+            var paging_data_support = paging_data.crateNew();
+
             var paramArray = new Array();
 
-//            var sendParam = new Object();
-//            sendParam['page_id'] = "1";
-//            sendParam['job_id'] = "1";
-//            sendParam['user_id'] = "1";
-//            sendParam['field_name'] = "field_name";
-//            sendParam['field_datatype'] = "13";
-//            sendParam['parent_field_id'] = "1";
-//            sendParam['combine_field_value'] = "1";
-//            sendParam['field_locate_id'] = "1";
-//            var pageFieldLocateObj = new Object();
-//            pageFieldLocateObj['field_locate_pattern'] = "field_locate_pattern";
-//            pageFieldLocateObj['field_ext_pattern'] = "field_ext_pattern";
-//            sendParam['pageFieldLocate'] = pageFieldLocateObj;
-//            paramArray.push(sendParam);
-//
-//            ajaxSupport.sendJsonAjaxRequest("/crawler/pageMg/newSaveFields.do",paramArray,"testCallBackFunction");
-
-
             var sendParam = new Object();
-            sendParam['page_id'] = "1";
-            sendParam['job_id'] = "1";
-            sendParam['user_id'] = "1";
-            sendParam['link_locate_pattern'] = "link_locate_pattern";
-            sendParam['link_ext_pattern'] = "link_ext_pattern";
-            sendParam['next_page_id'] = "1";
+            sendParam['page_url'] = "1";
+            sendParam['job_name'] = "新浪";
+            sendParam['download_time_start'] = "2017-07-01";
+            sendParam['download_time_end'] = "2017-07-30";
             paramArray.push(sendParam);
 
-            ajaxSupport.sendJsonAjaxRequest("/crawler/pageMg/newSaveLinks.do",paramArray,"testCallBackFunction");
+            paging_data_support.make_paging_data("/crawler/pageView/listCrawlerPage.do",sendParam);
 
-//            var paramObj = new Object();
-//            paramObj['job_id'] = 15;
-//            paramObj['page_name'] = 'TT ';
-//            paramObj['page_type'] = 1;
-//            paramObj['data_format'] = 1;
-//            paramObj['is_multi_page'] = 1;
-//            paramObj['paginate_element'] = 'TRTRTR';
-//            paramObj['load_indicator'] = 'TRTRTR';
-//            paramObj['page_interval'] = 14;
-//            paramObj['max_page_num'] = 14;
-//            paramObj['save_page_source'] = 14;
-//            paramObj['data_file'] = 'data_file';
-//            ajaxSupport.sendAjaxRequest('/crawler/pageMg/newSaveCrawlerPage.do',paramObj,'testCallBackFunction');
-
-//            var paramObj = new Object();
-//            paramObj['page_id']=1;
-//            paramObj['job_id']=1;
-//            paramObj['user_id']=1;
-//            ajaxSupport.sendAjaxRequest('/crawler/pageMg/listPageLink.do',paramObj,'testCallBackFunction');
 
 
         });

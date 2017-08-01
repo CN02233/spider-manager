@@ -36,7 +36,8 @@ public class CrawlerPageMgController {
     public String listCrawlerPageByPaging(int currPage, int pageSize){
         String pageResult = PageResult.pageHelperList2PageResultStr(
                 crawlerPageMgService.listCrawlerPageByPaging(currPage, pageSize));
-        return pageResult;
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
+        return result;
     }
 
     @RequestMapping("craPageData")
