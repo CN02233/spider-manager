@@ -8,6 +8,9 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by SongCQ on 2017/7/31.
  */
@@ -26,5 +29,25 @@ public class JobMgServiceImp implements JobMgService {
             else pageData.setJobStatus(new JobStatus());
         }
         return resultPage;
+    }
+
+    @Override
+    public List<Map<String, Object>> crawlSrcType() {
+        return iJobMgDao.crawlSrcType();
+    }
+
+    @Override
+    public List<Map<String, Object>> dataStore() {
+        return iJobMgDao.dataStore();
+    }
+
+    @Override
+    public List<Map<String, Object>> jobScheduleList() {
+        return iJobMgDao.jobScheduleList();
+    }
+
+    @Override
+    public List<Map<String, Object>> jobHostList() {
+        return iJobMgDao.jobHostList();
     }
 }

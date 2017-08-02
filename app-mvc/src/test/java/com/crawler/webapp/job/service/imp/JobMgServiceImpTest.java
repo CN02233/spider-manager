@@ -22,7 +22,7 @@ public class JobMgServiceImpTest extends AbstractTestService{
     public void pagingCrawlList() throws Exception {
         JobInfoBean jobInfoBean = new JobInfoBean();
 //        jobInfoBean.setIs_valid(1);
-        jobInfoBean.setJob_name("新浪");
+//        jobInfoBean.setJob_name("新浪");
 
         Page<JobInfoBean> res = jobMgService.pagingCrawlList(1, 10, jobInfoBean);
 

@@ -74,7 +74,9 @@ var modal_support = {
                     });
                     callBack(inputValues);
                 });
-            }
+            }else{
+                $("#commitEditModal").remove();
+            }   
 
             $("#edit_modal").modal({backdrop:false,show:true});
             // $('#edit_modal').modal('show');
@@ -134,6 +136,22 @@ var modal_support = {
             return modal_name;
         };
 
+        modal_support_alter.makeTableEdit = function(edit_title,callBack,titleNames,paramNames,dataList,operations){
+            this.makeEditModalByColumn(edit_title,new Array(),callBack);
+            console.log("modal edit table has inited ...."+$("#modal_edit_table").length);
+            $("#modal_edit_table").addClass("workbench_table");
+            var titleThead = $("<thead><tr></tr>tr></thead>");
+            $.each(titleNames,function(i,titleName){
+                titleThead.append("<th>"+titleName+"</th>");
+            });
+
+            $("#modal_edit_table").append(titleThead);
+            $("#modal_edit_table").append("<tbody></tbody>");
+
+            var workbench_table_support_obj = workbench_table.createNew();
+            workbench_table_support_obj.makeTable("modal_edit_table",paramNames,dataList,operations);
+        };
+
         modal_support_alter.closeEditModalByColumn = function(){
             removeEditModal();
         };
@@ -164,8 +182,8 @@ var modal_support = {
 
 
 function modal_alter_confirm_click(call_back_function,callBackParam){
-    console.log(callBackParam);
-    console.log(call_back_function!=null);
+    // console.log(callBackParam);
+    // console.log(call_back_function!=null);
     // $('#modal_alter').modal('hide');
     $('#modal_alter').remove();
     if(call_back_function!=null)

@@ -75,7 +75,7 @@ public class JsonpAspect {
                                     Class<?>[] jsonObjType = jsonMsgParam.jsonObjTypes();
                                     Class<?> rootClassType = allParamTypes[paramCount];
                                     if (jsonObjType.length==1&&rootClassType.equals(jsonObjType[0])) {//非泛型
-                                        Object result = JsonSupport.jsonToObect(jsonStr, rootClassType);
+                                        paramObj = JsonSupport.jsonToObect(jsonStr, rootClassType);
                                     } else {//泛型
                                         if(List.class.isAssignableFrom(rootClassType)){
                                             paramObj = JsonSupport.jsonToList4Generic(jsonStr, rootClassType, jsonObjType[0]);

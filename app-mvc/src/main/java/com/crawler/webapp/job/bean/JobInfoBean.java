@@ -1,5 +1,6 @@
 package com.crawler.webapp.job.bean;
 
+import com.crawler.webapp.proxyserver.bean.ProxyAssign;
 import com.workbench.auth.user.entity.User;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class JobInfoBean {
     private int user_id;
     private User user;
     private String job_name;
-    private int is_valid = 1;//0无效 1有效
+    private Integer is_valid = null;//0无效 1有效
     private String is_valid_cn = "未知";//0无效 1有效
     private int host_id;
     private int max_page_num;
@@ -21,11 +22,12 @@ public class JobInfoBean {
     private int entry_page_id;
     private int job_cat_id;
     private int max_depth;
-    private int crawl_src_type_id;
+    private int crawl_src_type_id;//数据源类型
     private String start_urls;
-    private int data_store_id;
+    private int data_store_id;//数据存储编号
     private int job_schedule_id;
     private JobStatus jobStatus;
+    private ProxyAssign proxyAssign;
 
 
     public int getJob_id() {
@@ -52,11 +54,11 @@ public class JobInfoBean {
         this.job_name = job_name;
     }
 
-    public int getIs_valid() {
+    public Integer getIs_valid() {
         return is_valid;
     }
 
-    public void setIs_valid(int is_valid) {
+    public void setIs_valid(Integer is_valid) {
 
         if(is_valid==0){
             is_valid_cn = "无效";
@@ -170,5 +172,13 @@ public class JobInfoBean {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ProxyAssign getProxyAssign() {
+        return proxyAssign;
+    }
+
+    public void setProxyAssign(ProxyAssign proxyAssign) {
+        this.proxyAssign = proxyAssign;
     }
 }

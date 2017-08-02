@@ -40,6 +40,15 @@ public class CrawlerPageMgController {
         return result;
     }
 
+    @RequestMapping("listCrawlerPage")
+    @ResponseBody
+    @JsonpCallback
+    public String listCrawlerPage(){
+        List<CrawlerPage> dataResult = crawlerPageMgService.listCrawlerPage();
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,dataResult);
+        return result;
+    }
+
     @RequestMapping("craPageData")
     @ResponseBody
     @JsonpCallback

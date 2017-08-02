@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by SongCQ on 2017/7/31.
@@ -13,11 +14,15 @@ import java.util.List;
 public interface IJobMgDao {
 
     @Select("<script>" +
-            "select * from crawl_job where " +
-            " is_valid=#{jobInfoBean.is_valid}" +
-            "<if test='jobInfoBean.job_name!=null'> " +
+            "select * from crawl_job  " +
+            "<where>" +
+            "<if test='jobInfoBean.is_valid!=null  '> " +
+            "   is_valid=#{jobInfoBean.is_valid}" +
+            "</if>"+
+            "<if test='jobInfoBean.job_name!=null  '> " +
             "   and job_name like concat('%',#{jobInfoBean.job_name},'%')" +
             " </if> " +
+            "</where>" +
             "</script>")
     @Results({@Result(property = "jobStatus",column = "job_id",
             many = @Many(select="com.crawler.webapp.job.dao.IJobMgDao.getJobStatus")),
@@ -30,4 +35,19 @@ public interface IJobMgDao {
     @Options(useCache = false)
     JobStatus getJobStatus(int job_id);
 
+    @Select("select * from crawl_src_type")
+    @Options(useCache = false)
+    List<Map<String, Object>> crawlSrcType();
+
+    @Select("select * from data_store")
+    @Options(useCache = false)
+    List<Map<String,Object>> dataStore();
+
+    @Select("select * from job_schedule")
+    @Options(useCache = false)
+    List<Map<String,Object>> jobScheduleList();
+
+    @Select("select * from crawl_host")
+    @Options(useCache = false)
+    List<Map<String,Object>> jobHostList();
 }

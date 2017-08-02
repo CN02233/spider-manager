@@ -5,7 +5,8 @@
 
 .modal_top{
     z-index: 20086;
-    position: relative;
+    /*position: relative;*/
+    position: fixed;
 }
 
 .modal_wrapper{
