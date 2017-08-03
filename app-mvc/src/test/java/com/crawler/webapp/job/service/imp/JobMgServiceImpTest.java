@@ -8,12 +8,30 @@ import org.junit.Test;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
  * Created by SongCQ on 2017/7/31.
  */
 public class JobMgServiceImpTest extends AbstractTestService{
+    @Test
+    public void saveNewJob() throws Exception {
+        JobInfoBean jobInfoBean = new JobInfoBean();
+        jobInfoBean.setJob_name("job_name");
+        jobInfoBean.setMax_page_num(123);
+        jobInfoBean.setStart_urls("setStart_urls");
+        jobInfoBean.setPage_life_cycle(111);
+        jobInfoBean.setMax_depth(222);
+
+        List<String> serverList = new ArrayList();
+//        serverList.add("1");
+//        serverList.add("2");
+
+        jobMgService.saveNewJob(jobInfoBean,null);
+    }
 
     @Resource
     private JobMgService jobMgService;

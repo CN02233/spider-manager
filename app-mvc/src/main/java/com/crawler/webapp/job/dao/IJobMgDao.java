@@ -50,4 +50,14 @@ public interface IJobMgDao {
     @Select("select * from crawl_host")
     @Options(useCache = false)
     List<Map<String,Object>> jobHostList();
+
+    @Insert("insert into crawl_job (job_id,user_id,job_name,is_valid,host_id,max_page_num,page_life_cycle," +
+            "entry_page_id,job_cat_id,max_depth,crawl_src_type_id,start_urls,data_store_id,job_schedule_id) values " +
+            "(#{job_id},#{user_id},#{job_name},#{is_valid},#{host_id},#{max_page_num},#{page_life_cycle}," +
+            "#{entry_page_id},#{job_cat_id},#{max_depth},#{crawl_src_type_id},#{start_urls},#{data_store_id},#{job_schedule_id})")
+    void saveJobInfo(JobInfoBean jobInfo);
+
+
+    @Insert("insert into poxy_assign (proxy_server_id,job_id,user_id ) values (#{proxy_server_id},#{job_id},#{user_id})")
+    void saveProxyServer(@Param("proxy_server_id") String proxy_server_id,@Param("job_id") int job_id,@Param("user_id") int user_id);
 }

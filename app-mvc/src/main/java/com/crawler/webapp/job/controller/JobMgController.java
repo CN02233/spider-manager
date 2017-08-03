@@ -3,9 +3,12 @@ package com.crawler.webapp.job.controller;
 import com.crawler.webapp.job.bean.JobInfoBean;
 import com.crawler.webapp.job.service.JobMgService;
 import com.github.pagehelper.Page;
+import com.google.common.base.Strings;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.page.PageResult;
+import com.webapp.support.session.SessionSupport;
+import com.workbench.auth.user.entity.User;
 import com.workbench.spring.aop.annotation.JsonMsgParam;
 import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +81,10 @@ public class JobMgController {
     @JsonpCallback(isJsonRequest = true)
     public String saveNewJob(@JsonMsgParam(jsonName = "jobInfo",jsonObjTypes={JobInfoBean.class}) JobInfoBean jobInfo,
                              @JsonMsgParam(jsonName = "proxyServers",jsonObjTypes={String.class}) ArrayList<String> proxyServers){
+
+        User user = SessionSupport.checkoutUserFromSession();
+        jobInfo.setUser_id(user.getUser_id());
+        jobMgService.saveNewJob(jobInfo,proxyServers);
         String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
         return result;
     }
