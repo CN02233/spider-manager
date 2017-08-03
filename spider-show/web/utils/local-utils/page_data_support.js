@@ -8,6 +8,8 @@ var ajax_support = {
 
         ajax_support.DEFUALT_PAGE_SIZE = 10;//默认每页显示条数
 
+        ajax_support.json_data_list = new Array();
+
         ajax_support.sendAjaxRequestSimple = function(url,params){
             $.ajax({
                 url:SERVICE_HOST+url,
@@ -28,10 +30,30 @@ var ajax_support = {
             this.sendAjaxRequestSimple(realUrl,params);
         };
 
-        ajax_support.sendJsonAjaxRequest = function(url,params,callBackFunction){
-            var jsonStr = JSON.stringify(params);
+        // ajax_support.sendJsonAjaxRequest = function(url,params,callBackFunction){
+        //     var jsonStr = JSON.stringify(params);
+        //     var realUrl = url + "?web_call_back=" + callBackFunction+"&isJson=Y";
+        //     this.sendAjaxRequestSimple(realUrl,JSON.parse(JSON.stringify(params)));
+        // };
+
+        ajax_support.sendJsonAjaxRequest = function(url,callBackFunction){
             var realUrl = url + "?web_call_back=" + callBackFunction+"&isJson=Y";
-            this.sendAjaxRequestSimple(realUrl,{"jsonObj":jsonStr});
+            var sendParam = new Object();
+            if(this.json_data_list.length>0){
+                $.each(this.json_data_list,function(i,json_data){
+                    var jsonName = json_data["jsonName"];
+                    var jsonData = json_data["jsonData"];
+                    var jsonStr = JSON.stringify(jsonData);
+                    sendParam[jsonName] = jsonStr;
+                });
+                this.sendAjaxRequestSimple(realUrl,sendParam);
+
+            }
+        };
+
+
+        ajax_support.addJsonData = function(jsonName,jsonData){
+            this.json_data_list.push({"jsonName":jsonName,"jsonData":jsonData});
         };
 
         /**

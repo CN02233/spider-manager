@@ -3,6 +3,7 @@ package com.webapp.support.page;
 import com.github.pagehelper.Page;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import com.webapp.support.json.JsonSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,14 @@ public class PageResult {
             resultList.addAll(pageList);
             result.setDataList(resultList);
             return result;
+        }
+
+        return null;
+    }
+
+    public static String pageHelperList2PageResultStr(Page pageList){
+        if(pageList!=null){
+            return pageHelperList2PageResult(pageList).toString();
         }
 
         return null;
@@ -76,5 +85,9 @@ public class PageResult {
 
     public void setDataList(List dataList) {
         this.dataList = dataList;
+    }
+
+    public String toString(){
+        return JsonSupport.objectToJson(this);
     }
 }

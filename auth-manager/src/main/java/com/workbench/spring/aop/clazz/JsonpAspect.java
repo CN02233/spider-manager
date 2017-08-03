@@ -43,7 +43,7 @@ public class JsonpAspect {
 
 
     @Around("annotationJsonpCallback()")
-    public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable{
+    public String doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable{
         try{
             Object object= null;
             if(checkIsJsonMsg()) {//发用数据是否为JSON报文
@@ -75,7 +75,7 @@ public class JsonpAspect {
                                     Class<?>[] jsonObjType = jsonMsgParam.jsonObjTypes();
                                     Class<?> rootClassType = allParamTypes[paramCount];
                                     if (jsonObjType.length==1&&rootClassType.equals(jsonObjType[0])) {//非泛型
-                                        Object result = JsonSupport.jsonToObect(jsonStr, rootClassType);
+                                        paramObj = JsonSupport.jsonToObect(jsonStr, rootClassType);
                                     } else {//泛型
                                         if(List.class.isAssignableFrom(rootClassType)){
                                             paramObj = JsonSupport.jsonToList4Generic(jsonStr, rootClassType, jsonObjType[0]);
@@ -103,8 +103,10 @@ public class JsonpAspect {
             return jsonpCallBackStr;
         }catch(Exception e){
             e.printStackTrace();
-            JsonResult exceptionResult = JsonpSupport.makeJsonpResult(JsonResult.RESULT.FAILD, "系统异常", "异常原因:" + e.getMessage(), null);
-            return exceptionResult;
+            String jsonpCallBackStr = JsonpSupport.objectToJsonp(getJsonpCallbackName(),
+                    JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.FAILD, "系统异常", "异常原因:" + e.toString(), null));
+
+            return jsonpCallBackStr;
         }
 
     }

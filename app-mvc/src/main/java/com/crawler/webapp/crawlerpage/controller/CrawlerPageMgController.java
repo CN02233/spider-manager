@@ -33,17 +33,27 @@ public class CrawlerPageMgController {
     @RequestMapping("pagingCrawlerPage")
     @ResponseBody
     @JsonpCallback
-    public PageResult listCrawlerPageByPaging(int currPage, int pageSize){
-        PageResult pageResult = PageResult.pageHelperList2PageResult(
+    public String listCrawlerPageByPaging(int currPage, int pageSize){
+        String pageResult = PageResult.pageHelperList2PageResultStr(
                 crawlerPageMgService.listCrawlerPageByPaging(currPage, pageSize));
-        return pageResult;
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
+        return result;
+    }
+
+    @RequestMapping("listCrawlerPage")
+    @ResponseBody
+    @JsonpCallback
+    public String listCrawlerPage(){
+        List<CrawlerPage> dataResult = crawlerPageMgService.listCrawlerPage();
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,dataResult);
+        return result;
     }
 
     @RequestMapping("craPageData")
     @ResponseBody
     @JsonpCallback
-    public JsonResult craPageData(int page_id, int job_id, int user_id){
-        return  JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"获取成功",null,
+    public String craPageData(int page_id, int job_id, int user_id){
+        return  JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,
                 crawlerPageMgService.craPageData(page_id, job_id, user_id));
 
     }
@@ -51,17 +61,17 @@ public class CrawlerPageMgController {
     @RequestMapping("listPageLink")
     @ResponseBody
     @JsonpCallback
-    public JsonResult listPageLink(int page_id, int job_id, int user_id) {
+    public String listPageLink(int page_id, int job_id, int user_id) {
 
-        return  JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"获取成功",null,
+        return  JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,
                 crawlerPageMgService.listPageLink(page_id, job_id, user_id));
     }
 
     @RequestMapping("listPageField")
     @ResponseBody
     @JsonpCallback
-    public JsonResult listPageField(int page_id, int job_id, int user_id) {
-        return  JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"获取成功",null,
+    public String listPageField(int page_id, int job_id, int user_id) {
+        return  JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,
                 crawlerPageMgService.listPageField(page_id, job_id, user_id));
     }
 
@@ -71,29 +81,29 @@ public class CrawlerPageMgController {
     @RequestMapping("newSaveCrawlerPage")
     @ResponseBody
     @JsonpCallback
-    public JsonResult newSaveCrawlerPage(CrawlerPage crawlerPage){
+    public String newSaveCrawlerPage(CrawlerPage crawlerPage){
         User user = SessionSupport.checkoutUserFromSession();
         crawlerPage.setUser_id(user.getUser_id());
         crawlerPageMgService.newSaveCrawlerPage(crawlerPage);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
     }
 
     @RequestMapping("newSaveFields")
     @ResponseBody
     @JsonpCallback(isJsonRequest = true)
-    public JsonResult newSaveFields(@JsonMsgParam(jsonObjTypes = PageField.class)
+    public String newSaveFields(@JsonMsgParam(jsonObjTypes = PageField.class)
                                                 ArrayList<PageField> pageFields){
         crawlerPageMgService.newSavePageFields(pageFields);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
     }
 
     @RequestMapping("newSaveLinks")
     @ResponseBody
     @JsonpCallback(isJsonRequest = true)
-    public JsonResult newSaveLinks(@JsonMsgParam(jsonObjTypes = PageLink.class)
-            List<PageLink> pageLinks){
+    public String newSaveLinks(@JsonMsgParam(jsonObjTypes = PageLink.class)
+                                           ArrayList<PageLink> pageLinks){
         crawlerPageMgService.newSavePageLinks(pageLinks);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
     }
 
     /*
@@ -102,27 +112,27 @@ public class CrawlerPageMgController {
     @RequestMapping("updateCrawlerPage")
     @ResponseBody
     @JsonpCallback
-    public JsonResult updateCrawlerPage(CrawlerPage crawlerPage){
+    public String updateCrawlerPage(CrawlerPage crawlerPage){
         crawlerPageMgService.updateCrawlerPage(crawlerPage);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
     }
 
     @RequestMapping("updatePageLinks")
     @ResponseBody
     @JsonpCallback(isJsonRequest = true)
-    public JsonResult updatePageLinks(@JsonMsgParam(jsonObjTypes = PageLink.class)
+    public String updatePageLinks(@JsonMsgParam(jsonObjTypes = PageLink.class)
                                                   ArrayList<PageLink> pageLinks){
         crawlerPageMgService.updatePageLinks(pageLinks);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
     }
 
     @RequestMapping("updatePageFields")
     @ResponseBody
     @JsonpCallback(isJsonRequest = true)
-    public JsonResult updatePageFields(@JsonMsgParam(jsonObjTypes = PageField.class)
+    public String updatePageFields(@JsonMsgParam(jsonObjTypes = PageField.class)
                                                    ArrayList<PageField> pageFields){
         crawlerPageMgService.updatePageFields(pageFields);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
     }
 
     /*
@@ -131,25 +141,25 @@ public class CrawlerPageMgController {
     @RequestMapping("deleteCrawlerPage")
     @ResponseBody
     @JsonpCallback
-    public JsonResult deleteCrawlerPage(int page_id, int job_id, int user_id){
+    public String deleteCrawlerPage(int page_id, int job_id, int user_id){
         crawlerPageMgService.deleteCrawlerPage(page_id, job_id, user_id);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
     }
 
     @RequestMapping("deletePageField")
     @ResponseBody
     @JsonpCallback
-    public JsonResult deletePageField(int field_id,int page_id, int job_id, int user_id){
+    public String deletePageField(int field_id,int page_id, int job_id, int user_id){
         crawlerPageMgService.removePageFields(field_id, page_id, job_id, user_id);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
     }
 
     @RequestMapping("deletePageLink")
     @ResponseBody
     @JsonpCallback
-    public JsonResult deletePageLink(int link_id,int page_id, int job_id, int user_id){
+    public String deletePageLink(int link_id,int page_id, int job_id, int user_id){
         crawlerPageMgService.removePageLink(link_id, page_id, job_id, user_id);
-        return JsonpSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
+        return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
     }
 
 }

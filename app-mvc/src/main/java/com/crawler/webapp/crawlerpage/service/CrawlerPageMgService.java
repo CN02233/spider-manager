@@ -41,4 +41,6 @@ public interface CrawlerPageMgService {
     void removeAllPageFields(int page_id, int job_id, int user_id);
 
     void removePageFields(int field_id, int page_id, int job_id, int user_id);
+
+    List<CrawlerPage> listCrawlerPage();
 }

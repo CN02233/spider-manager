@@ -98,4 +98,8 @@ public interface CrawlerPageMgDao {
 
     @Delete("delete from page_field_locate_relation where field_locate_id = #{locateId}")
     void removeLocateRelation(int locateId);
+
+    @Select("select * from crawl_page_config")
+    @Options(useCache = false)
+    List<CrawlerPage> listCrawlerPage();
 }

@@ -50,9 +50,8 @@ public class JsonSupport {
         ObjectMapper mapper = new ObjectMapper();
         try {
             TypeFactory t = TypeFactory.defaultInstance();
-            Object list = mapper.readValue(jsonVal, t.constructCollectionType(ArrayList.class, PageField.class));
+            Object mapVal = mapper.readValue(jsonVal,clazz);
 
-            Object mapVal = mapper.readValue(jsonVal,tList.getClass());
             return mapVal;
         } catch (IOException e) {
             e.printStackTrace();

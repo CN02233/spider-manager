@@ -24,7 +24,7 @@ public class MenuServiceImpTest extends AbstractTestService {
 
     @Test
     public void listMenuByPage() throws Exception {
-        PageResult resultMenu = menuService.listMenuByPage(2, 8);
+        PageResult resultMenu = menuService.listMenuByPage(1, 100);
 
 
         JsonResult jsonResult = new JsonResult();
