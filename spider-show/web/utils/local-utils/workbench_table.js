@@ -17,7 +17,10 @@ var workbench_table = {
                     var paramValue = null;
                     if(paramName.split(".").length>1){
                         var paramPart = paramName.split(".");
-                        paramValue = dataObj[paramPart[0]][paramPart[1]];
+                        if(dataObj[paramPart[0]]!=null)
+                            paramValue = dataObj[paramPart[0]][paramPart[1]];
+                        else
+                            paramValue = "未知";
                     }else{
                         paramValue = dataObj[paramName];
                     }

@@ -18,6 +18,11 @@ import static org.junit.Assert.*;
  */
 public class JobMgServiceImpTest extends AbstractTestService{
     @Test
+    public void deleJob() throws Exception {
+        jobMgService.deleJob(2510633);
+    }
+
+    @Test
     public void saveNewJob() throws Exception {
         JobInfoBean jobInfoBean = new JobInfoBean();
         jobInfoBean.setJob_name("job_name");

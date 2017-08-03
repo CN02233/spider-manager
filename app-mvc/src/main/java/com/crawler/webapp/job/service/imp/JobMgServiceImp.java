@@ -1,9 +1,12 @@
 package com.crawler.webapp.job.service.imp;
 
+import com.crawler.webapp.crawlerpage.bean.PageFieldLocate;
+import com.crawler.webapp.crawlerpage.dao.CrawlerPageMgDao;
 import com.crawler.webapp.job.bean.JobInfoBean;
 import com.crawler.webapp.job.bean.JobStatus;
 import com.crawler.webapp.job.dao.IJobMgDao;
 import com.crawler.webapp.job.service.JobMgService;
+import com.crawler.webapp.proxyserver.bean.ProxyServer;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,5 +77,44 @@ public class JobMgServiceImp implements JobMgService {
 
             }
         }
+    }
+
+    @Override
+    public JobInfoBean getCrawlData(int job_id) {
+        JobInfoBean resultData = iJobMgDao.getCrawlData(job_id);
+        return resultData;
+    }
+
+    @Override
+    public List<ProxyServer> listAllProxyServerByJob(int job_id) {
+        List<ProxyServer> resultData = iJobMgDao.listAllProxyServerByJob(job_id);
+        return resultData;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateJobInfo(JobInfoBean jobInfo, ArrayList<String> proxyServers) {
+        iJobMgDao.updateJobInfo(jobInfo);
+        iJobMgDao.deleteAllProxyServer(jobInfo.getJob_id());
+        if(proxyServers!=null){
+            for(String proxyServerId:proxyServers){
+                iJobMgDao.saveProxyServer(proxyServerId,jobInfo.getJob_id(),jobInfo.getUser_id());
+            }
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleJob(int job_id) {
+        //删除采集页面定义表
+        iJobMgDao.removePageLinksByJob(job_id);
+        iJobMgDao.removeLocateRelationByJob(job_id);
+        iJobMgDao.removePageFieldsByJob(job_id);
+        iJobMgDao.deleteCrawlerPageByJob(job_id);
+
+        //删除任务信息
+        iJobMgDao.delJob(job_id);
+        //删除任务与代理服务器对应关系
+        iJobMgDao.deleteAllProxyServer(job_id);
     }
 }

@@ -1,6 +1,7 @@
 package com.crawler.webapp.job.service;
 
 import com.crawler.webapp.job.bean.JobInfoBean;
+import com.crawler.webapp.proxyserver.bean.ProxyServer;
 import com.github.pagehelper.Page;
 
 import java.util.ArrayList;
@@ -23,4 +24,12 @@ public interface JobMgService {
     List<Map<String,Object>> jobHostList();
 
     void saveNewJob(JobInfoBean jobInfo, List<String> proxyServers);
+
+    JobInfoBean getCrawlData(int job_id);
+
+    List<ProxyServer> listAllProxyServerByJob(int job_id);
+
+    void updateJobInfo(JobInfoBean jobInfo, ArrayList<String> proxyServers);
+
+    void deleJob(int job_id);
 }
