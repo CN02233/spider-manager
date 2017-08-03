@@ -138,12 +138,8 @@ public class CrawlerPageMgServiceImp implements CrawlerPageMgService{
 
     @Override
     public void removeAllPageFields(int page_id, int job_id, int user_id){
-        List<PageFieldLocate> locateObjList = crawlerPageMgDao.getFieldLocate(page_id, job_id, user_id);
-        for(PageFieldLocate locateObj :locateObjList){
-            int locateId = locateObj.getField_locate_id();
-            crawlerPageMgDao.removeLocateRelation(locateId);
-        }
-        crawlerPageMgDao.removeLocate(page_id,job_id,user_id);
+        crawlerPageMgDao.removeLocateRelation(page_id, job_id, user_id);
+
         crawlerPageMgDao.removePageFields(0,page_id,job_id,user_id);
     }
 

@@ -16,16 +16,16 @@ public class JobInfoBean {
     private String job_name;
     private Integer is_valid = null;//0无效 1有效
     private String is_valid_cn = "未知";//0无效 1有效
-    private int host_id;
-    private int max_page_num;
-    private int page_life_cycle;
-    private int entry_page_id;
-    private int job_cat_id;
-    private int max_depth;
-    private int crawl_src_type_id;//数据源类型
+    private Integer host_id = null;
+    private Integer max_page_num = null;
+    private Integer page_life_cycle = null;
+    private Integer entry_page_id = null;
+    private Integer job_cat_id = null;
+    private Integer max_depth = null;
+    private Integer crawl_src_type_id = null; //数据源类型
     private String start_urls;
-    private int data_store_id;//数据存储编号
-    private int job_schedule_id;
+    private Integer data_store_id = null;//数据存储编号
+    private Integer job_schedule_id = null;
     private JobStatus jobStatus;
     private ProxyAssign proxyAssign;
 
@@ -70,59 +70,67 @@ public class JobInfoBean {
         this.is_valid = is_valid;
     }
 
-    public int getHost_id() {
+    public String getIs_valid_cn() {
+        return is_valid_cn;
+    }
+
+    public void setIs_valid_cn(String is_valid_cn) {
+        this.is_valid_cn = is_valid_cn;
+    }
+
+    public Integer getHost_id() {
         return host_id;
     }
 
-    public void setHost_id(int host_id) {
+    public void setHost_id(Integer host_id) {
         this.host_id = host_id;
     }
 
-    public int getMax_page_num() {
+    public Integer getMax_page_num() {
         return max_page_num;
     }
 
-    public void setMax_page_num(int max_page_num) {
+    public void setMax_page_num(Integer max_page_num) {
         this.max_page_num = max_page_num;
     }
 
-    public int getPage_life_cycle() {
+    public Integer getPage_life_cycle() {
         return page_life_cycle;
     }
 
-    public void setPage_life_cycle(int page_life_cycle) {
+    public void setPage_life_cycle(Integer page_life_cycle) {
         this.page_life_cycle = page_life_cycle;
     }
 
-    public int getEntry_page_id() {
+    public Integer getEntry_page_id() {
         return entry_page_id;
     }
 
-    public void setEntry_page_id(int entry_page_id) {
+    public void setEntry_page_id(Integer entry_page_id) {
         this.entry_page_id = entry_page_id;
     }
 
-    public int getJob_cat_id() {
+    public Integer getJob_cat_id() {
         return job_cat_id;
     }
 
-    public void setJob_cat_id(int job_cat_id) {
+    public void setJob_cat_id(Integer job_cat_id) {
         this.job_cat_id = job_cat_id;
     }
 
-    public int getMax_depth() {
+    public Integer getMax_depth() {
         return max_depth;
     }
 
-    public void setMax_depth(int max_depth) {
+    public void setMax_depth(Integer max_depth) {
         this.max_depth = max_depth;
     }
 
-    public int getCrawl_src_type_id() {
+    public Integer getCrawl_src_type_id() {
         return crawl_src_type_id;
     }
 
-    public void setCrawl_src_type_id(int crawl_src_type_id) {
+    public void setCrawl_src_type_id(Integer crawl_src_type_id) {
         this.crawl_src_type_id = crawl_src_type_id;
     }
 
@@ -134,19 +142,19 @@ public class JobInfoBean {
         this.start_urls = start_urls;
     }
 
-    public int getData_store_id() {
+    public Integer getData_store_id() {
         return data_store_id;
     }
 
-    public void setData_store_id(int data_store_id) {
+    public void setData_store_id(Integer data_store_id) {
         this.data_store_id = data_store_id;
     }
 
-    public int getJob_schedule_id() {
+    public Integer getJob_schedule_id() {
         return job_schedule_id;
     }
 
-    public void setJob_schedule_id(int job_schedule_id) {
+    public void setJob_schedule_id(Integer job_schedule_id) {
         this.job_schedule_id = job_schedule_id;
     }
 
@@ -158,12 +166,12 @@ public class JobInfoBean {
         this.jobStatus = jobStatus;
     }
 
-    public String getIs_valid_cn() {
-        return is_valid_cn;
+    public ProxyAssign getProxyAssign() {
+        return proxyAssign;
     }
 
-    public void setIs_valid_cn(String is_valid_cn) {
-        this.is_valid_cn = is_valid_cn;
+    public void setProxyAssign(ProxyAssign proxyAssign) {
+        this.proxyAssign = proxyAssign;
     }
 
     public User getUser() {
@@ -172,13 +180,5 @@ public class JobInfoBean {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public ProxyAssign getProxyAssign() {
-        return proxyAssign;
-    }
-
-    public void setProxyAssign(ProxyAssign proxyAssign) {
-        this.proxyAssign = proxyAssign;
     }
 }

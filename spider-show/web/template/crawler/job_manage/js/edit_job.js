@@ -3,7 +3,7 @@
  */
 
 var ajax_support_obj = ajax_support.createNew();
-
+var isView = false;
 $(document).ready(function(){
 
 
@@ -12,11 +12,83 @@ $(document).ready(function(){
     });
 
     $("#save_job_btn").click(function(){
-        save_new_job();
+        var paramObj = page_support.createNew().check_param_from_url();
+        var view_type = paramObj["type"];
+        if(view_type!=null&&view_type=='edit'){
+            update_save_job();
+        }else{
+            save_new_job();
+        }
     });
 
     initSelectData();
+    viewOrEdit();
+
 });
+
+function viewOrEdit(){
+    var paramObj = page_support.createNew().check_param_from_url();
+    var job_id = paramObj["job_id"];
+    var view_type = paramObj["type"];
+    if(job_id==null||job_id==''){
+        return ;
+    }
+
+    $("body").append("<input type='hidden' id='job_id' value='"+job_id+"'/>");
+
+    if(view_type=='view'){
+        $("input").attr("disabled","disabled");
+        $("select").attr("disabled","disabled");
+        $("button").attr("disabled","disabled");
+        isView = true;
+    }
+
+    ajax_support_obj.sendAjaxRequest("/crawler/jobMg/getCrawlAndProxy.do",{"job_id":job_id},"setParamVal");
+}
+
+function setParamVal(dataJson){
+    console.log(JSON.stringify(dataJson));
+    if(ajax_support_obj.ajax_result_success(dataJson)){
+        var resultData = ajax_support_obj.get_result_data(dataJson);
+        var crawlData = resultData["crawlData"];
+        var allProxyServerList = resultData["allProxyServerList"];
+
+        var job_name = crawlData['job_name'];
+        var is_valid = crawlData['is_valid'];
+        var max_page_num = crawlData['max_page_num'];
+        var start_urls = crawlData['start_urls'];
+        var page_life_cycle = crawlData['page_life_cycle'];
+        var entry_page_id = crawlData['entry_page_id'];
+        var max_depth = crawlData['max_depth'];
+        var crawl_src_type_id = crawlData['crawl_src_type_id'];
+        var data_store_id = crawlData['data_store_id'];
+        var job_schedule_id = crawlData['job_schedule_id'];
+        var host_id = crawlData['host_id'];
+
+        $("#job_name").val(job_name);
+        $("#is_valid").find("option[value='"+is_valid+"']").attr("selected",true);
+        $("#max_page_num").val(max_page_num);
+        $("#start_urls").val(start_urls);
+        $("#page_life_cycle").val(page_life_cycle);
+        $("#entry_page_id").find("option[value='"+entry_page_id+"']").attr("selected",true);
+        $("#max_depth").val(max_depth);
+        $("#crawl_src_type_id").find("option[value='"+crawl_src_type_id+"']").attr("selected",true);
+        $("#data_store_id").find("option[value='"+data_store_id+"']").attr("selected",true);
+        $("#job_schedule_id").find("option[value='"+job_schedule_id+"']").attr("selected",true);
+        $("#host_id").find("option[value='"+host_id+"']").attr("selected",true);
+
+        if(allProxyServerList!=null&&allProxyServerList.length>0){
+            $.each(allProxyServerList,function(i,proxyServer){
+                var proxy_server_id = proxyServer["proxy_server_id"];
+                var proxy_server_name = proxyServer["proxy_server_name"];
+                var proxy_server_ip = proxyServer["proxy_server_ip"];
+                var proxy_user_name = proxyServer["proxy_user_name"];
+                var proxy_user_password = proxyServer["proxy_user_password"];
+                makeProxyServerTable(proxy_server_id,proxy_server_name,proxy_server_ip,proxy_user_name,proxy_user_password);
+            });
+        }
+    }
+}
 
 function initSelectData(){
     ajax_support_obj.sendAjaxRequest("/crawler/pageMg/listCrawlerPage.do",null,"initStartPage");//起始页面
@@ -88,7 +160,7 @@ function initjobHost(dataResult){
 
 function initSelectOptions(selectId,dataResult){
     var $selectObj = $("#"+selectId);
-    $selectObj.append("<option>请选择</option>");
+    $selectObj.append("<option value=''>请选择</option>");
     if(ajax_support_obj.ajax_result_success(dataResult)){
         return true;
     }else
@@ -130,23 +202,54 @@ function selectProxy(selectRowObj){
         var proxy_user_name = $(selectRowObj).attr("proxy_user_name");
         var proxy_user_password = $(selectRowObj).attr("proxy_user_password");
 
-        $("#selected_proxy_server_table").find("tbody").append("<tr id='"+proxy_server_id+"'>" +
-            "<td>"+proxy_server_id+"</td>" +
-            "<td>"+proxy_server_name+"</td>" +
-            "<td>"+proxy_server_ip+"</td>" +
-            "<td>"+proxy_user_name+"</td>" +
-            "<td>"+proxy_user_password+"</td>" +
-            "<td onclick='remove_proxy_server(this)' class='workbench_table_operation'>删除</td>" +
-            "</tr>");
+        makeProxyServerTable(proxy_server_id,proxy_server_name,proxy_server_ip,proxy_user_name,proxy_user_password);
     }
+}
+
+function makeProxyServerTable(proxy_server_id,proxy_server_name,proxy_server_ip,proxy_user_name,proxy_user_password){
+    var optionStr = "<td onclick='remove_proxy_server(this)' class='workbench_table_operation'>删除</td>";
+
+    if(isView){
+        optionStr = "<td></td>";
+    }
+
+    $("#selected_proxy_server_table").find("tbody").append("<tr id='"+proxy_server_id+"'>" +
+        "<td>"+proxy_server_id+"</td>" +
+        "<td>"+proxy_server_name+"</td>" +
+        "<td>"+proxy_server_ip+"</td>" +
+        "<td>"+proxy_user_name+"</td>" +
+        "<td>"+proxy_user_password+"</td>" +
+        optionStr +
+        "</tr>");
+
+
 }
 
 function remove_proxy_server(removeServer){
     $(removeServer).parent().remove();
 }
 
-function save_new_job(ajax_support_obj){
+function save_new_job(){
 
+    var ajax_json_obj =  ajax_support.createNew();
+    ajax_json_obj.addJsonData("jobInfo",getParams());
+    ajax_json_obj.addJsonData("proxyServers",getProxyServers());
+    ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/saveNewJob.do","callServiceResult");
+    // ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/saveNewJob.do",jsonParamObj,"callServiceResult");
+    // ajax_support_obj.sendAjaxRequest("/crawler/proxyServer/saveNewJob.do",null,"callServiceResult");
+
+}
+
+function update_save_job(){
+    var ajax_json_obj =  ajax_support.createNew();
+    var jobInfoParam = getParams();
+    jobInfoParam["job_id"]=$("#job_id").val();
+    ajax_json_obj.addJsonData("jobInfo",jobInfoParam);
+    ajax_json_obj.addJsonData("proxyServers",getProxyServers());
+    ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/updateJobInfo.do","callServiceResult");
+}
+
+function getParams(){
     var paramObj = new Object();
     var allInput = $(".input_style").find("input");
     var allSelect = $(".input_style").find("select");
@@ -154,7 +257,8 @@ function save_new_job(ajax_support_obj){
         $.each(allInput,function(i,inputObj){
             var inputId = $(inputObj).attr("id");
             var inputVal = $(inputObj).val();
-            paramObj[inputId] = inputVal;
+            if(inputVal!=null&&inputVal!='')
+                paramObj[inputId] = inputVal;
         });
     }
 
@@ -162,11 +266,14 @@ function save_new_job(ajax_support_obj){
         $.each(allSelect,function(i,selectObj){
             var selectId = $(selectObj).attr("id");
             var selectVal = $(selectObj).val();
-            // paramObj[selectId] = selectVal;
+            if(selectVal!=null&&selectVal!='')
+                paramObj[selectId] = selectVal;
         });
     }
-    // jsonParamObj["jobInfo"] = paramObj;
+    return paramObj;
+}
 
+function getProxyServers(){
     var serverList = new Array();
     var allSelectedServer = $("#selected_proxy_server_table").find("tbody").find("tr");
     if(allSelectedServer!=null&&allSelectedServer.length>0){
@@ -176,19 +283,9 @@ function save_new_job(ajax_support_obj){
 
         });
     }
-
-
-
-    var ajax_json_obj =  ajax_support.createNew();
-    ajax_json_obj.addJsonData("jobInfo",paramObj);
-    ajax_json_obj.addJsonData("proxyServers",serverList);
-    ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/saveNewJob.do","callServiceResult");
-    // ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/saveNewJob.do",jsonParamObj,"callServiceResult");
-    // ajax_support_obj.sendAjaxRequest("/crawler/proxyServer/saveNewJob.do",null,"callServiceResult");
-
+    return serverList;
 }
 
-
-function callServiceResult(){
-
+function callServiceResult(saveResult){
+    modal_support.createNew().make_alter(saveResult["result_msg"]);
 }

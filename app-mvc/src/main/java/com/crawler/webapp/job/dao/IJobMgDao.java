@@ -2,6 +2,7 @@ package com.crawler.webapp.job.dao;
 
 import com.crawler.webapp.job.bean.JobInfoBean;
 import com.crawler.webapp.job.bean.JobStatus;
+import com.crawler.webapp.proxyserver.bean.ProxyServer;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
@@ -14,7 +15,7 @@ import java.util.Map;
 public interface IJobMgDao {
 
     @Select("<script>" +
-            "select * from crawl_job  " +
+            "select *,job_id as job_id_copy,user_id as user_id_copy from crawl_job  " +
             "<where>" +
             "<if test='jobInfoBean.is_valid!=null  '> " +
             "   is_valid=#{jobInfoBean.is_valid}" +
@@ -24,9 +25,10 @@ public interface IJobMgDao {
             " </if> " +
             "</where>" +
             "</script>")
-    @Results({@Result(property = "jobStatus",column = "job_id",
+    @Results({
+            @Result(property = "jobStatus",column = "job_id_copy",
             many = @Many(select="com.crawler.webapp.job.dao.IJobMgDao.getJobStatus")),
-            @Result(property = "user",column = "user_id",
+            @Result(property = "user",column = "user_id_copy",
                     many = @Many(select="com.workbench.auth.user.dao.IUserServiceDao.getUserByUserId"))})
     @Options(useCache = false)
     Page<JobInfoBean> pagingCrawlList(@Param("currPage") int currPage,@Param("pageSize") int pageSize,@Param("jobInfoBean") JobInfoBean jobInfoBean);
@@ -60,4 +62,36 @@ public interface IJobMgDao {
 
     @Insert("insert into poxy_assign (proxy_server_id,job_id,user_id ) values (#{proxy_server_id},#{job_id},#{user_id})")
     void saveProxyServer(@Param("proxy_server_id") String proxy_server_id,@Param("job_id") int job_id,@Param("user_id") int user_id);
+
+    @Select("select * from crawl_job where job_id = #{job_id}")
+    @Options(useCache = false)
+    JobInfoBean getCrawlData(int job_id);
+
+    @Select("select ps.* from poxy_server ps inner join poxy_assign pa on ps.proxy_server_id=pa.proxy_server_id and pa.job_id = #{job_id}")
+    @Options(useCache = false)
+    List<ProxyServer> listAllProxyServerByJob(int job_id);
+
+    @Update("update crawl_job set job_name=#{job_name},is_valid=#{is_valid},host_id=#{host_id},max_page_num=#{max_page_num}," +
+            "page_life_cycle=#{page_life_cycle},entry_page_id=#{entry_page_id},job_cat_id=#{job_cat_id},max_depth=#{max_depth}," +
+                    "crawl_src_type_id=#{crawl_src_type_id},start_urls=#{start_urls},data_store_id=#{data_store_id},job_schedule_id=#{job_schedule_id} " +
+            " where job_id=#{job_id}")
+    void updateJobInfo(JobInfoBean jobInfo);
+
+    @Delete("delete from poxy_assign where job_id=#{job_id}")
+    void deleteAllProxyServer(int job_id);
+
+    @Delete("delete from crawl_job where job_id=#{job_id}")
+    void delJob(int job_id);
+
+    @Delete("delete from page_field_locate_relation where job_id = #{job_id}")
+    void removeLocateRelationByJob(int job_id);
+
+    @Delete("delete from page_field where job_id=#{job_id}")
+    void removePageFieldsByJob(int job_id);
+
+    @Delete("delete from crawl_page_config where job_id=#{job_id}")
+    void deleteCrawlerPageByJob(int job_id);
+
+    @Delete("delete from page_link where job_id=#{job_id}")
+    void removePageLinksByJob(int job_id);
 }

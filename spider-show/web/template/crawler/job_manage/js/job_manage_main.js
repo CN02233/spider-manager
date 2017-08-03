@@ -27,6 +27,8 @@ $(document).ready(function(){
 });
 
 function page_callback(dataList){
+    console.info("dataList "+JSON.stringify(dataList));
+
     var $user_table = $("#job_list_table").find("tbody");
     $user_table.empty();
     var columnNames = ["job_id","job_name","entry_page_id","user.user_name","is_valid_cn","jobStatus.run_status_cn"];
@@ -34,9 +36,9 @@ function page_callback(dataList){
     var table_support = workbench_table.createNew();
 
     var operationArray = new Array();
-    var view_operation = table_support.operationsByName("查看", ["job_id"], "viewUser(this)");
-    var edit_operation = table_support.operationsByName("编辑", ["job_id"], "editUser(this)");
-    var delete_operation = table_support.operationsByName("删除", ["job_id"], "deleteUser(this)");
+    var view_operation = table_support.operationsByName("查看", ["job_id"], "viewJob(this)");
+    var edit_operation = table_support.operationsByName("编辑", ["job_id"], "editJob(this)");
+    var delete_operation = table_support.operationsByName("删除", ["job_id"], "deleteJob(this)");
     operationArray.push(view_operation);
     operationArray.push(edit_operation);
     operationArray.push(delete_operation);
@@ -47,4 +49,28 @@ function page_callback(dataList){
 
 function add_job(){
     page_support.createNew().forward_new_page("/template/crawler/job_manage/edit_job.html")
+}
+
+function viewJob(viewObj){
+    var job_id = $(viewObj).attr("job_id");
+    page_support.createNew().forward_new_page("/template/crawler/job_manage/edit_job.html?job_id="+job_id+"&type=view")
+}
+
+function editJob(viewObj){
+    var job_id = $(viewObj).attr("job_id");
+    page_support.createNew().forward_new_page("/template/crawler/job_manage/edit_job.html?job_id="+job_id+"&type=edit")
+}
+
+function deleteJob(viewObj){
+    var job_id = $(viewObj).attr("job_id");
+    modal_support.createNew().make_alter("确定删除当前采集任务？该操作会删除所有与该任务关联的内容","confirmDel",{"job_id":job_id});
+}
+
+function confirmDel(jobParam){
+    ajax_support.sendAjaxRequest("/crawler/jobMg/deleJob.do",jobParam,"delCallBack")
+}
+
+function delCallBack(delResult){
+    modal_support.createNew().make_alter(delResult["result_msg"]);
+    paging_data.make_paging_data("/crawler/jobMg/pagingList.do");
 }

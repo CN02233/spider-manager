@@ -75,31 +75,43 @@ public interface CrawlerPageMgDao {
             "<if test='link_id!=0'> and link_id = #{link_id}</if></script>")
     void removePageLinks(@Param("link_id") int link_id,@Param("page_id") int page_id, @Param("job_id") int job_id, @Param("user_id") int user_id);
 
+
     @Update("update crawl_page_config set page_name=#{page_name},page_type=#{page_type},data_format=#{data_format},is_multi_page=#{is_multi_page}," +
             "paginate_element=#{paginate_element},load_indicator=#{load_indicator}," +
             "page_interval=#{page_interval},max_page_num=#{max_page_num},save_page_source=#{save_page_source},data_file=#{data_file} where " +
             "page_id=#{page_id} and job_id=#{job_id} and user_id=#{user_id}")
     void updateCrawlerPage(CrawlerPage crawlerPage);
 
+    @Delete("delete from crawl_page_config where page_id=#{page_id} and job_id=#{job_id} and user_id=#{user_id} ")
     void deleteCrawlerPage(@Param("page_id") int page_id, @Param("job_id") int job_id, @Param("user_id") int user_id);
 
     @Delete("<script>delete from page_field where page_id=#{page_id} and job_id=#{job_id} and user_id=#{user_id} " +
             "<if test='field_id!=0'> and field_id = #{field_id}</if></script>")
     void removePageFields(@Param("field_id")  int field_id,@Param("page_id") int page_id, @Param("job_id") int job_id, @Param("user_id") int user_id);
 
-    @Delete("delete from page_field_locate where page_id=#{page_id} and job_id=#{job_id} and user_id=#{user_id} ")
-    void removeLocate(@Param("page_id") int page_id, @Param("job_id") int job_id, @Param("user_id") int user_id);
+    @Delete("delete from page_field_locate where field_locate_id=#{field_locate_id} and field_ext_pattern=#{field_ext_pattern} and field_locate_pattern=#{field_locate_pattern} ")
+    void removeLocate(@Param("field_locate_id") int field_locate_id, @Param("field_ext_pattern") String field_ext_pattern, @Param("field_locate_pattern") String field_locate_pattern);
 
-    @Select("select pf.* from page_field_locate_relation pflr inner join page_field_locate pfl on " +
+
+    @Select("select pfl.* from page_field_locate_relation pflr inner join page_field_locate pfl on " +
             "pflr.field_locate_id = pfl.field_locate_id and pflr.page_id = #{page_id} and pflr.job_id = #{job_id} " +
             "and pflr.user_id = #{user_id} ")
     @Options(useCache = false)
     List<PageFieldLocate> getFieldLocate(@Param("page_id") int page_id, @Param("job_id") int job_id, @Param("user_id") int user_id);
 
+    @Select("select pfl.* from page_field_locate_relation pflr inner join page_field_locate pfl on " +
+            "pflr.field_locate_id = pfl.field_locate_id and pflr.job_id = #{job_id}  ")
+    @Options(useCache = false)
+    List<PageFieldLocate> getFieldLocateByJob(int job_id);
+
     @Delete("delete from page_field_locate_relation where field_locate_id = #{locateId}")
     void removeLocateRelation(int locateId);
+
+    @Delete("delete from page_field_locate_relation where page_id=#{page_id} and job_id=#{job_id} and user_id=#{user_id}")
+    void removeLocateRelation(@Param("page_id") int page_id, @Param("job_id") int job_id, @Param("user_id") int user_id);
 
     @Select("select * from crawl_page_config")
     @Options(useCache = false)
     List<CrawlerPage> listCrawlerPage();
+
 }
