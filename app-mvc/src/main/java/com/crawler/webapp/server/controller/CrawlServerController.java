@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by SongCQ on 2017/8/3.
  */
 @Controller
-@RequestMapping("crawl/server")
+@RequestMapping("crawler/server")
 public class CrawlServerController {
 
     @Autowired
@@ -29,6 +29,33 @@ public class CrawlServerController {
         Page<CrawlServer> pageRs = crawlServerService.pagingServer(currPage,pageSize,host_name);
         PageResult pageResult = PageResult.pageHelperList2PageResult(pageRs);
         String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
+        return result;
+    }
+
+    @RequestMapping("saveNewServer")
+    @ResponseBody
+    @JsonpCallback
+    public String saveNewServer(CrawlServer crawlServer){
+        crawlServerService.saveNewServer(crawlServer);
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return result;
+    }
+
+    @RequestMapping("updateServer")
+    @ResponseBody
+    @JsonpCallback
+    public String updateServer(CrawlServer crawlServer){
+        crawlServerService.updateServer(crawlServer);
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        return result;
+    }
+
+    @RequestMapping("getServer")
+    @ResponseBody
+    @JsonpCallback
+    public String getServer(int host_id){
+        CrawlServer serverData = crawlServerService.getServer(host_id);
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,serverData);
         return result;
     }
 

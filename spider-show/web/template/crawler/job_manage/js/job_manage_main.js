@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-    var paging_data_support = paging_data.crateNew();
+    var paging_data_support = paging_data.createNew();
 
     var tableSearchCreater = workbench_table.tableSearchCreater();
 

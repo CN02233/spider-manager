@@ -34,6 +34,16 @@ public class GroupController {
         return resultJson;
     }
 
+    @RequestMapping("listUserGroup")
+    @ResponseBody
+    public String listUserGroupPage(HttpServletRequest request){
+        Page<Group> userGrpPage = groupService.listUserGroupPage(1, 200);
+        PageResult pageResult = PageResult.pageHelperList2PageResult(userGrpPage);
+        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
+//        logger.debug("jsonResult information after delete :{}",resultJson);
+        return resultJson;
+    }
+
     @RequestMapping("listSuperGroup")
     @ResponseBody
     public String listSuperGroup(HttpServletRequest request){

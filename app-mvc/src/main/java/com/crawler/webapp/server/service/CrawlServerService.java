@@ -9,4 +9,10 @@ import com.github.pagehelper.Page;
 public interface CrawlServerService {
 
     Page<CrawlServer> pagingServer(int currPage, int pageSize, String host_name);
+
+    void saveNewServer(CrawlServer crawlServer);
+
+    CrawlServer getServer(int host_id);
+
+    void updateServer(CrawlServer crawlServer);
 }
