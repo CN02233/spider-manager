@@ -48,6 +48,18 @@ public class JobMgController {
         return result;
     }
 
+    @RequestMapping("pagingListByHost")
+    @ResponseBody
+    @JsonpCallback
+    public String pagingListByHost(int currPage,int pageSize,Integer host_id, String host_name){
+        Page<JobInfoBean> crawListPage = jobMgService.pagingListByHost(currPage, pageSize,host_id, host_name);
+        PageResult pageResult = PageResult.pageHelperList2PageResult(crawListPage);
+        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
+
+        logger.debug("paging crawl list result :{}",result);
+        return result;
+    }
+
     @RequestMapping("crawlSrcType")
     @ResponseBody
     @JsonpCallback

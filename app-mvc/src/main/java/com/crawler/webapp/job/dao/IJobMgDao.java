@@ -33,6 +33,20 @@ public interface IJobMgDao {
     @Options(useCache = false)
     Page<JobInfoBean> pagingCrawlList(@Param("currPage") int currPage,@Param("pageSize") int pageSize,@Param("jobInfoBean") JobInfoBean jobInfoBean);
 
+    @Select("<script>" +
+            "select cj.*,ch.host_name from crawl_job cj inner join crawl_host ch on cj.host_id = ch.host_id " +
+            "<if test='host_id!=null'>" +
+            " and cj.host_id = #{host_id}" +
+            "</if>" +
+            "<if test='host_name!=null'>" +
+            " and ch.host_name like concat('%',#{host_name},'%')" +
+            "</if>" +
+            "</script>")
+    @Options(useCache = false)
+    Page<JobInfoBean> pagingListByHost(@Param("currPage") int currPage,@Param("pageSize") int pageSize,
+                                       @Param("host_id") Integer host_id,@Param("host_name") String host_name);
+
+
     @Select("select max(start_time) max_start_time,cs.* from crawl_status cs where job_id = #{job_id}")
     @Options(useCache = false)
     JobStatus getJobStatus(int job_id);
@@ -94,4 +108,5 @@ public interface IJobMgDao {
 
     @Delete("delete from page_link where job_id=#{job_id}")
     void removePageLinksByJob(int job_id);
+
 }

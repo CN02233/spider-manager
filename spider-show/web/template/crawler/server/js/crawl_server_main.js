@@ -31,9 +31,11 @@ function page_callback(dataList){
     var view_operation = table_support.operationsByName("查看", ["host_id"], "view_host(this)");
     var edit_operation = table_support.operationsByName("编辑", ["host_id"], "edit_host(this)");
     var delete_operation = table_support.operationsByName("删除", ["host_id"], "deleteHost(this)");
+    var listCrawler_operation = table_support.operationsByName("采集列表", ["host_id"], "listCrawler(this)");
     operationArray.push(view_operation);
     operationArray.push(edit_operation);
     operationArray.push(delete_operation);
+    operationArray.push(listCrawler_operation);
 
 
     table_support.makeTable("server_list_table",columnNames,dataList,operationArray);
@@ -149,4 +151,8 @@ function listPage(){
     var paging_data_support = paging_data.createNew();
     paging_data_support.make_paging_data("/crawler/server/pagingServer.do");
     modal_support.createNew().closeEditModalByColumn();
+}
+
+function listCrawler(clickObj){
+    page_support.createNew().forward_new_page("/template/crawler/job_manage/job_paging_by_host.html?host_id="+$(clickObj).attr("host_id"));
 }

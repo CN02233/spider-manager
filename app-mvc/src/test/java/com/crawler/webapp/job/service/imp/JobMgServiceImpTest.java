@@ -18,6 +18,13 @@ import static org.junit.Assert.*;
  */
 public class JobMgServiceImpTest extends AbstractTestService{
     @Test
+    public void pagingListByHost() throws Exception {
+        Page<JobInfoBean> aa = jobMgService.pagingListByHost(1, 10,null, "新浪");
+        Page<JobInfoBean> bb = jobMgService.pagingListByHost(1, 10, 0,null);
+        System.out.print("");
+    }
+
+    @Test
     public void deleJob() throws Exception {
         jobMgService.deleJob(2510633);
     }
