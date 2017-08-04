@@ -8,7 +8,7 @@ $(document).ready(function(){
     var page_support_obj = page_support.createNew();
     var params = page_support_obj.check_param_from_url();
     user_role_id = params["user_role_id"];
-    var pagingDataObj = paging_data.crateNew();
+    var pagingDataObj = paging_data.createNew();
     pagingDataObj.make_paging_data("/sys/roleMenu/pagingMenuByRole.do",params);
 
 

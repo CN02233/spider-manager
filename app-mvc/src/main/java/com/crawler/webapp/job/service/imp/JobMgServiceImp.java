@@ -35,6 +35,18 @@ public class JobMgServiceImp implements JobMgService {
         return resultPage;
     }
 
+
+    @Override
+    public Page<JobInfoBean> pagingListByHost(int currPage, int pageSize, Integer host_id,String host_name) {
+        Page<JobInfoBean> resultPage = iJobMgDao.pagingListByHost(currPage, pageSize,host_id, host_name);
+        for(JobInfoBean pageData : resultPage){
+            JobStatus jobStatus = pageData.getJobStatus();
+            if(jobStatus!=null){}
+            else pageData.setJobStatus(new JobStatus());
+        }
+        return resultPage;
+    }
+
     @Override
     public List<Map<String, Object>> crawlSrcType() {
         return iJobMgDao.crawlSrcType();
@@ -117,4 +129,5 @@ public class JobMgServiceImp implements JobMgService {
         //删除任务与代理服务器对应关系
         iJobMgDao.deleteAllProxyServer(job_id);
     }
+
 }

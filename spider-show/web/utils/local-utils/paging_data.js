@@ -4,8 +4,8 @@
 
 var paging_data = {
 
-    crateNew : function(){
-        paging_data = {};
+    createNew : function(){
+        var paging_data_obj = {};
 
         /**
          * 请求后台返回分页数据，调用该方法时需要保证调用的JS中实现page_callback函数
@@ -14,27 +14,28 @@ var paging_data = {
          * @param pageSize
          * @param currPage
          */
-        paging_data.make_paging_data = function(url,params,pageSize,currPage){
+        paging_data_obj.make_paging_data = function(url,params,pageSize,currPage){
             console.log("ajax_support "+ajax_support);
-
+            var ajax_support_self = null;
             if(ajax_support!=null&&ajax_support.isRoot()!=null&&ajax_support.isRoot()){
-                ajax_support = ajax_support.createNew();
-            }
+                ajax_support_self = ajax_support.createNew();
+            }else
+                ajax_support_self = ajax_support;
             $(".paging").attr("back_url",url);
             if(params!=null)
                 $(".paging").attr("paging_params",JSON.stringify(params));
 
-            ajax_support.sendAjaxRequestByPage(url,params,pageSize,currPage,"page_data_callback");
+            ajax_support_self.sendAjaxRequestByPage(url,params,pageSize,currPage,"page_data_callback");
         };
 
-        return paging_data;
+        return paging_data_obj;
     }
 
 }
 
 function page_data_callback(resonse_data){
     if(resonse_data!=null){
-        var responseResult = ajax_support.ajax_result_success(resonse_data);
+        var responseResult = ajax_support.createNew().ajax_result_success(resonse_data);
         if(responseResult){
             var page_data = resonse_data.resultData;
 
@@ -103,7 +104,7 @@ function goToPage(aObj){
         params = JSON.parse(paging_params);
     // console.log("2 currPage value is "+currPage+"---" );
 
-    paging_data.make_paging_data(url,params,pageSize,currPage);
+    paging_data.createNew().make_paging_data(url,params,pageSize,currPage);
     $paging.attr("now-page-no",currPage);
 
     $(".paging_li_check").removeClass("paging_li_check");

@@ -32,4 +32,6 @@ public interface JobMgService {
     void updateJobInfo(JobInfoBean jobInfo, ArrayList<String> proxyServers);
 
     void deleJob(int job_id);
+
+    Page<JobInfoBean> pagingListByHost(int currPage, int pageSize,Integer host_id, String host_name);
 }

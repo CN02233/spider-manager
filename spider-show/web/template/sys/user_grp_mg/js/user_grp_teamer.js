@@ -10,7 +10,7 @@ $(document).ready(function(){
     // console.log(JSON.stringify(params));
     user_group_id = params["user_group_id"];
     // var ajax_support_obj = ajax_support.createNew();
-    var paging_data_obj = paging_data.crateNew();
+    var paging_data_obj = paging_data.createNew();
     paging_data_obj.make_paging_data("/sys/userGroup/listUsersByGroupId.do",params);
 
     var tableSearchCreater = workbench_table.tableSearchCreater();

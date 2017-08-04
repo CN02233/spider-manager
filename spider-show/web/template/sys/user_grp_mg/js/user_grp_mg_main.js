@@ -1,7 +1,7 @@
 
 var modal_support_alter = modal_support.createNew();
 var ajax_support = ajax_support.createNew();
-var paging_data = paging_data.crateNew();
+var paging_data = paging_data.createNew();
 
 var edit_modal_name = null;
 

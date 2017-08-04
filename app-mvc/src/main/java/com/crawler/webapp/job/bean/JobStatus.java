@@ -1,5 +1,8 @@
 package com.crawler.webapp.job.bean;
 
+import com.workbench.auth.user.entity.User;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -9,9 +12,15 @@ public class JobStatus {
 
     private int user_id;
 
+    private User user;
+
     private int job_id;
 
+    private String job_name;
+
     private Date start_time;
+
+    private String start_time_str;
 
     private int run_status;
 
@@ -45,6 +54,8 @@ public class JobStatus {
 
     public void setStart_time(Date start_time) {
         this.start_time = start_time;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        start_time_str = format.format(start_time);
     }
 
     public int getRun_status() {
@@ -92,5 +103,29 @@ public class JobStatus {
 
 
         this.run_status_cn = run_status_cn;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getJob_name() {
+        return job_name;
+    }
+
+    public void setJob_name(String job_name) {
+        this.job_name = job_name;
+    }
+
+    public String getStart_time_str() {
+        return start_time_str;
+    }
+
+    public void setStart_time_str(String start_time_str) {
+        this.start_time_str = start_time_str;
     }
 }

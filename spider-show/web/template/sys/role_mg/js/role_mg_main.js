@@ -11,7 +11,7 @@ $(document).ready(function(){
     var searchInfoObj = tableSearchCreater.searchInfoObject(null,null,true,true,"add_role()");
     tableSearchCreater.createSearch(searchInfoObj);
 
-    var pagingDataObj = paging_data.crateNew();
+    var pagingDataObj = paging_data.createNew();
 
     pagingDataObj.make_paging_data("/sys/role/rolePageData.do");
 

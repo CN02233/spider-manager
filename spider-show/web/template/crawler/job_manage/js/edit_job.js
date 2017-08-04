@@ -39,7 +39,7 @@ function viewOrEdit(){
     if(view_type=='view'){
         $("input").attr("disabled","disabled");
         $("select").attr("disabled","disabled");
-        $("button").attr("disabled","disabled");
+        $("button[id!='back_list']").attr("disabled","disabled");
         isView = true;
     }
 

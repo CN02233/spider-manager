@@ -69,7 +69,8 @@ var modal_support = {
                     var inputValues = new Array();
                     $.each(columns,function(i,edit_columns){
                         var column_id = edit_columns.column_id;
-                        var column_val = $("#"+column_id).val();
+                        var column_val = $("#modal_edit_table").find("#"+column_id).val();
+                        // var column_val = $("#"+column_id).val();
                         inputValues.push({"column_id":column_id,"column_val":column_val});
                     });
                     callBack(inputValues);
