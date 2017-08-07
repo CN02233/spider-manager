@@ -15,4 +15,6 @@ public interface CrawlServerService {
     CrawlServer getServer(int host_id);
 
     void updateServer(CrawlServer crawlServer);
+
+    void delServer(Integer host_id);
 }

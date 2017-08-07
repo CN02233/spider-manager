@@ -48,4 +48,9 @@ public class CrawlServerServiceImp implements CrawlServerService {
         crawlServerDao.updateServer(crawlServer);
 
     }
+
+    @Override
+    public void delServer(Integer host_id) {
+        crawlServerDao.delServer(host_id);
+    }
 }

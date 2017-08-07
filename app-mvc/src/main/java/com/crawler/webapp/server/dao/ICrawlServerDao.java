@@ -33,4 +33,7 @@ public interface ICrawlServerDao {
     @Update("update crawl_host set host_id=#{host_id},host_name=#{host_name},host_ip=#{host_ip}," +
             "host_status=#{host_status},user_group_id=#{user_group_id} where host_id=#{host_id}")
     void updateServer(CrawlServer crawlServer);
+
+    @Delete("delete from crawl_host where host_id=#{host_id}")
+    void delServer(Integer host_id);
 }

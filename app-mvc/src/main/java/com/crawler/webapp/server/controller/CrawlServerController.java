@@ -59,4 +59,13 @@ public class CrawlServerController {
         return result;
     }
 
+    @RequestMapping("delServer")
+    @ResponseBody
+    @JsonpCallback
+    public String delServer(Integer host_id){
+        crawlServerService.delServer(host_id);
+        String jsonpResult = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, null);
+        return jsonpResult;
+    }
+
 }

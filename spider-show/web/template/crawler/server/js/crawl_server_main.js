@@ -143,7 +143,7 @@ function checkOutParams(hostParams){
 
 function saveCallBack(callBackResult){
     console.log("save call back is running "+JSON.stringify(callBackResult));
-    modal_support.createNew().make_alter("保存成功","listPage");
+    modal_support.createNew().make_alter(callBackResult["result_msg"],"listPage");
 
 }
 
@@ -155,4 +155,9 @@ function listPage(){
 
 function listCrawler(clickObj){
     page_support.createNew().forward_new_page("/template/crawler/job_manage/job_paging_by_host.html?host_id="+$(clickObj).attr("host_id"));
+}
+
+function deleteHost(host_id){
+    ajax_support.createNew().sendAjaxRequest("/crawler/server/delServer.do",{"host_id":$(host_id).attr("host_id")},"saveCallBack")
+
 }
