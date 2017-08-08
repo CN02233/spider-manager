@@ -1,5 +1,6 @@
 package com.crawler.webapp.crawlerpage.bean;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,6 +11,8 @@ public class JobPage {
     private String page_url;
 
     private Date download_time;
+
+    private String download_time_str;
 
     private String download_time_start;
 
@@ -69,6 +72,10 @@ public class JobPage {
 
     public void setDownload_time(Date download_time) {
         this.download_time = download_time;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+        if(download_time!=null)
+            download_time_str = format.format(download_time);
+
     }
 
     public String getDownload_time_start() {
@@ -101,5 +108,13 @@ public class JobPage {
 
     public void setJob_name(String job_name) {
         this.job_name = job_name;
+    }
+
+    public String getDownload_time_str() {
+        return download_time_str;
+    }
+
+    public void setDownload_time_str(String download_time_str) {
+        this.download_time_str = download_time_str;
     }
 }
