@@ -22,4 +22,5 @@ public class CrawlerPageViewServiceImp implements CrawlerPageViewService {
         Page<JobPage> pageResult = crawlerPageViewDao.listCrawlerPage(currPage, pageSize, jobPage);
         return pageResult;
     }
+
 }

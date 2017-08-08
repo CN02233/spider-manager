@@ -12,9 +12,15 @@ import org.apache.ibatis.annotations.Select;
 public interface CrawlerPageViewDao {
 
     @Select("<script>select  distinct cp.*,cj.job_name from crawl_page cp inner join crawl_job cj on cp.job_id = cj.job_id " +
-            " and cp.page_url like concat('%',#{jobPageObj.page_url},'%')" +
-            " <if test='jobPageObj.job_name!=null and jobPageObj.job_name!=&quot;&quot;'> " +
-            "       and cj.job_name like concat('%',#{jobPageObj.job_name},'%') " +
+            " <if test='jobPageObj.page_url!=null and jobPageObj.page_url!=&quot;&quot;'> " +
+            "       and cj.page_url like concat('%',#{jobPageObj.page_url},'%') " +
+            "</if> " +
+
+            " <if test='jobPageObj.job_id!=null and jobPageObj.job_id!=&quot;&quot;'> " +
+            "       and cj.job_id = #{jobPageObj.job_id} " +
+            "</if> " +
+            " <if test='jobPageObj.page_url!=null and jobPageObj.page_url!=&quot;&quot;'> " +
+            "       and cj.page_url like concat('%',#{jobPageObj.page_url},'%') " +
             "</if> " +
             " <if test='jobPageObj.user_id!=0'> and cp.user_id=#{jobPageObj.user_id}</if> " +
             " <if test='jobPageObj.download_time_start!=null and jobPageObj.download_time_start!=&quot;&quot; '> " +

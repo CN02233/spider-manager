@@ -8,7 +8,7 @@ var workbench_table = {
         var table_support = {};
 
         table_support.makeTable = function(tableName,paramNames,dataList,operations){
-            $table = $("#"+tableName);
+            var $table = $("#"+tableName);
             var $user_table = $table.find("tbody");
             $user_table.empty();
             $.each(dataList,function(i,dataObj){

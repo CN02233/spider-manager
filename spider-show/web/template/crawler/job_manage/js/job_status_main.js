@@ -19,7 +19,7 @@ $(document).ready(function(){
 });
 
 function page_callback(dataList){
-    console.info("dataList "+JSON.stringify(dataList));
+    // console.info("dataList "+JSON.stringify(dataList));
 
     var $user_table = $("#job_list_table").find("tbody");
     $user_table.empty();
@@ -27,6 +27,17 @@ function page_callback(dataList){
 
     var table_support = workbench_table.createNew();
 
-    table_support.makeTable("job_list_table",columnNames,dataList,null);
+    var operationArray = new Array();
+    var listCrawlerPage_operation = table_support.operationsByName("页面浏览", ["job_id"], "listCrawlerPage(this)");
+    operationArray.push(listCrawlerPage_operation);
+
+
+    table_support.makeTable("job_list_table",columnNames,dataList,operationArray);
+
+}
+
+function listCrawlerPage(clickObj){
+    var job_id = $(clickObj).attr("job_id");
+    page_support.createNew().forward_new_page("/template/crawler/job_manage/job_page.html?job_id="+job_id);
 
 }

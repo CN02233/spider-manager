@@ -27,7 +27,7 @@ public class CrawlerPageViewController {
     @JsonpCallback
     public String listCrawlerPage(int currPage,int pageSize,JobPage jobPage){
         Page<JobPage> resultPage = crawlerPageViewService.listCrawlerPage(currPage, pageSize, jobPage);
-        String pageData = PageResult.pageHelperList2PageResultStr(resultPage);
+        PageResult pageData = PageResult.pageHelperList2PageResult(resultPage);
         String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageData);
 
         return result;
