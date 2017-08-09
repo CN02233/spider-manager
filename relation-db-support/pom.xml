@@ -170,6 +170,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>20.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <!--分页插件-->

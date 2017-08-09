@@ -102,7 +102,7 @@ public class CrawlerPageMgServiceImpTest extends AbstractTestService {
     @Test
     public void newSaveCrawlerPage() throws Exception {
         CrawlerPage crawlerPage = new CrawlerPage();
-        crawlerPage.setUser_id(1);
+        crawlerPage.setUser_id(2);
         crawlerPage.setJob_id(1);
         crawlerPageMgService.newSaveCrawlerPage(crawlerPage);
     }
