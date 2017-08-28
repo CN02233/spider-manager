@@ -69,7 +69,22 @@ var modal_support = {
                     var inputValues = new Array();
                     $.each(columns,function(i,edit_columns){
                         var column_id = edit_columns.column_id;
-                        var column_val = $("#modal_edit_table").find("#"+column_id).val();
+                        var pointIndex = column_id.indexOf(".");
+                        var column_val = "";
+                        if(pointIndex>-1){
+                            var partArray = column_id.split(".");
+                            var column_id_cp = "";
+                            for(var s=0;s<partArray.length;s++){
+                                if(s==0){
+                                    column_id_cp=partArray[s];
+                                }else
+                                    column_id_cp = column_id_cp+"\\."+partArray[s]
+                            }
+                            column_val = $("#modal_edit_table").find("#"+column_id_cp).val();
+                        }else{
+                            column_val = $("#modal_edit_table").find("#"+column_id).val();
+                        }
+
                         // var column_val = $("#"+column_id).val();
                         inputValues.push({"column_id":column_id,"column_val":column_val});
                     });

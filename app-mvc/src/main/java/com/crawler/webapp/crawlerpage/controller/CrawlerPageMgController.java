@@ -34,7 +34,7 @@ public class CrawlerPageMgController {
     @ResponseBody
     @JsonpCallback
     public String listCrawlerPageByPaging(int currPage, int pageSize){
-        String pageResult = PageResult.pageHelperList2PageResultStr(
+        PageResult pageResult = PageResult.pageHelperList2PageResult(
                 crawlerPageMgService.listCrawlerPageByPaging(currPage, pageSize));
         String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
         return result;
@@ -84,6 +84,11 @@ public class CrawlerPageMgController {
     public String newSaveCrawlerPage(CrawlerPage crawlerPage){
         User user = SessionSupport.checkoutUserFromSession();
         crawlerPage.setUser_id(user.getUser_id());
+
+        CrawlerPage checkResult = crawlerPageMgService.craPageData(crawlerPage.getPage_id(), crawlerPage.getJob_id(), crawlerPage.getUser_id());
+        if(checkResult!=null)
+            return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.FAILD,"保存失败",
+                    "当前用户下已新增过PAGE_ID:"+crawlerPage.getPage_id()+" JOB_ID:"+crawlerPage.getJob_id()+"的组合",null);
         crawlerPageMgService.newSaveCrawlerPage(crawlerPage);
         return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
     }
@@ -91,7 +96,7 @@ public class CrawlerPageMgController {
     @RequestMapping("newSaveFields")
     @ResponseBody
     @JsonpCallback(isJsonRequest = true)
-    public String newSaveFields(@JsonMsgParam(jsonObjTypes = PageField.class)
+    public String newSaveFields(@JsonMsgParam(jsonObjTypes = PageField.class,jsonName = "pageFields")
                                                 ArrayList<PageField> pageFields){
         crawlerPageMgService.newSavePageFields(pageFields);
         return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
@@ -100,7 +105,7 @@ public class CrawlerPageMgController {
     @RequestMapping("newSaveLinks")
     @ResponseBody
     @JsonpCallback(isJsonRequest = true)
-    public String newSaveLinks(@JsonMsgParam(jsonObjTypes = PageLink.class)
+    public String newSaveLinks(@JsonMsgParam(jsonObjTypes = PageLink.class,jsonName = "pageLinks")
                                            ArrayList<PageLink> pageLinks){
         crawlerPageMgService.newSavePageLinks(pageLinks);
         return JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);

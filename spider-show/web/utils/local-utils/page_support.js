@@ -31,6 +31,8 @@ var page_support = {
             var hasParams = window.location.href.split("?");
             if(hasParams.length>0){
                 var allParamStr = hasParams[1];
+                if(allParamStr==null||allParamStr=='')
+                    return null;
                 var paramArray = allParamStr.split("&");
 
                 var resultParam = new Object();

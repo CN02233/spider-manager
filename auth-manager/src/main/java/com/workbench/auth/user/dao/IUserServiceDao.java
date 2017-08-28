@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Map;
 /**
  * Created by pc on 2017/6/29.
  */
+@Repository
 public interface IUserServiceDao {
 
     String query_user_columns = "SELECT user_id,user_name,user_type,reg_date,user_status,last_login_time";

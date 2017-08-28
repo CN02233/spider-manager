@@ -58,6 +58,9 @@ public class CrawlerPageMgServiceImp implements CrawlerPageMgService{
         if(maxPageId==null)
             maxPageId = 0;
         crawlerPage.setPage_id(maxPageId|1);
+
+
+
         crawlerPageMgDao.newSaveCrawlerPage(crawlerPage);
     }
 
@@ -89,8 +92,10 @@ public class CrawlerPageMgServiceImp implements CrawlerPageMgService{
             crawlerPageMgDao.savePageFiledLocateRelation(fieldId,pageField.getPage_id(),pageField.getJob_id(),pageField.getUser_id(),relationId);
 
             PageFieldLocate pageFieldLocate = pageField.getPageFieldLocate();
-            pageFieldLocate.setField_locate_id(relationId);
-            crawlerPageMgDao.savePageFieldLocate(pageFieldLocate);
+            if(pageFieldLocate!=null){
+                pageFieldLocate.setField_locate_id(relationId);
+                crawlerPageMgDao.savePageFieldLocate(pageFieldLocate);
+            }
         }
     }
 

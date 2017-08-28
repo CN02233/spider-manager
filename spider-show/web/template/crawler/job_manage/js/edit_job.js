@@ -13,6 +13,10 @@ $(document).ready(function(){
 
     $("#save_job_btn").click(function(){
         var paramObj = page_support.createNew().check_param_from_url();
+        if(paramObj==null){
+            save_new_job();
+            return;
+        }
         var view_type = paramObj["type"];
         if(view_type!=null&&view_type=='edit'){
             update_save_job();
