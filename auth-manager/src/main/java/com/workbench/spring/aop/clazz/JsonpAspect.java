@@ -46,9 +46,10 @@ public class JsonpAspect {
     public String doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable{
         try{
             Object object= null;
+            HttpServletRequest request =
+                    ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            request.setCharacterEncoding("utf-8");
             if(checkIsJsonMsg()) {//发用数据是否为JSON报文
-                HttpServletRequest request =
-                        ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
                 int argsLength = pjp.getArgs().length;
                 Object[] paramObjs = new Object[argsLength];
@@ -100,6 +101,8 @@ public class JsonpAspect {
 
             String jsonpCallBackStr = JsonpSupport.objectToJsonp(getJsonpCallbackName(), object);
             logger.debug("Response message to web page value is: {}",jsonpCallBackStr);
+
+            ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse().setContentType("text/html;charset=utf-8");
             return jsonpCallBackStr;
         }catch(Exception e){
             e.printStackTrace();

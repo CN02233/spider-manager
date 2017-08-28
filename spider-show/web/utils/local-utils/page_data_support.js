@@ -17,6 +17,7 @@ var ajax_support = {
                 data:params,
                 xhrFields:{withCredentials:true},
                 dataType:'jsonp',
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 error:function(data){
                     console.log("brower get one error....."+data);
                 }
