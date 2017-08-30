@@ -59,4 +59,10 @@ public class JobMgServiceImpTest extends AbstractTestService{
         System.out.print("");
     }
 
+    @Test
+    public void startJob(){
+        JobMgServiceImp jobMgServiceImp = new JobMgServiceImp();
+        jobMgServiceImp.startJob(1,1);
+    }
+
 }

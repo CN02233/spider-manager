@@ -5,7 +5,7 @@ var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
 //全局变量
 
 //后台服务地址
-var SERVICE_HOST = 'http://10.1.5.192:8081/app-mvc';
+var SERVICE_HOST = 'http://10.1.5.121:8081/app-mvc';
 
 document.write('<script type="text/javascript" src="'+projectName+'/utils/public-utils/jquery.1.11.3/jquery.min.js"></script>');
 document.write('<script type="text/javascript" src="'+projectName+'/utils/public-utils/bootstrap.3.3.7/js/bootstrap.min.js"></script>');

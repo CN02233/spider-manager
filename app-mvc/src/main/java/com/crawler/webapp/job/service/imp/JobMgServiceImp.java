@@ -1,13 +1,15 @@
 package com.crawler.webapp.job.service.imp;
 
-import com.crawler.webapp.crawlerpage.bean.PageFieldLocate;
-import com.crawler.webapp.crawlerpage.dao.CrawlerPageMgDao;
+import com.crawler.webapp.job.bean.CrawlerServers;
 import com.crawler.webapp.job.bean.JobInfoBean;
 import com.crawler.webapp.job.bean.JobStatus;
 import com.crawler.webapp.job.dao.IJobMgDao;
 import com.crawler.webapp.job.service.JobMgService;
 import com.crawler.webapp.proxyserver.bean.ProxyServer;
 import com.github.pagehelper.Page;
+import com.webapp.support.httpClient.HttpSendMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +23,13 @@ import java.util.*;
 @Service("jobMgService")
 public class JobMgServiceImp implements JobMgService {
 
+    private Logger logger = LoggerFactory.getLogger(JobMgServiceImp.class);
+
     @Autowired
     private IJobMgDao iJobMgDao;
+
+    @Autowired
+    private CrawlerServers crawlerServers;
 
     @Override
     public Page<JobInfoBean> pagingCrawlList(int currPage,int pageSize, JobInfoBean jobInfoBean) {
@@ -130,4 +137,35 @@ public class JobMgServiceImp implements JobMgService {
         iJobMgDao.deleteAllProxyServer(job_id);
     }
 
+
+    @Override
+    public String startJob(int job_id, int user_id){
+        String crawlerServer = crawlerServers.getCrawlerServer();
+        String resultMsg = callJob(crawlerServer, "start", job_id, user_id);
+        return resultMsg;
+    }
+    @Override
+    public String stopJob(int job_id, int user_id){
+        String crawlerServer = crawlerServers.getCrawlerServer();
+        String resultMsg = callJob(crawlerServer, "stop", job_id, user_id);
+        return resultMsg;
+    }
+    @Override
+    public String updateJob(int job_id, int user_id){
+        String crawlerServer = crawlerServers.getCrawlerServer();
+        String resultMsg = callJob(crawlerServer, "update", job_id, user_id);
+        return resultMsg;
+    }
+
+
+    private String callJob(String url,String callType,int job_id, int user_id){
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("command",callType);
+        paramMap.put("job_id",job_id);
+        paramMap.put("user_id",user_id);
+        String resultMsg = HttpSendMessage.postHttpRequest4Str(url, paramMap);
+        logger.debug("send to crawler start msg,response value is --->{}<---",resultMsg);
+
+        return resultMsg;
+    }
 }

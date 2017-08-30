@@ -5,6 +5,7 @@ import com.webapp.support.clazz.ClazzSupport;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.jsonp.JsonpSupport;
+import com.workbench.exception.runtime.NotLoginException;
 import com.workbench.spring.aop.annotation.JsonMsgParam;
 import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,6 +14,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,6 +34,7 @@ import java.util.Map;
  */
 @Component
 @Aspect
+@Order(10)
 public class JsonpAspect {
 
     private Logger logger = LoggerFactory.getLogger(JsonpAspect.class);
@@ -44,7 +47,6 @@ public class JsonpAspect {
 
     @Around("annotationJsonpCallback()")
     public String doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable{
-        try{
             Object object= null;
             HttpServletRequest request =
                     ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
@@ -104,13 +106,6 @@ public class JsonpAspect {
 
             ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse().setContentType("text/html;charset=utf-8");
             return jsonpCallBackStr;
-        }catch(Exception e){
-            e.printStackTrace();
-            String jsonpCallBackStr = JsonpSupport.objectToJsonp(getJsonpCallbackName(),
-                    JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.FAILD, "系统异常", "异常原因:" + e.toString(), null));
-
-            return jsonpCallBackStr;
-        }
 
     }
 

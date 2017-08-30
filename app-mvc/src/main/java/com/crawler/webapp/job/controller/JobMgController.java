@@ -141,4 +141,48 @@ public class JobMgController {
         return result;
     }
 
+    @RequestMapping("startJob")
+    @ResponseBody
+    @JsonpCallback
+    public String startJob(Integer job_id, Integer user_id){
+        String startResult = jobMgService.startJob(job_id, user_id);
+        if(!Strings.isNullOrEmpty(startResult)&&"DONE".equals(startResult)){
+            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"启动成功",null,null);
+            return result;
+        }else{
+            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"启动失败:"+startResult,null,null);
+            return result;
+        }
+
+    }
+
+    @RequestMapping("stopJob")
+    @ResponseBody
+    @JsonpCallback
+    public String stopJob(Integer job_id, Integer user_id){
+
+        String startResult = jobMgService.stopJob(job_id, user_id);
+        if(!Strings.isNullOrEmpty(startResult)&&"DONE".equals(startResult)){
+            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"停止成功",null,null);
+            return result;
+        }else{
+            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"停止失败:"+startResult,null,null);
+            return result;
+        }
+    }
+
+    @RequestMapping("updateJob")
+    @ResponseBody
+    @JsonpCallback
+    public String updateJob(Integer job_id, Integer user_id){
+        String startResult = jobMgService.updateJob(job_id, user_id);
+        if(!Strings.isNullOrEmpty(startResult)&&"DONE".equals(startResult)){
+            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"停止成功",null,null);
+            return result;
+        }else{
+            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"更新失败:"+startResult,null,null);
+            return result;
+        }
+    }
+
 }

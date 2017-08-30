@@ -34,4 +34,10 @@ public interface JobMgService {
     void deleJob(int job_id);
 
     Page<JobInfoBean> pagingListByHost(int currPage, int pageSize,Integer host_id, String host_name);
+
+    String startJob(int job_id, int user_id);
+
+    String stopJob(int job_id, int user_id);
+
+    String updateJob(int job_id, int user_id);
 }

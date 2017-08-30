@@ -1,5 +1,6 @@
 package com.webapp.support.session;
 
+import com.workbench.exception.runtime.NotLoginException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -20,8 +21,9 @@ public class SessionSupport {
         Object userObj = request.getSession().getAttribute("user");
         if(userObj!=null)
             return (T) userObj;
-        else
-            return null;
+        else{
+            throw new NotLoginException("当前用户未登陆");
+        }
     }
 
     public static void addDataToSession(HttpServletRequest request,Object object,String dataName){

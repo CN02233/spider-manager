@@ -197,7 +197,7 @@ var workbench_table = {
 
                 // console.log("查询条件内容"+JSON.stringify(paramObj));
                 if(paging){
-                    paging_data.make_paging_data(searchUrl,paramObj);
+                    paging_data.createNew().make_paging_data(searchUrl,paramObj);
                 }else{
                     ajax_support.sendAjaxRequest(searchUrl,paramObj,ajaxCallBack);
                 }

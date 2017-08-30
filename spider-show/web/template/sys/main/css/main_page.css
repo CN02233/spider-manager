@@ -66,8 +66,18 @@ html { overflow: hidden; }
     background-size: 18px 18px;
 }
 
+.gather_img:hover{
+    background:url('../../../../style/image/dashboard_selected_icon.png') no-repeat center;
+    background-size: 18px 18px;
+}
+
 .gather_report_img{
     background:url('../../../../style/image/Feed.png') no-repeat center;
+    background-size: 18px 18px;
+}
+
+.gather_report_img:hover{
+    background:url('../../../../style/image/Feed_selected_icon.png') no-repeat center;
     background-size: 18px 18px;
 }
 
@@ -76,16 +86,41 @@ html { overflow: hidden; }
     background-size: 18px 18px;
 }
 
+
+.offline_page_img:hover{
+    background:url('../../../../style/image/Stats_selected_icon.png') no-repeat center;
+    background-size: 30px 30px;
+}
+
 .resource_img{
     background:url('../../../../style/image/Projects.png') no-repeat center;
     background-size: 18px 18px;
 }
 
-.user_manage_img{
-    background:url('../../../../style/image/Projects.png') no-repeat center;
+.resource_img:hover{
+    background:url('../../../../style/image/Projects_selected_icon.png') no-repeat center;
     background-size: 18px 18px;
 }
 
+.user_manage_img{
+    background:url('../../../../style/image/user_icon.png') no-repeat center;
+    background-size: 18px 18px;
+}
+
+.user_manage_img:hover{
+    background:url('../../../../style/image/user_selected_icon.png') no-repeat center;
+    background-size: 18px 18px;
+}
+
+.auth_img{
+    background:url('../../../../style/image/icon_settings.png') no-repeat center;
+    background-size: 18px 18px;
+}
+
+.auth_img:hover{
+    background:url('../../../../style/image/settings_selected_icon.png') no-repeat center;
+    background-size: 18px 18px;
+}
 
 
 .root_menu_font{
@@ -121,11 +156,11 @@ html { overflow: hidden; }
 
 .logo_collapse{
     margin-top:30px;
-    margin-left:23px;
-    width:50px;
-    height:18px;
-    background:url('../../../../style/image/CRAlogo.png') no-repeat ;
-    background-size: 50px 18px;
+    margin-left:18px;
+    width:60px;
+    height:30px;
+    background:url('../../../../style/image/CRAleft.png') no-repeat ;
+    background-size: 60px 30px;
 }
 
 .title_div{
