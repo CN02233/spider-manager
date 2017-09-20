@@ -40,25 +40,19 @@ public class LoginController {
     @JsonpCallback
     public String doLogin(String user_name, String user_pwd){
         boolean checkResult = Strings.isNullOrEmpty(user_name);
-        LoginResult validateResult = null;
         if(checkResult){
-            validateResult = new LoginResult();
-            validateResult.setValidate_result("用户名为空");
-            validateResult.setResult_code(LoginResult.LOGIN_RESULT.USERNM_NOT_NULL);
+            return JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "用户名为空", LoginResult.LOGIN_RESULT.USERNM_NOT_NULL.toString(), null);
+
         }else{
-            validateResult = loginService.validate(user_name, user_pwd);
+            loginService.validate(user_name, user_pwd);
             User user = userService.getUserByUserNm(user_name);
             if(user==null){
-                validateResult = new LoginResult();
-                validateResult.setValidate_result("当前登录/操作的用户不存在");
-                validateResult.setResult_code(LoginResult.LOGIN_RESULT.USERNM_NOT_FOUND);
+                return JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "当前登录/操作的用户不存在",
+                        LoginResult.LOGIN_RESULT.USERNM_NOT_FOUND.toString(), null);
             }else
                 SessionSupport.addUserToSession(userService.getUserByUserNm(user_name));
         }
-        String jsonResult = JsonSupport.objectToJson(validateResult);
-
-        logger.debug("login validate result jsonp message -->{}",jsonResult);
-        return jsonResult;
+        return JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "登录成功",null, null);
     }
 
 }

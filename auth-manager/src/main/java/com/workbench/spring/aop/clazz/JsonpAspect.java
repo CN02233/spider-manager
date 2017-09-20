@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.webapp.support.clazz.ClazzSupport;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
+import com.webapp.support.jsonp.JsonpConfig;
 import com.webapp.support.jsonp.JsonpSupport;
 import com.workbench.exception.runtime.NotLoginException;
 import com.workbench.spring.aop.annotation.JsonMsgParam;
@@ -14,6 +15,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -39,7 +41,8 @@ public class JsonpAspect {
 
     private Logger logger = LoggerFactory.getLogger(JsonpAspect.class);
 
-    private String DEAFULT_JSON_ATT_NAME = "jsonObj";
+    @Autowired
+    private JsonpConfig jsonpConfig;
 
     @Pointcut("@annotation(com.workbench.spring.aop.annotation.JsonpCallback)")
     private void annotationJsonpCallback(){} //声明一个切入点,切入点的名称其实是一个方法
@@ -47,6 +50,10 @@ public class JsonpAspect {
 
     @Around("annotationJsonpCallback()")
     public String doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable{
+            if(!jsonpConfig.isUseJsonp()){
+                return (String) pjp.proceed();
+            }
+
             Object object= null;
             HttpServletRequest request =
                     ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
