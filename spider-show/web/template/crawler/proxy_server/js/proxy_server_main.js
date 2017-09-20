@@ -130,6 +130,9 @@ function listPage(){
 }
 
 function delete_server(proxy_server_id){
-    ajax_support.createNew().sendAjaxRequest("/crawler/proxyServer/delServer.do",{"proxy_server_id":$(proxy_server_id).attr("proxy_server_id")},"saveCallBack")
+    modal_support.createNew().make_alter("确定删除服务器？","confirmDel",{"proxy_server_id":$(proxy_server_id).attr("proxy_server_id")},true);
+}
 
+function confirmDel(proxy_server_id){
+    ajax_support.createNew().sendAjaxRequest("/crawler/proxyServer/delServer.do",{"proxy_server_id":$(proxy_server_id).attr("proxy_server_id")},"saveCallBack")
 }

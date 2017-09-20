@@ -56,8 +56,8 @@ public class CrawlServer {
         if(host_status==null)
             return;
         switch (host_status){
-            case 0:host_status_cn="离线";
-            case 1:host_status_cn="在线";
+            case 0:host_status_cn="离线";break;
+            case 1:host_status_cn="在线";break;
         }
     }
 

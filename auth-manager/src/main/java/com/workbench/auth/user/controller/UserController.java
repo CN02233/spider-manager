@@ -1,7 +1,7 @@
 package com.workbench.auth.user.controller;
 
 import com.github.pagehelper.Page;
-import com.webapp.support.jsonp.JsonpSupport;
+import com.webapp.support.json.JsonSupport;
 import com.webapp.support.session.SessionSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -32,23 +31,19 @@ public class UserController {
 
     @RequestMapping("listUserPage")
     @ResponseBody
-    public String getUserByPage(int currPage, int pageSize,User user,HttpServletRequest request){
+    @JsonpCallback
+    public String getUserByPage(int currPage, int pageSize,User user){
         Page<User> userPageList = userService.listUsersForPage(currPage, pageSize,user);
         PageResult pageResult = PageResult.pageHelperList2PageResult(userPageList);
-        String result = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
-        return result;
+        String jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, pageResult);
+        return jsonResult;
     }
 
     @RequestMapping("userMenuList")
     @ResponseBody
-    public String getMenuList4User(HttpServletRequest request){
-//        Enumeration<String> headerNames = request.getHeaderNames();
-//        while(headerNames.hasMoreElements()){
-//            String headerName = headerNames.nextElement();
-//            logger.debug("header name is -->{}<-- and header value is -->{}<--",headerName,request.getHeader(headerName));
-//        }
-
-        User user = SessionSupport.checkoutUserFromSession(request);
+    @JsonpCallback
+    public String getMenuList4User(){
+        User user = SessionSupport.checkoutUserFromSession();
         JsonResult jsonResult = JsonResult.getInstance();
         if(user!=null){
             List<Menu> allMenu = userService.getMenuList4User(user.getUser_name());
@@ -60,66 +55,66 @@ public class UserController {
             jsonResult.setFaild_reason("USER_NOT_LOGIN");
             jsonResult.setResult_msg("用户未登录,请重新登录");
         }
-        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
+//        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, jsonResult);
 
-        logger.debug("get user menu list,result jsonp value :{}",resultJson);
+        logger.debug("get user menu list,result jsonp value :{}",jsonResult.toString());
 
-        return resultJson;
+        return jsonResult.toString();
 
     }
 
 
     @RequestMapping("saveNewUser")
     @ResponseBody
-    public String saveNewUser(User user,HttpServletRequest request){
+    @JsonpCallback
+    public String saveNewUser(User user){
         userService.createUser(user);
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(JsonResult.RESULT.SUCCESS);
         jsonResult.setResult_msg("保存成功");
         logger.debug("user bean information after create :{}, and json value is 【{}】",user.toString(),jsonResult.toString());
-        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
 
-        return resultJson;
+        return jsonResult.toString();
     }
 
     @RequestMapping("delUserByUserId")
     @ResponseBody
-    public String delUserByUserId(Integer user_id,HttpServletRequest request){
+    @JsonpCallback
+    public String delUserByUserId(Integer user_id){
         userService.delUserById(user_id);
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(JsonResult.RESULT.SUCCESS);
         jsonResult.setResult_msg("删除成功");
         logger.debug("jsonResult information after delete :{}",jsonResult.toString());
-        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
 
-        return resultJson;
+        return jsonResult.toString();
     }
 
     @RequestMapping("getUserByUserId")
     @ResponseBody
-    public String getUserByUserId(Integer user_id,HttpServletRequest request){
+    @JsonpCallback
+    public String getUserByUserId(Integer user_id){
         User user = userService.getUserByUserId(user_id);
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(JsonResult.RESULT.SUCCESS);
         jsonResult.setResult_msg("获取成功");
         jsonResult.setResultData(user);
         logger.debug("jsonResult information after delete :{}",jsonResult.toString());
-        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
 
-        return resultJson;
+        return jsonResult.toString();
     }
 
     @RequestMapping("updateSaveUser")
     @ResponseBody
-    public String updateSaveUser(User user,HttpServletRequest request){
+    @JsonpCallback
+    public String updateSaveUser(User user){
         userService.updateUser(user);
 
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResult(JsonResult.RESULT.SUCCESS);
         jsonResult.setResult_msg("保存成功");
         logger.debug("jsonResult information after delete :{}",jsonResult.toString());
-        String resultJson = JsonpSupport.objectToJsonp(JsonpSupport.jsonpCallbackFunctionName(request), jsonResult);
 
-        return resultJson;
+        return jsonResult.toString();
     }
 }

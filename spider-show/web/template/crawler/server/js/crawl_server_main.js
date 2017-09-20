@@ -48,8 +48,8 @@ function init_host_input(host_id){
     var host_name_op = modal_support.getModalEditObject("host_name","服务器名称");
     var host_ip_op = modal_support.getModalEditObject("host_ip","服务器地址");
     var host_status_op = modal_support.getModalEditObject("host_status","服务器状态","select",true,null,false,
-        [{options_value:1,options_text:"离线"},
-            {options_value:0,options_text:"在线"}]);
+        [{options_value:1,options_text:"在线"},
+            {options_value:0,options_text:"离线"}]);
     var group_id_op = modal_support.getModalEditObject("user_group_id","用户组","select");
     var opArray = new Array();
     if(host_id!=null){
@@ -158,6 +158,11 @@ function listCrawler(clickObj){
 }
 
 function deleteHost(host_id){
-    ajax_support.createNew().sendAjaxRequest("/crawler/server/delServer.do",{"host_id":$(host_id).attr("host_id")},"saveCallBack")
+    modal_support.createNew().make_alter("确定删除服务器？","confirmDel",{"host_id":$(host_id).attr("host_id")},true);
 
+
+}
+
+function confirmDel(host_id){
+    ajax_support.createNew().sendAjaxRequest("/crawler/server/delServer.do",{"host_id":$(host_id).attr("host_id")},"saveCallBack")
 }

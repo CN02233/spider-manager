@@ -1,12 +1,15 @@
 package com.workbench.auth.authvalidate.controller;
 
 import com.google.common.base.Strings;
+import com.webapp.support.json.JsonSupport;
+import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.session.SessionSupport;
 import com.workbench.auth.authvalidate.service.LoginService;
 import com.workbench.auth.authvalidate.bean.LoginResult;
 import com.workbench.auth.user.entity.User;
 import com.workbench.auth.user.service.UserService;
+import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +37,8 @@ public class LoginController {
 
     @RequestMapping("doLogin")
     @ResponseBody
-    public String doLogin(String user_name, String user_pwd, String web_call_back, HttpServletRequest request){
-
-//        Enumeration<String> headerNames = request.getHeaderNames();
-//        while(headerNames.hasMoreElements()){
-//            String headerName = headerNames.nextElement();
-//            logger.debug("header name is -->{}<-- and header value is -->{}<--",headerName,request.getHeader(headerName));
-//        }
-
-
+    @JsonpCallback
+    public String doLogin(String user_name, String user_pwd){
         boolean checkResult = Strings.isNullOrEmpty(user_name);
         LoginResult validateResult = null;
         if(checkResult){
@@ -57,12 +53,12 @@ public class LoginController {
                 validateResult.setValidate_result("当前登录/操作的用户不存在");
                 validateResult.setResult_code(LoginResult.LOGIN_RESULT.USERNM_NOT_FOUND);
             }else
-                SessionSupport.addUserToSession(request,userService.getUserByUserNm(user_name));
+                SessionSupport.addUserToSession(userService.getUserByUserNm(user_name));
         }
+        String jsonResult = JsonSupport.objectToJson(validateResult);
 
-        String jsonpMsg = JsonpSupport.objectToJsonp(web_call_back, validateResult);
-        logger.debug("login validate result jsonp message -->{}",jsonpMsg);
-        return jsonpMsg;
+        logger.debug("login validate result jsonp message -->{}",jsonResult);
+        return jsonResult;
     }
 
 }

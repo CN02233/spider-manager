@@ -1,21 +1,18 @@
 package com.workbench.auth.role.controller;
 
 import com.github.pagehelper.Page;
-import com.webapp.support.jsonp.JsonpSupport;
+import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
 import com.workbench.auth.menu.entity.Menu;
-import com.workbench.auth.role.dao.IRoleManageDao;
-import com.workbench.auth.role.dao.IRoleMenuDao;
 import com.workbench.auth.role.entity.RoleMenu;
 import com.workbench.auth.role.service.RoleMenuManageService;
+import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -31,53 +28,55 @@ public class RoleMenuManageController {
 
     @RequestMapping("getMenuByRole")
     @ResponseBody
-    public String getMenuByRole(int user_role_id, HttpServletRequest request){
+    @JsonpCallback
+    public String getMenuByRole(int user_role_id){
         List<Menu> roleMenuList = roleMenuManageService.getMenuByRole(user_role_id);
 
-        String jsonpResult = JsonpSupport.makeJsonpResponse(
-                JsonResult.RESULT.SUCCESS, "获取成功", null, roleMenuList, request);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, roleMenuList);
 
         return jsonpResult;
     }
 
     @RequestMapping("getMenuOutRole")
     @ResponseBody
-    public String getMenuOutRole(int user_role_id, HttpServletRequest request){
+    @JsonpCallback
+    public String getMenuOutRole(int user_role_id){
         List<Menu> roleMenuList = roleMenuManageService.getMenuOutRole(user_role_id);
 
-        String jsonpResult = JsonpSupport.makeJsonpResponse(
-                JsonResult.RESULT.SUCCESS, "获取成功", null, roleMenuList, request);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, roleMenuList);
 
         return jsonpResult;
     }
 
     @RequestMapping("pagingMenuByRole")
     @ResponseBody
-    public String pagingMenuByRole(int user_role_id,int currPage,int pageSize, HttpServletRequest request){
+    @JsonpCallback
+    public String pagingMenuByRole(int user_role_id,int currPage,int pageSize){
         Page<Menu> roleMenuPage = roleMenuManageService.pagingMenuByRole(user_role_id,currPage,pageSize);
         PageResult pageResult = PageResult.pageHelperList2PageResult(roleMenuPage);
-        String result = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, pageResult);
 
         return result;
     }
 
     @RequestMapping("saveMenuForRole")
     @ResponseBody
-    public String  saveMenuForRole(RoleMenu roleMenu, HttpServletRequest request){
+    @JsonpCallback
+    public String  saveMenuForRole(RoleMenu roleMenu){
         roleMenuManageService.saveMenuForRole(roleMenu);
 
-        String jsonpResult = JsonpSupport.makeJsonpResponse(
-                JsonResult.RESULT.SUCCESS, "删除成功", null, null, request);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, null);
+
         return jsonpResult;
     }
 
     @RequestMapping("delMenuFromRole")
     @ResponseBody
-    public String  delMenuFromRole(RoleMenu roleMenu, HttpServletRequest request){
+    @JsonpCallback
+    public String  delMenuFromRole(RoleMenu roleMenu){
         roleMenuManageService.delMenuFromRole(roleMenu);
 
-        String jsonpResult = JsonpSupport.makeJsonpResponse(
-                JsonResult.RESULT.SUCCESS, "删除成功", null, null, request);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, null);
         return jsonpResult;
     }
 

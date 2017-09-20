@@ -25,6 +25,9 @@ var modal_support = {
                 "</div>"+
                 "</div>"+
                 "<div class='modal-footer'>"+
+                "<button type='button' id='close_btn_modal' class='btn btn-default'>"+
+                "取消"+
+                "</button>"+
                 "<button type='button' class='btn btn-primary' onclick='modal_alter_confirm_click("+callBack+","+JSON.stringify(callBackParam)+")'>"+
                 "确定"+
                 "</button>"+
@@ -33,6 +36,15 @@ var modal_support = {
                 "</div><!-- /.modal -->"+
                 "</div>'";
             $("body").append(modal_html_code);
+
+            if(needCancel!=null&&needCancel){
+                $("#close_btn_modal").click(function(){
+                    $('#modal_alter').remove();
+                });
+            }else{
+                $("#close_btn_modal").remove();
+            }
+
             $("#modal_alter").modal({backdrop:false,show:true});
         };
 
@@ -66,6 +78,9 @@ var modal_support = {
             if(callBack!=null){
                 $("#commitEditModal").click(function(){
                     // console.log("commit edit modal click function has running....");
+                    if(!modal_support_alter.modal_support_checknotnull()){
+                        return ;
+                    }
                     var inputValues = new Array();
                     $.each(columns,function(i,edit_columns){
                         var column_id = edit_columns.column_id;
@@ -110,21 +125,27 @@ var modal_support = {
                 var column_value = edit_columns.column_value!=null?edit_columns.column_value:"";
                 var column_readyOnly = edit_columns.readyOnly;
                 var column_list = edit_columns.column_list;
+                var column_not_null = edit_columns.not_null;
                 var $tr = $("<tr></tr>");
 
                 $("#modal_edit_table").append($tr);
-
-                $tr.append("<td class=' input_name_div'>"+column_name+"：</td>");
+                if(column_not_null!=null&&column_not_null){
+                    $tr.append("<td class=' input_name_div'>" +
+                        "<span style='color:red;font-size:10px;' class='glyphicon glyphicon-fire'></span>&nbsp;"+column_name+"：</td>");
+                }else{
+                    $tr.append("<td class=' input_name_div'>"+column_name+"：</td>");
+                }
 
                 if(column_type=='text'){
                     var readOnlyAttr = "";
                     if(column_readyOnly){
                         readOnlyAttr = "readonly = true";
                     }
-
-                    $tr.append("<td class='input_area_div'>" +
-                        "<input type='text' id='"+column_id+"' "+readOnlyAttr+" value='"+column_value+"' class='form-control modal_input'/>" +
+                    var input_text_td = $("<td class='input_area_div'>" +
+                        "<input type='text' column_name='"+column_name+"' id='"+column_id+"' "+readOnlyAttr+" value='"+column_value+"' class='form-control modal_input'/>" +
                         "</td>");
+
+                    $tr.append(input_text_td);
 
                 }else if(column_type=='select'){
                     var readOnlyAttr = "";
@@ -134,7 +155,7 @@ var modal_support = {
 
 
                     $tr.append("<td class='input_area_div'>" +
-                        "<select id='"+column_id+"' "+readOnlyAttr+" class='form-control modal_input'></select>" +
+                        "<select column_name='"+column_name+"' id='"+column_id+"' "+readOnlyAttr+" class='form-control modal_input'></select>" +
                         "</td>");
                     $("#"+column_id).append("<option value=''>请选择</option>");
                     if(column_list!=null){
@@ -145,6 +166,10 @@ var modal_support = {
 
                         });
                     }
+                }
+
+                if(column_not_null!=null&&column_not_null){
+                    $tr.find("#"+column_id).addClass("not_null_column");
                 }
 
             }
@@ -171,6 +196,32 @@ var modal_support = {
         modal_support_alter.closeEditModalByColumn = function(){
             removeEditModal();
         };
+
+
+        modal_support_alter.modal_support_checknotnull = function(){
+            var all_notnull_colunm = $(".not_null_column");
+            var isNullColumn = null;
+            if(all_notnull_colunm.length>0){
+                $.each(all_notnull_colunm,function(i,notnull_column){
+                    var id = $(notnull_column).attr("id");
+                    var column_name = $(notnull_column).attr("column_name");
+                    var val = $(notnull_column).val();
+                    if(val==null||val==''){
+                        if(isNullColumn==null)
+                            isNullColumn = column_name;
+                        else{
+                            isNullColumn = isNullColumn+"<br/>"+column_name;
+                        }
+                    }
+                });
+            }
+
+            if(isNullColumn!=null){
+                modal_support_alter.make_alter("以下字段不允许为空<br/>"+isNullColumn);
+                return false;
+            }
+            return true;
+        }
 
         return modal_support_alter;
     },

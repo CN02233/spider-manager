@@ -1,11 +1,13 @@
 package com.workbench.auth.group.controller;
 
 import com.github.pagehelper.Page;
+import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
 import com.workbench.auth.group.entity.Group;
 import com.workbench.auth.group.service.GroupService;
+import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,65 +28,78 @@ public class GroupController {
 
     @RequestMapping("listUserGroupPage")
     @ResponseBody
-    public String listUserGroupPage(int currPage, int pageSize, HttpServletRequest request){
+    @JsonpCallback
+    public String listUserGroupPage(int currPage, int pageSize){
         Page<Group> userGrpPage = groupService.listUserGroupPage(currPage, pageSize);
         PageResult pageResult = PageResult.pageHelperList2PageResult(userGrpPage);
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
+        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, pageResult);
+
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
 
     @RequestMapping("listUserGroup")
     @ResponseBody
-    public String listUserGroupPage(HttpServletRequest request){
+    @JsonpCallback
+    public String listUserGroupPage(){
         Page<Group> userGrpPage = groupService.listUserGroupPage(1, 200);
         PageResult pageResult = PageResult.pageHelperList2PageResult(userGrpPage);
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult,request);
+        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, pageResult);
+
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
 
     @RequestMapping("listSuperGroup")
     @ResponseBody
-    public String listSuperGroup(HttpServletRequest request){
+    @JsonpCallback
+    public String listSuperGroup(){
         List<Group> list = groupService.listSuperGroup();
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,list,request);
+        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, list);
+
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
 
     @RequestMapping("getUserGroup")
     @ResponseBody
-    public String  getUserGroup(int user_group_id, HttpServletRequest request){
+    @JsonpCallback
+    public String  getUserGroup(int user_group_id){
         Group group = groupService.getUserGroup(user_group_id);
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"获取成功",null,group,request);
+        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, group);
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
 
     @RequestMapping("saveNewGroup")
     @ResponseBody
-    public String  saveNewUserGroup(Group group, HttpServletRequest request){
+    @JsonpCallback
+    public String  saveNewUserGroup(Group group){
         groupService.saveNewUserGroup(group);
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"保存成功",null,null,request);
+        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "保存成功", null, null);
+
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
 
     @RequestMapping("updateUserGroup")
     @ResponseBody
-    public String  updateUserGroup(Group group, HttpServletRequest request){
+    @JsonpCallback
+    public String  updateUserGroup(Group group){
         groupService.updateUserGroup(group);
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"保存成功",null,null,request);
+        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "保存成功", null, null);
+
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }
 
     @RequestMapping("delUserGroup")
     @ResponseBody
-    public String  delUserGroup(int user_group_id,HttpServletRequest request){
+    @JsonpCallback
+    public String  delUserGroup(int user_group_id){
         groupService.delUserGroup(user_group_id);
-        String resultJson = JsonpSupport.makeJsonpResponse(JsonResult.RESULT.SUCCESS,"删除成功",null,null,request);
+        String resultJson = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, null);
+
 //        logger.debug("jsonResult information after delete :{}",resultJson);
         return resultJson;
     }

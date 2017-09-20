@@ -1,11 +1,10 @@
 package com.crawler.webapp.job.controller;
 
-import com.crawler.webapp.job.bean.JobInfoBean;
 import com.crawler.webapp.job.bean.JobStatus;
 import com.crawler.webapp.job.service.JobStatusService;
 import com.github.pagehelper.Page;
+import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
-import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.page.PageResult;
 import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.slf4j.Logger;
@@ -33,7 +32,7 @@ public class JobStatusController {
     public String pagingCrawlStatusList(int currPage,int pageSize, String job_name){
         Page<JobStatus> crawStatusListPage = jobStatusService.pagingCrawlStatusList(currPage, pageSize, job_name);
         PageResult pageResult = PageResult.pageHelperList2PageResult(crawStatusListPage);
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
 
         logger.debug("paging crawl list result :{}",result);
         return result;

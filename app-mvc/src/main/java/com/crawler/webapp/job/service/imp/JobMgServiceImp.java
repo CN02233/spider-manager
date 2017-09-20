@@ -8,6 +8,8 @@ import com.crawler.webapp.job.service.JobMgService;
 import com.crawler.webapp.proxyserver.bean.ProxyServer;
 import com.github.pagehelper.Page;
 import com.webapp.support.httpClient.HttpSendMessage;
+import com.webapp.support.session.SessionSupport;
+import com.workbench.auth.user.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +119,10 @@ public class JobMgServiceImp implements JobMgService {
         iJobMgDao.deleteAllProxyServer(jobInfo.getJob_id());
         if(proxyServers!=null){
             for(String proxyServerId:proxyServers){
+                if(jobInfo.getUser_id()==null){
+                    User user = SessionSupport.checkoutUserFromSession();
+                    jobInfo.setUser_id(user.getUser_id());
+                }
                 iJobMgDao.saveProxyServer(proxyServerId,jobInfo.getJob_id(),jobInfo.getUser_id());
             }
         }

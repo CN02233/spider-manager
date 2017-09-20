@@ -3,8 +3,8 @@ package com.crawler.webapp.proxyserver.controller;
 import com.crawler.webapp.proxyserver.bean.ProxyServer;
 import com.crawler.webapp.proxyserver.service.ProxyServerService;
 import com.github.pagehelper.Page;
+import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
-import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.page.PageResult;
 import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,8 @@ public class ProxyServerController {
     @JsonpCallback
     public String listProxyServers(){
         List<ProxyServer> resultData = proxyServerService.listProxyServers();
-        String jsonpResult = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, resultData);
-        return jsonpResult;
+        String jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, resultData);
+        return jsonResult;
     }
 
     @RequestMapping("pagingProxyServers")
@@ -39,7 +39,7 @@ public class ProxyServerController {
     public String pagingProxyServers(int currPage,int pageSize,String proxy_server_name ){
         Page<ProxyServer> resultData = proxyServerService.pagingProxyServers(currPage,pageSize,proxy_server_name);
         PageResult pageResult = PageResult.pageHelperList2PageResult(resultData);
-        String jsonpResult = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, pageResult);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, pageResult);
         return jsonpResult;
     }
 
@@ -48,7 +48,7 @@ public class ProxyServerController {
     @JsonpCallback
     public String proxyServers(Integer proxy_server_id){
         ProxyServer resultData = proxyServerService.proxyServer(proxy_server_id);
-        String jsonpResult = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, resultData);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, resultData);
         return jsonpResult;
     }
 
@@ -57,7 +57,7 @@ public class ProxyServerController {
     @JsonpCallback
     public String saveNewServer(ProxyServer proxyServer){
         proxyServerService.saveNewServer(proxyServer);
-        String jsonpResult = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS, "保存成功", null, null);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "保存成功", null, null);
         return jsonpResult;
     }
 
@@ -66,7 +66,7 @@ public class ProxyServerController {
     @JsonpCallback
     public String updateServer(ProxyServer proxyServer){
         proxyServerService.updateServer(proxyServer);
-        String jsonpResult = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS, "保存成功", null, null);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "保存成功", null, null);
         return jsonpResult;
     }
 
@@ -76,7 +76,7 @@ public class ProxyServerController {
     @JsonpCallback
     public String delServer(Integer proxy_server_id){
         proxyServerService.delServer(proxy_server_id);
-        String jsonpResult = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, null);
+        String jsonpResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, null);
         return jsonpResult;
     }
 

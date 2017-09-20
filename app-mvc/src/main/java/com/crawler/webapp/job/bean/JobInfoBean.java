@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class JobInfoBean {
 
-    private int job_id;
-    private int user_id;
+    private Integer job_id = null;
+    private Integer user_id = null;
     private User user;
     private String job_name;
     private Integer is_valid = null;//0无效 1有效
@@ -30,19 +30,19 @@ public class JobInfoBean {
     private ProxyAssign proxyAssign;
 
 
-    public int getJob_id() {
+    public Integer getJob_id() {
         return job_id;
     }
 
-    public void setJob_id(int job_id) {
+    public void setJob_id(Integer job_id) {
         this.job_id = job_id;
     }
 
-    public int getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 

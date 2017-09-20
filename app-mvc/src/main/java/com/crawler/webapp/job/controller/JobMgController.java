@@ -5,8 +5,8 @@ import com.crawler.webapp.job.service.JobMgService;
 import com.crawler.webapp.proxyserver.bean.ProxyServer;
 import com.github.pagehelper.Page;
 import com.google.common.base.Strings;
+import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
-import com.webapp.support.jsonp.JsonpSupport;
 import com.webapp.support.page.PageResult;
 import com.webapp.support.session.SessionSupport;
 import com.workbench.auth.user.entity.User;
@@ -42,7 +42,7 @@ public class JobMgController {
     public String pagingCrawlList(int currPage,int pageSize, JobInfoBean jobInfoBean){
         Page<JobInfoBean> crawListPage = jobMgService.pagingCrawlList(currPage, pageSize, jobInfoBean);
         PageResult pageResult = PageResult.pageHelperList2PageResult(crawListPage);
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
 
         logger.debug("paging crawl list result :{}",result);
         return result;
@@ -54,7 +54,7 @@ public class JobMgController {
     public String pagingListByHost(int currPage,int pageSize,Integer host_id, String host_name){
         Page<JobInfoBean> crawListPage = jobMgService.pagingListByHost(currPage, pageSize,host_id, host_name);
         PageResult pageResult = PageResult.pageHelperList2PageResult(crawListPage);
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,pageResult);
 
         logger.debug("paging crawl list result :{}",result);
         return result;
@@ -65,7 +65,7 @@ public class JobMgController {
     @JsonpCallback
     public String crawlSrcType(){
         List<Map<String,Object>> resultFromDb = jobMgService.crawlSrcType();
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
         return result;
     }
 
@@ -74,7 +74,7 @@ public class JobMgController {
     @JsonpCallback
     public String dataStore(){
         List<Map<String,Object>> resultFromDb = jobMgService.dataStore();
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
         return result;
     }
 
@@ -83,7 +83,7 @@ public class JobMgController {
     @JsonpCallback
     public String jobScheduleList(){
         List<Map<String,Object>> resultFromDb = jobMgService.jobScheduleList();
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
         return result;
     }
 
@@ -92,7 +92,7 @@ public class JobMgController {
     @JsonpCallback
     public String jobHostList(){
         List<Map<String,Object>> resultFromDb = jobMgService.jobHostList();
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,resultFromDb);
         return result;
     }
 
@@ -105,7 +105,7 @@ public class JobMgController {
         User user = SessionSupport.checkoutUserFromSession();
         jobInfo.setUser_id(user.getUser_id());
         jobMgService.saveNewJob(jobInfo,proxyServers);
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
         return result;
     }
 
@@ -115,7 +115,7 @@ public class JobMgController {
     public String updateJobInfo(@JsonMsgParam(jsonName = "jobInfo",jsonObjTypes={JobInfoBean.class}) JobInfoBean jobInfo,
                                 @JsonMsgParam(jsonName = "proxyServers",jsonObjTypes={String.class}) ArrayList<String> proxyServers){
         jobMgService.updateJobInfo(jobInfo,proxyServers);
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,null);
         return result;
     }
 
@@ -128,7 +128,7 @@ public class JobMgController {
         Map<String,Object> resultMap = new HashMap();
         resultMap.put("crawlData",crawlData);
         resultMap.put("allProxyServerList",allProxyServerList);
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,resultMap);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"保存成功",null,resultMap);
         return result;
     }
 
@@ -137,7 +137,7 @@ public class JobMgController {
     @JsonpCallback
     public String deleJob(int job_id){
         jobMgService.deleJob(job_id);
-        String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"删除成功",null,null);
         return result;
     }
 
@@ -147,10 +147,10 @@ public class JobMgController {
     public String startJob(Integer job_id, Integer user_id){
         String startResult = jobMgService.startJob(job_id, user_id);
         if(!Strings.isNullOrEmpty(startResult)&&"DONE".equals(startResult)){
-            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"启动成功",null,null);
+            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"启动成功",null,null);
             return result;
         }else{
-            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"启动失败:"+startResult,null,null);
+            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"启动失败:"+startResult,null,null);
             return result;
         }
 
@@ -163,10 +163,10 @@ public class JobMgController {
 
         String startResult = jobMgService.stopJob(job_id, user_id);
         if(!Strings.isNullOrEmpty(startResult)&&"DONE".equals(startResult)){
-            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"停止成功",null,null);
+            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"停止成功",null,null);
             return result;
         }else{
-            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"停止失败:"+startResult,null,null);
+            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"停止失败:"+startResult,null,null);
             return result;
         }
     }
@@ -177,10 +177,10 @@ public class JobMgController {
     public String updateJob(Integer job_id, Integer user_id){
         String startResult = jobMgService.updateJob(job_id, user_id);
         if(!Strings.isNullOrEmpty(startResult)&&"DONE".equals(startResult)){
-            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"停止成功",null,null);
+            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"停止成功",null,null);
             return result;
         }else{
-            String result = JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.SUCCESS,"更新失败:"+startResult,null,null);
+            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"更新失败:"+startResult,null,null);
             return result;
         }
     }

@@ -11,24 +11,72 @@ var ajax_support = {
         ajax_support.json_data_list = new Array();
 
         ajax_support.sendAjaxRequestSimple = function(url,params){
-            $.ajax({
-                url:SERVICE_HOST+url,
-                type:'post',
-                data:params,
-                xhrFields:{withCredentials:true},
-                dataType:'jsonp',
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                error:function(data){
-                    console.log("brower get one error....."+data);
-                }
+            if(use_jsonp){
+                $.ajax({
+                    url:SERVICE_HOST+url,
+                    type:'post',
+                    data:params,
+                    xhrFields:{withCredentials:true},
+                    dataType:'jsonp',
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    error:function(data){
+                        console.log("brower get one error....."+data);
+                    }
 
-            });
+                });
+            }else{
+                $.ajax({
+                    type : 'POST',
+                    contentType : 'application/json; charset=utf-8',
+                    url : SERVICE_HOST+url,
+                    data : '',
+                    dataType : 'json',
+                    success : function(data) {
+                        // 生成报表
+                        if(callbackFunction!=null){
+                            callbackFunction(data);
+                        }
+                        //createDataZoom();
+                    },
+                    error : function(data) {
+//			);
+                        alert("error");
+                    }
+
+                });
+            }
         };
+
+
+
+
 
         ajax_support.sendAjaxRequest = function(url,params,callBackFunction){
             // console.log("sendAjaxRequest is running....");
-            var realUrl = url + "?web_call_back=" + callBackFunction;
-            this.sendAjaxRequestSimple(realUrl,params);
+            if(use_jsonp){
+                var realUrl = url + "?web_call_back=" + callBackFunction;
+                this.sendAjaxRequestSimple(realUrl,params);
+            }else{
+                $.ajax({
+                    type : 'POST',
+                    contentType : 'application/json; charset=utf-8',
+                    url : SERVICE_HOST+url,
+                    data : '',
+                    dataType : 'json',
+                    success : function(data) {
+                        // 生成报表
+                        if(callbackFunction!=null){
+                            callbackFunction(data);
+                        }
+                        //createDataZoom();
+                    },
+                    error : function(data) {
+//			);
+                        alert("error");
+                    }
+
+                });
+            }
         };
 
         // ajax_support.sendJsonAjaxRequest = function(url,params,callBackFunction){
@@ -38,7 +86,7 @@ var ajax_support = {
         // };
 
         ajax_support.sendJsonAjaxRequest = function(url,callBackFunction){
-            var realUrl = url + "?web_call_back=" + callBackFunction+"&isJson=Y";
+            var realUrl = url + "?web_call_back=" + callBackFunction;
             var sendParam = new Object();
             if(this.json_data_list.length>0){
                 $.each(this.json_data_list,function(i,json_data){
@@ -47,8 +95,8 @@ var ajax_support = {
                     var jsonStr = JSON.stringify(jsonData);
                     sendParam[jsonName] = jsonStr;
                 });
-                this.sendAjaxRequestSimple(realUrl,sendParam);
-
+                sendParam["isJson"] = "Y";
+                this.sendAjaxRequest(realUrl,sendParam,callBackFunction);
             }
         };
 
@@ -73,10 +121,10 @@ var ajax_support = {
             if(currPage==null||currPage==''){
                 currPage = 1;
             }
-            var realUrl = url + "?web_call_back=" + callBackFunction+"&pageSize="+pageSize+"&currPage="+currPage;
-
             // this.sendAjaxRequest()
-            this.sendAjaxRequestSimple(realUrl,param);
+            param["pageSize"] = pageSize;
+            param["currPage"] = currPage;
+            this.sendAjaxRequest(url,param,callBackFunction);
         };
 
         ajax_support.ajax_result_success = function(result_json){

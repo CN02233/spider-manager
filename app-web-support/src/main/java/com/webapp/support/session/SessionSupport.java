@@ -33,4 +33,10 @@ public class SessionSupport {
     public static void addUserToSession(HttpServletRequest request,Object user){
         addDataToSession(request,user,"user");
     }
+
+    public static void addUserToSession(Object user){
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        addDataToSession(request,user,"user");
+    }
 }

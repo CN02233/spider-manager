@@ -69,7 +69,7 @@ function editJob(viewObj){
 
 function deleteJob(viewObj){
     var job_id = $(viewObj).attr("job_id");
-    modal_support.createNew().make_alter("确定删除当前采集任务？该操作会删除所有与该任务关联的内容","confirmDel",{"job_id":job_id});
+    modal_support.createNew().make_alter("确定删除当前采集任务？该操作会删除所有与该任务关联的内容","confirmDel",{"job_id":job_id},true);
 }
 
 function startJob(viewObj){
@@ -92,7 +92,7 @@ function updateJob(viewObj){
 
 
 function confirmDel(jobParam){
-    ajax_support.createNew().createNew().sendAjaxRequest("/crawler/jobMg/deleJob.do",jobParam,"delCallBack")
+    ajax_support.createNew().sendAjaxRequest("/crawler/jobMg/deleJob.do",jobParam,"delCallBack");
 }
 
 function confirmSend(jobParam){
@@ -115,5 +115,5 @@ function sendCallBack(sendResult){
 
 function delCallBack(delResult){
     modal_support.createNew().make_alter(delResult["result_msg"]);
-    paging_data.make_paging_data("/crawler/jobMg/pagingList.do");
+    paging_data.createNew().make_paging_data("/crawler/jobMg/pagingList.do");
 }

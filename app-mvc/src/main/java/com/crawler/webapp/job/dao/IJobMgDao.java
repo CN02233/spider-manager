@@ -17,6 +17,9 @@ public interface IJobMgDao {
     @Select("<script>" +
             "select *,job_id as job_id_copy,user_id as user_id_copy from crawl_job  " +
             "<where>" +
+            "<if test='jobInfoBean.job_id!=null  '> " +
+            "   job_id=#{jobInfoBean.job_id}" +
+            "</if>"+
             "<if test='jobInfoBean.is_valid!=null  '> " +
             "   is_valid=#{jobInfoBean.is_valid}" +
             "</if>"+
@@ -75,7 +78,7 @@ public interface IJobMgDao {
 
 
     @Insert("insert into poxy_assign (proxy_server_id,job_id,user_id ) values (#{proxy_server_id},#{job_id},#{user_id})")
-    void saveProxyServer(@Param("proxy_server_id") String proxy_server_id,@Param("job_id") int job_id,@Param("user_id") int user_id);
+    void saveProxyServer(@Param("proxy_server_id") String proxy_server_id,@Param("job_id") Integer job_id,@Param("user_id") Integer user_id);
 
     @Select("select * from crawl_job where job_id = #{job_id}")
     @Options(useCache = false)

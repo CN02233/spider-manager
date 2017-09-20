@@ -11,7 +11,7 @@ $(document).ready(function(){
     var searchElements = new Array();
     searchElements.push(hostnameElement);
 
-    var searchInfoObj = tableSearchCreater.searchInfoObject("/crawler/jobMg/pagingListByHost.do",searchElements);
+    var searchInfoObj = tableSearchCreater.searchInfoObject("/crawler/jobMg/pagingListByHost.do",searchElements,null,false);
     tableSearchCreater.createSearch(searchInfoObj);
 
     var paramUrl = page_support.createNew().check_param_from_url();

@@ -36,11 +36,13 @@ function title_div_style(){
     var title_div_width = page_width4main_page-menu_div_width;
     $("#title_div").width(title_div_width);
     // console.log("page_width4main_page value is "+page_width4main_page+"||menu_div_width value is "+menu_div_width);
-    $("#title_div").height(85);
+    // $("#title_div").height(85);
+    $("#title_div").height(0);
     $("#title_space_div").width(title_div_width-200);
     $("#title_space_div").height('100%');
     $("#title_user_div").width(198);
     $("#title_user_div").height('100%');
+    $("#title_div").hide();
 
 }
 

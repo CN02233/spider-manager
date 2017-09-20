@@ -53,6 +53,11 @@ html { overflow: hidden; }
     height:30px;
     margin:0;
     text-align: left;
+    cursor:pointer;
+}
+
+.menu_img_li>label{
+    cursor:pointer;
 }
 
 .sign_out_li{
@@ -141,6 +146,7 @@ html { overflow: hidden; }
     width:110px;
     text-align: left;
     margin-top:0px;
+    cursor:pointer;
 }
 
 .split_label{
@@ -165,7 +171,7 @@ html { overflow: hidden; }
 
 .title_div{
     /*width:80%;*/
-    height:85px;
+    height:0px;
     background: #F4F9FF;
     border-bottom:1px solid #E3E9F4;
 }

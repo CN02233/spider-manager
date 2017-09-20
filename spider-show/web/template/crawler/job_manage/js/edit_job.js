@@ -4,6 +4,7 @@
 
 var ajax_support_obj = ajax_support.createNew();
 var isView = false;
+
 $(document).ready(function(){
 
 
@@ -291,5 +292,7 @@ function getProxyServers(){
 }
 
 function callServiceResult(saveResult){
-    modal_support.createNew().make_alter(saveResult["result_msg"]);
+    modal_support.createNew().make_alter(saveResult["result_msg"],function(){
+        page_support.createNew().forward_new_page("/template/crawler/job_manage/job_manage_main.html");
+    },null,false);
 }

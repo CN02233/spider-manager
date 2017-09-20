@@ -1,8 +1,11 @@
 package com.workbench.spring.aop.clazz;
 
 import com.google.common.base.Strings;
+import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.jsonp.JsonpSupport;
+import com.webapp.support.session.SessionSupport;
+import com.workbench.auth.authvalidate.controller.LoginController;
 import com.workbench.auth.user.entity.User;
 import com.workbench.exception.runtime.NotLoginException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -34,23 +37,24 @@ public class SystemLogAspect {
 
     @Around("allMethod()")
     public Object doAspect(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        User user = (User) request.getSession().getAttribute("user");
-        Object[] allArgs = joinPoint.getArgs();
-        logger.info("User:-->{}<-- called method:-->{}<--,the param values-->{}<--",user,joinPoint.toString(),allArgs);
         try {
+            Object targer = joinPoint.getTarget();
+            if(!(targer instanceof LoginController)){
+                User user = SessionSupport.checkoutUserFromSession();
+                Object[] allArgs = joinPoint.getArgs();
+                logger.info("User:-->{}<-- called method:-->{}<--,the param values-->{}<--",user,joinPoint.toString(),allArgs);
+            }
             return joinPoint.proceed();
         }catch(Exception e){
             e.printStackTrace();
 
             if(e instanceof NotLoginException){
                 String jsonpCallBackStr = JsonpSupport.objectToJsonp(getJsonpCallbackName(),
-                        JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.FAILD, "用户未登录", "USER_NOT_LOGIN", null));
+                        JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "用户未登录", "USER_NOT_LOGIN", null));
                 return jsonpCallBackStr;
             }
             String jsonpCallBackStr = JsonpSupport.objectToJsonp(getJsonpCallbackName(),
-                    JsonpSupport.makeJsonpResultStr(JsonResult.RESULT.FAILD, "系统异常", "异常原因:" + e.toString(), null));
+                    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "系统异常", "异常原因:" + e.toString(), null));
 
             return jsonpCallBackStr;
         }

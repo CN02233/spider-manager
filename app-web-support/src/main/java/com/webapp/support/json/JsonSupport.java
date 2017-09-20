@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.JsonArray;
 import com.webapp.support.PageField;
+import com.webapp.support.jsonp.JsonResult;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -83,6 +84,20 @@ public class JsonSupport {
             e.printStackTrace();
         }
         return mapVal;
+    }
+
+    public static JsonResult makeJsonpResult(JsonResult.RESULT result, String resultMsg, String failReason, Object resultData){
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setResult(result);
+        jsonResult.setResult_msg(resultMsg);
+        jsonResult.setFaild_reason(failReason);
+        jsonResult.setResultData(resultData);
+        return jsonResult;
+    }
+
+    public static String makeJsonResultStr(JsonResult.RESULT result, String resultMsg, String failReason, Object resultData){
+        JsonResult jsonResult = makeJsonpResult(result, resultMsg, failReason, resultData);
+        return jsonResult.toString();
     }
 
 //    public static Object jsonToObect(String jsonVal, Type type){

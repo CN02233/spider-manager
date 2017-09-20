@@ -1,7 +1,7 @@
 
 var modal_support_alter = modal_support.createNew();
-var ajax_support = ajax_support.createNew();
-var paging_data = paging_data.createNew();
+var ajax_support_obj = ajax_support.createNew();
+var paging_data_obj = paging_data.createNew();
 
 var edit_modal_name = null;
 
@@ -19,7 +19,7 @@ $(document).ready(function(){
     var searchInfoObj = tableSearchCreater.searchInfoObject("/sys/user/listUserPage.do",searchElements,true,true,"add_user()");
     tableSearchCreater.createSearch(searchInfoObj);
 
-    paging_data.make_paging_data("/sys/user/listUserPage.do");
+    paging_data_obj.make_paging_data("/sys/user/listUserPage.do");
 
     // $("#add_user_btn").click(function(){
     //     add_user();
@@ -54,31 +54,31 @@ function add_user(){
 
 function addUserSave(saveColumn){
     var paramArray = saveParams(saveColumn);
-    ajax_support.sendAjaxRequest("/sys/user/saveNewUser.do",paramArray,"saveCallBack");
+    ajax_support_obj.sendAjaxRequest("/sys/user/saveNewUser.do",paramArray,"saveCallBack");
 }
 
 
 function viewUser(viewUserObj){
     edit_modal_name = modal_support_alter.makeEditModalByColumn("查看用户",makeUserInfoColumn("view"));
-    ajax_support.sendAjaxRequest("/sys/user/getUserByUserId.do",{"user_id":$(viewUserObj).attr("user_id")},"editUserInfo");
+    ajax_support_obj.sendAjaxRequest("/sys/user/getUserByUserId.do",{"user_id":$(viewUserObj).attr("user_id")},"editUserInfo");
 }
 
 function editUser(viewUserObj){
     edit_modal_name = modal_support_alter.makeEditModalByColumn("编辑用户",makeUserInfoColumn("edit"),editUserSave);
-    ajax_support.sendAjaxRequest("/sys/user/getUserByUserId.do",{"user_id":$(viewUserObj).attr("user_id")},"editUserInfo");
+    ajax_support_obj.sendAjaxRequest("/sys/user/getUserByUserId.do",{"user_id":$(viewUserObj).attr("user_id")},"editUserInfo");
 }
 
 function editUserSave(saveColumn){
     var paramArray = saveParams(saveColumn);
-    ajax_support.sendAjaxRequest("/sys/user/updateSaveUser.do",paramArray,"saveCallBack");
+    ajax_support_obj.sendAjaxRequest("/sys/user/updateSaveUser.do",paramArray,"saveCallBack");
 }
 
 function deleteUser(viewUserObj){
-    modal_support_alter.make_alter("确定删除用户？",sendDelRequest,{"user_id":$(viewUserObj).attr("user_id")})
+    modal_support_alter.make_alter("确定删除用户？",sendDelRequest,{"user_id":$(viewUserObj).attr("user_id")},true)
 }
 
 function sendDelRequest(userObj){
-    ajax_support.sendAjaxRequest("/sys/user/delUserByUserId.do",{"user_id":$(userObj).attr("user_id")},"saveCallBack");
+    ajax_support_obj.sendAjaxRequest("/sys/user/delUserByUserId.do",{"user_id":$(userObj).attr("user_id")},"saveCallBack");
 }
 
 function makeUserInfoColumn(showType){
@@ -111,7 +111,7 @@ function makeUserInfoColumn(showType){
         var userId_modal = modal_support.getModalEditObject("user_id","用户ID","text",true,null,true);
         columnsArray.push(userId_modal);
     }
-    var userName_modal = modal_support.getModalEditObject("user_name","用户名","text",false,null,false);
+    var userName_modal = modal_support.getModalEditObject("user_name","用户名","text",true,null,false);
     var user_type_options = [
         {"options_value":1,"options_text":"管理员"},
         {"options_value":2,"options_text":"业务管理员"},
@@ -150,18 +150,18 @@ function saveParams(saveColumn){
 }
 
 function saveCallBack(saveResult){
-    if(ajax_support.ajax_result_success(saveResult)){
+    if(ajax_support_obj.ajax_result_success(saveResult)){
         modal_support_alter.make_alter("保存成功");
         modal_support_alter.closeEditModalByColumn();
-        paging_data.make_paging_data("/sys/user/listUserPage.do");
+        paging_data_obj.make_paging_data("/sys/user/listUserPage.do");
     }else{
         modal_support_alter.make_alter("保存失败");
     }
 }
 
 function editUserInfo(userObj){
-    if(ajax_support.ajax_result_success(userObj)){
-        var userResultData = ajax_support.get_result_data(userObj);
+    if(ajax_support_obj.ajax_result_success(userObj)){
+        var userResultData = ajax_support_obj.get_result_data(userObj);
 
         var user_id = userResultData["user_id"];
         var user_name = userResultData["user_name"];
