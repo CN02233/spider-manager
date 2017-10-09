@@ -120,9 +120,9 @@ var ajax_support = {
             }else{
                 var modal_support_page_data_tmp = null;
                 if(modal_support!=null)
-                    modal_support_page_data_tmp = modal_support.createNew();
-                else{
                     modal_support_page_data_tmp = modal_support;
+                else{
+                    modal_support_page_data_tmp = modal_support.createNew();
                 }
                 if(result_json.faild_reason == "USER_NOT_LOGIN"){
                     modal_support_page_data_tmp.make_alter(result_json.result_msg,auth_failed);

@@ -11,6 +11,8 @@ public class CrawlerServers {
 
     private List<String> serverAddresList;
 
+    private String solrAddres;
+
     private AtomicInteger automicInteger = new AtomicInteger(0);
 
     public List<String> getServerAddresList() {
@@ -30,5 +32,13 @@ public class CrawlerServers {
         }else{
             return serverAddresList.get(nowVal);
         }
+    }
+
+    public String getSolrAddres() {
+        return solrAddres;
+    }
+
+    public void setSolrAddres(String solrAddres) {
+        this.solrAddres = solrAddres;
     }
 }

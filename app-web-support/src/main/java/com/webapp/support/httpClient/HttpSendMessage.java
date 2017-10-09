@@ -17,9 +17,9 @@ public class HttpSendMessage {
             return null;
         String line = null;
         StringBuilder result = new StringBuilder();
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(inputStream));
         try {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(inputStream,"UTF-8"));
             while ((line = in.readLine()) != null) {
                 result.append(line);
             }
