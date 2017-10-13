@@ -204,11 +204,13 @@ html { overflow: hidden; }
     margin-top:0px;
     background: url('../../../../style/image/Sign-Out.png') no-repeat right;
     background-size: 20px 25px;
+    cursor: pointer;
 }
 
 .sign_out_font{
     margin-left:20px;
     height: 30px;
     line-height: 30px;
+    cursor: pointer;
 }
 /*退出 end*/

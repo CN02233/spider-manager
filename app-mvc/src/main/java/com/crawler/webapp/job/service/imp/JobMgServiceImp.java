@@ -44,6 +44,10 @@ public class JobMgServiceImp implements JobMgService {
         return resultPage;
     }
 
+    @Override
+    public List<JobInfoBean> listAllJob(){
+        return iJobMgDao.listAllJob();
+    }
 
     @Override
     public Page<JobInfoBean> pagingListByHost(int currPage, int pageSize, Integer host_id,String host_name) {
@@ -92,6 +96,9 @@ public class JobMgServiceImp implements JobMgService {
         jobInfo.setJob_id(job_id);
 
         iJobMgDao.saveJobInfo(jobInfo);
+        if(proxyServers!=null&&proxyServers.size()>0){}//do nothing}
+        else
+            proxyServers = jobInfo.getProxyServerList();
         if(proxyServers!=null){
             for(String proxyServerId:proxyServers){
                 iJobMgDao.saveProxyServer(proxyServerId,job_id,jobInfo.getUser_id());
@@ -117,6 +124,9 @@ public class JobMgServiceImp implements JobMgService {
     public void updateJobInfo(JobInfoBean jobInfo, ArrayList<String> proxyServers) {
         iJobMgDao.updateJobInfo(jobInfo);
         iJobMgDao.deleteAllProxyServer(jobInfo.getJob_id());
+        if(proxyServers!=null&&proxyServers.size()>0){}//do nothing}
+        else
+            proxyServers = jobInfo.getProxyServerList();
         if(proxyServers!=null){
             for(String proxyServerId:proxyServers){
                 if(jobInfo.getUser_id()==null){

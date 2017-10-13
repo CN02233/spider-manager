@@ -1,8 +1,11 @@
 package com.crawler.webapp.job.bean;
 
 import com.crawler.webapp.proxyserver.bean.ProxyAssign;
+import com.google.common.base.Strings;
+import com.webapp.support.json.JsonSupport;
 import com.workbench.auth.user.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +31,8 @@ public class JobInfoBean {
     private Integer job_schedule_id = null;
     private JobStatus jobStatus;
     private ProxyAssign proxyAssign;
+    private String proxyServers;
+    private ArrayList proxyServerList;
 
 
     public Integer getJob_id() {
@@ -180,5 +185,24 @@ public class JobInfoBean {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getProxyServers() {
+        return proxyServers;
+    }
+
+    public void setProxyServers(String proxyServers) {
+        this.proxyServers = proxyServers;
+        if(!Strings.isNullOrEmpty(proxyServers)){
+            proxyServerList = (ArrayList) JsonSupport.jsonToObect(proxyServers,ArrayList.class);
+        }
+    }
+
+    public ArrayList getProxyServerList() {
+        return proxyServerList;
+    }
+
+    public void setProxyServerList(ArrayList proxyServerList) {
+        this.proxyServerList = proxyServerList;
     }
 }

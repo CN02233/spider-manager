@@ -39,6 +39,15 @@ public class UserController {
         return jsonResult;
     }
 
+    @RequestMapping("listAllUser")
+    @ResponseBody
+    @JsonpCallback
+    public String listAllUser(){
+        List<User> userList = userService.listAllUser();
+        String jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取成功", null, userList);
+        return jsonResult;
+    }
+
     @RequestMapping("userMenuList")
     @ResponseBody
     @JsonpCallback

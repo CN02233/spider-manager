@@ -71,18 +71,35 @@ var ajax_support = {
         // };
 
         ajax_support.sendJsonAjaxRequest = function(url,callBackFunction){
-            var realUrl = url + "?web_call_back=" + callBackFunction;
-            var sendParam = new Object();
-            if(this.json_data_list.length>0){
-                $.each(this.json_data_list,function(i,json_data){
-                    var jsonName = json_data["jsonName"];
-                    var jsonData = json_data["jsonData"];
-                    var jsonStr = JSON.stringify(jsonData);
-                    sendParam[jsonName] = jsonStr;
-                });
-                sendParam["isJson"] = "Y";
-                this.sendAjaxRequest(realUrl,sendParam,callBackFunction);
+            if(use_jsonp){
+                var realUrl = url + "?web_call_back=" + callBackFunction;
+                var sendParam = new Object();
+                if(this.json_data_list.length>0){
+                    $.each(this.json_data_list,function(i,json_data){
+                        var jsonName = json_data["jsonName"];
+                        var jsonData = json_data["jsonData"];
+                        var jsonStr = JSON.stringify(jsonData);
+                        sendParam[jsonName] = jsonStr;
+                    });
+                    sendParam["isJson"] = "Y";
+                    this.sendAjaxRequest(realUrl,sendParam,callBackFunction);
+                }
+            }else{
+                if(this.json_data_list.length>0){
+                    var sendParam = new Object();
+
+                    $.each(this.json_data_list,function(i,json_data){
+                        var jsonName = json_data["jsonName"];
+                        var jsonData = json_data["jsonData"];
+                        var jsonStr = JSON.stringify(jsonData);
+                        sendParam[jsonName] = jsonData;
+                    });
+                    this.sendAjaxRequest(realUrl,sendParam,callBackFunction);
+
+                }
             }
+
+
         };
 
 

@@ -40,7 +40,7 @@ function initStyle(){
 }
 
 function getJobCatData(){
-    ajax_support.createNew().sendAjaxRequest("/search/pageSearch/listJobTypes.do",null,"initTree");
+    ajax_support.createNew().sendAjaxRequest("/search/pageSearch/listJobAndTypes.do",null,"initTree");
 }
 
 function initTree(dataList){
@@ -49,9 +49,9 @@ function initTree(dataList){
     if(ajaxSupportTmp.ajax_result_success(dataList)){
         var responseData = ajaxSupportTmp.get_result_data(dataList);
         $.each(responseData,function(i,catData){
-            var job_cat_id= catData["job_cat_id"];
-            var super_cat_id= catData["super_cat_id"];
-            var job_cat_name= catData["job_cat_name"];
+            var job_cat_id= catData["id"];
+            var super_cat_id= catData["super_id"];
+            var job_cat_name= catData["name"];
             treeNodes.push({"id":job_cat_id, "pId":super_cat_id, "name":job_cat_name});
         });
     }
@@ -112,6 +112,10 @@ function doSearch(){
         jobSearchBean.pagingMap = pagingsData;
         jobSearchBean.rows = eachPageNum;
         jobSearchBean.searchContent = $("#search_content").val();
+        jobSearchBean.url = $("#url").val();
+        jobSearchBean.jobStartDate = $("#jobStartDate").val();
+        jobSearchBean.jobEndData = $("#jobEndData").val();
+        jobSearchBean.pageId = $("#pageId").val();
 
         if(sendNodeArray!=null&&sendNodeArray.length>0){
             var $search_result_tab = $("#search_result_tab");
@@ -169,9 +173,15 @@ function searchCallBack(searchResult){
                     var crawl_time = each_node_data['crawl_time'];
                     var page_content = each_node_data['page_content'];
                     var page_source = each_node_data['page_source'];
+                    var version = each_node_data['_version_'];
                     page_source = page_source.replace("<","&lt;");
                     page_source = page_source.replace(">","&gt;");
                     var $table_jq = $("<table class='tab-content-table'></table>");
+                    $table_jq.append("<tr class='result_table_tr'><td>页面编号:</td>" +
+                        "<td version='"+version+"' job_id='"+real_node_id+"' style='cursor: pointer;color:blue;' onclick='showDetail(this)' >" +
+                        "<span style='margin-right:15px;'>"+page_id+"</span>" +
+                        "<span class='glyphicon glyphicon-eye-open'></span>"+
+                        "</td></td></tr>");
                     $table_jq.append("<tr class='result_table_tr'><td>URL:</td><td>"+url+"</td></td></tr>");
                     $table_jq.append("<tr class='result_table_tr'><td>抓取时间:</td><td>"+crawl_time+"</td></td></tr>");
                     $table_jq.append("<tr class='result_table_tr'><td>页面内容:</td><td>"+JSON.stringify(page_content)+"</td></td></tr>");
@@ -189,6 +199,9 @@ function searchCallBack(searchResult){
                     }
                     $(".paging[id!='paging_ul_"+firstNode+"']").hide();
                 }
+            }else{
+
+                $("#check_node_"+real_node_id).append("未找到结果....");
             }
         });
 
@@ -219,4 +232,10 @@ function getCheckedNode(nodeData){
         nodeArray.push(nodeId);
         return nodeArray;//D
     }
+}
+
+function showDetail(clickObj){
+    var job_id = $(clickObj).attr("job_id");
+    var version = $(clickObj).attr("version");
+    page_support.createNew().forward_new_page("/template/crawler/search_manage/search_detail.html?job_id="+job_id+"&version="+version);
 }

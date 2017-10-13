@@ -40,4 +40,6 @@ public interface JobMgService {
     String stopJob(int job_id, int user_id);
 
     String updateJob(int job_id, int user_id);
+
+    List<JobInfoBean> listAllJob();
 }

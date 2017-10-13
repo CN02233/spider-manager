@@ -1,8 +1,12 @@
 package com.webapp.support.httpClient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,22 +15,28 @@ import java.util.Set;
  */
 public class HttpSendMessage {
 
+    private static Logger logger = LoggerFactory.getLogger(HttpSendMessage.class);
+
     public static String postHttpRequest4Str(String url,Map<String,Object> paramMap){
-        InputStream inputStream = postHttpRequest(url,paramMap);
-        if(inputStream==null)
-            return null;
-        String line = null;
-        StringBuilder result = new StringBuilder();
-        try {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(inputStream,"UTF-8"));
-            while ((line = in.readLine()) != null) {
-                result.append(line);
+        try (InputStream inputStream = postHttpRequest(url,paramMap) ){
+            if(inputStream==null)
+                return null;
+            String line = null;
+            StringBuilder result = new StringBuilder();
+            try( BufferedReader in = new BufferedReader(
+                    new InputStreamReader(inputStream,"UTF-8"))){
+                while ((line = in.readLine()) != null) {
+                    result.append(line);
+                }
+                return result.toString();
+            }catch (IOException e){
+                e.printStackTrace();
+                throw e;
             }
-        } catch (IOException e) {
+        }catch (IOException e){
             e.printStackTrace();
         }
-        return result.toString();
+        return null;
     }
 
     public static InputStream postHttpRequest(String url,Map<String,Object> paramMap){
@@ -44,12 +54,22 @@ public class HttpSendMessage {
                     }
                     builder.append(paramKey);
                     builder.append("=");
-                    builder.append(paramVal);
+                    if(paramVal instanceof String){
+                        builder.append(URLEncoder.encode((String) paramVal, "UTF-8") );
+                    }else{
+                        builder.append(paramVal );
+                    }
                 }
 
-                PrintWriter out = new PrintWriter(conn.getOutputStream());
-                out.print(builder.toString());
-                out.flush();
+                logger.info("\n request http msg to -->{}<--,\n params:-->{}<--, \n finally send to server param string is -->{}<--",url,paramMap,builder.toString());
+
+                try(PrintWriter out = new PrintWriter(conn.getOutputStream())){
+                    out.print(builder.toString());
+                    out.flush();
+                }catch (IOException e) {
+                    e.printStackTrace();
+                    throw e;
+                }
             }
 
             return conn.getInputStream();

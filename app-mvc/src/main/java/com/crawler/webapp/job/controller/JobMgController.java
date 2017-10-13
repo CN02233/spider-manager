@@ -48,6 +48,15 @@ public class JobMgController {
         return result;
     }
 
+    @RequestMapping("listAllCraw")
+    @ResponseBody
+    @JsonpCallback
+    public String listAllCraw(){
+        List<JobInfoBean> allJob = jobMgService.listAllJob();
+        String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"获取成功",null,allJob);
+        return result;
+    }
+
     @RequestMapping("pagingListByHost")
     @ResponseBody
     @JsonpCallback

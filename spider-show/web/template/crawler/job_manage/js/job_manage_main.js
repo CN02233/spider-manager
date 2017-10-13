@@ -41,7 +41,7 @@ function page_callback(dataList){
     var delete_operation = table_support.operationsByName("删除", ["job_id"], "deleteJob(this)");
     var start_operation = table_support.operationsByName("启动", ["job_id","user_id"], "startJob(this)");
     var stop_operation = table_support.operationsByName("停止", ["job_id","user_id"], "stopJob(this)");
-    var update_operation = table_support.operationsByName("更细", ["job_id","user_id"], "updateJob(this)");
+    var update_operation = table_support.operationsByName("更新", ["job_id","user_id"], "updateJob(this)");
     operationArray.push(view_operation);
     operationArray.push(edit_operation);
     operationArray.push(delete_operation);

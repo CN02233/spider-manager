@@ -13,6 +13,8 @@ public interface PageSearchManageService {
 
     List<JobCategory> listJobCategory();
 
+    List<Map<String,Object>> listJobAndTypes();
+
     Map<String, Object> doSearch(SearchBean searchBean);
 
 }

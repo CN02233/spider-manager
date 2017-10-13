@@ -9,10 +9,9 @@ import org.junit.Test;
 
 import javax.annotation.Resource;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -20,6 +19,11 @@ import static org.junit.Assert.*;
  * Created by SongCQ on 2017/9/27.
  */
 public class PageSearchManageServiceImpTest extends AbstractTestService {
+    @Test
+    public void listJobAndTypes() throws Exception {
+        List<Map<String, Object>> res = pageSearchManageService.listJobAndTypes();
+        System.out.println(res.toString());
+    }
 
     @Resource
     private PageSearchManageService pageSearchManageService;
@@ -32,15 +36,29 @@ public class PageSearchManageServiceImpTest extends AbstractTestService {
     @Test
     public void doSearch() throws Exception {
         SearchBean searchBean = new SearchBean();
-//        searchBean.setSearchContent("2017-01-09");
-        List<Integer> jobs = new ArrayList<>();
+//        searchBean.setSearchContent("长沙");
+        Map pagingMap = new HashMap();
+        pagingMap.put("2","0");
+        pagingMap.put("4","0");
+        searchBean.setRows("8");
+        searchBean.setPageId("1");
+        searchBean.setUrl("finance.sina.com.cn");
+        searchBean.setPagingMap(pagingMap);
+        searchBean.setJobStartDate("2017-09-01");
+        List<Object> jobs = new ArrayList<>();
 //        jobs.add(2);
         jobs.add(4);
         searchBean.setJobIdList(jobs);
-        Map<String, Object> allRe = pageSearchManageService.doSearch(searchBean);
+//        Map<String, Object> allRe = pageSearchManageService.doSearch(searchBean);
 
+        System.out.println("done");
 
-        System.out.println(JsonSupport.objectToJson(allRe));
+        SearchBean searchBean1 = new SearchBean();
+        searchBean1.setVersion("1578854558940004352");
+        searchBean1.setJobIdList(jobs);
+        Map<String, Object> result = pageSearchManageService.doSearch(searchBean1);
+        System.out.println("done1");
+
     }
 
 }

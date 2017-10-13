@@ -177,18 +177,23 @@ function listProxyData(resultData){
     var ajax_support_new = ajax_support.createNew();
     if(ajax_support_new.ajax_result_success(resultData)){
         var dataList = ajax_support_new.get_result_data(resultData);
+        var modal_support_obj = modal_support.createNew();
+        var table_tiltes = ["服务器编号","服务器名称","服务器IP","用户名","口令","操作"];
+        var param_names = ["proxy_server_id","proxy_server_name","proxy_server_ip","proxy_user_name","proxy_user_password"];
+
+        var operationArray = new Array();
+        var select_proxy_operation = workbench_table.createNew()
+            .operationsByName("选择", ["proxy_server_id","proxy_server_name","proxy_server_ip","proxy_user_name","proxy_user_password"], "selectProxy(this)");
+        operationArray.push(select_proxy_operation);
+
         if(dataList!=null&&dataList.length>0){
-            var modal_support_obj = modal_support.createNew();
-            var table_tiltes = ["服务器编号","服务器名称","服务器IP","用户名","口令","操作"];
-            var param_names = ["proxy_server_id","proxy_server_name","proxy_server_ip","proxy_user_name","proxy_user_password"];
-
-            var operationArray = new Array();
-            var select_proxy_operation = workbench_table.createNew()
-                .operationsByName("选择", ["proxy_server_id","proxy_server_name","proxy_server_ip","proxy_user_name","proxy_user_password"], "selectProxy(this)");
-            operationArray.push(select_proxy_operation);
-
             modal_support_obj.makeTableEdit("代理服务器列表",null,table_tiltes,param_names,dataList,operationArray);
+
+        }else{
+            modal_support_obj.makeTableEdit("代理服务器列表",null,table_tiltes,param_names,new Array(),operationArray);
         }
+
+
     }
 
 }
@@ -236,22 +241,24 @@ function remove_proxy_server(removeServer){
 
 function save_new_job(){
 
-    var ajax_json_obj =  ajax_support.createNew();
-    ajax_json_obj.addJsonData("jobInfo",getParams());
-    ajax_json_obj.addJsonData("proxyServers",getProxyServers());
-    ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/saveNewJob.do","callServiceResult");
-    // ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/saveNewJob.do",jsonParamObj,"callServiceResult");
-    // ajax_support_obj.sendAjaxRequest("/crawler/proxyServer/saveNewJob.do",null,"callServiceResult");
-
+    // ajax_json_obj.addJsonData("jobInfo",getParams());
+    // ajax_json_obj.addJsonData("proxyServers",getProxyServers());
+    // ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/saveNewJob.do","callServiceResult");
+    var jobInfoParam = getParams();
+    jobInfoParam["proxyServers"] = JSON.stringify(getProxyServers());
+    ajax_support.createNew().sendAjaxRequest("/crawler/jobMg/saveNewJob.do",jobInfoParam,"callServiceResult");
 }
 
 function update_save_job(){
-    var ajax_json_obj =  ajax_support.createNew();
     var jobInfoParam = getParams();
     jobInfoParam["job_id"]=$("#job_id").val();
-    ajax_json_obj.addJsonData("jobInfo",jobInfoParam);
-    ajax_json_obj.addJsonData("proxyServers",getProxyServers());
-    ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/updateJobInfo.do","callServiceResult");
+    // ajax_json_obj.addJsonData("jobInfo",jobInfoParam);
+    // ajax_json_obj.addJsonData("proxyServers",getProxyServers());
+    // ajax_json_obj.sendJsonAjaxRequest("/crawler/jobMg/updateJobInfo.do","callServiceResult");
+
+    jobInfoParam["proxyServers"] = JSON.stringify(getProxyServers());
+    ajax_support.createNew().sendAjaxRequest("/crawler/jobMg/updateJobInfo.do",jobInfoParam,"callServiceResult");
+
 }
 
 function getParams(){

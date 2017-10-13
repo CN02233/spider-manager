@@ -32,7 +32,7 @@
             width:80%;
             height:95%;
             margin:1% 0 1% 0;
-            border-left:1px solid black;
+            border-left:1px solid #cccccc;
         }
         .search_input_text{
             border-radius: 10px;
@@ -111,17 +111,17 @@
                     </tr>
                     <tr class="search_table_tr">
                         <td>URL：</td>
-                        <td colspan="3"><input type="text" class="search_input_text" style="width:410px;"/></td>
+                        <td colspan="3"><input type="text" class="search_input_text" id="url" style="width:410px;"/></td>
                     </tr>
                     <tr class="search_table_tr">
                         <td>抓取时间：</td>
-                        <td style="width:200px;"><input type="text" class="search_input_text" style="width:190px;"/></td>
+                        <td style="width:200px;"><input type="text" class="search_input_text" placeholder="1970-01-01" id="jobStartDate" style="width:190px;"/></td>
                         <td style="width:20px;">至</td>
-                        <td><input type="text" class="search_input_text" style="width:190px;"/></td>
+                        <td><input type="text" class="search_input_text" placeholder="2020-12-30" id="jobEndData" style="width:190px;"/></td>
                     </tr>
                     <tr class="search_table_tr">
                         <td>页面编号：</td>
-                        <td colspan="3"><input type="text" class="search_input_text" style="width:410px;"/></td>
+                        <td colspan="3"><input type="text" id="pageId" class="search_input_text" style="width:410px;"/></td>
                     </tr>
                 </table>
             </div>

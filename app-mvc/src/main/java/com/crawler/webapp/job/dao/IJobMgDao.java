@@ -112,4 +112,7 @@ public interface IJobMgDao {
     @Delete("delete from page_link where job_id=#{job_id}")
     void removePageLinksByJob(int job_id);
 
+    @Select("select * from crawl_job")
+    @Options(useCache = false)
+    List<JobInfoBean> listAllJob();
 }

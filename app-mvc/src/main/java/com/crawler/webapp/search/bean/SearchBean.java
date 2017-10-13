@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public class SearchBean {
 
+    private String version;
+
+    private String pageId;
+
     private String searchContent;
 
     private String url;
@@ -26,7 +30,7 @@ public class SearchBean {
 
     private String jobIds;
 
-    private List<Integer> jobIdList;
+    private List<Object> jobIdList;
 
     private String rows;
 
@@ -77,16 +81,16 @@ public class SearchBean {
     }
 
     public void setJobIds(String jobIds) throws IOException {
-        List<Integer> jobIdList = (List<Integer>) JsonSupport.jsonToObect(jobIds,List.class);
+        List<Object> jobIdList = (List<Object>) JsonSupport.jsonToObect(jobIds,List.class);
         this.setJobIdList(jobIdList);
         this.jobIds = jobIds;
     }
 
-    public List<Integer> getJobIdList() {
+    public List<Object> getJobIdList() {
         return jobIdList;
     }
 
-    public void setJobIdList(List<Integer> jobIdList) {
+    public void setJobIdList(List<Object> jobIdList) {
         this.jobIdList = jobIdList;
     }
 
@@ -104,5 +108,21 @@ public class SearchBean {
 
     public void setRows(String rows) {
         this.rows = rows;
+    }
+
+    public String getPageId() {
+        return pageId;
+    }
+
+    public void setPageId(String pageId) {
+        this.pageId = pageId;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

@@ -25,4 +25,9 @@ function auth_failed(menuDataResult){
 
 $(document).ready(function(){
     menu_show();//菜单样式、逻辑
+
+    $("#sign_out_area").click(function(){
+        page_support.forward_new_page("/template/sys/login/login.html");
+    });
+
 });
