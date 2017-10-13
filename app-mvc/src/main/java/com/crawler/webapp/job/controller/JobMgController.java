@@ -186,7 +186,7 @@ public class JobMgController {
     public String updateJob(Integer job_id, Integer user_id){
         String startResult = jobMgService.updateJob(job_id, user_id);
         if(!Strings.isNullOrEmpty(startResult)&&"DONE".equals(startResult)){
-            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"停止成功",null,null);
+            String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"更新成功",null,null);
             return result;
         }else{
             String result = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS,"更新失败:"+startResult,null,null);
