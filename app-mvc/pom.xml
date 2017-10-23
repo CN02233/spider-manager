@@ -13,6 +13,7 @@
     <springversion>4.1.6.RELEASE</springversion>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <pageSourceDir>../spider-show/web</pageSourceDir>
   </properties>
 
   <dependencies>
@@ -55,5 +56,27 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>*</include>
+        </includes>
+      </resource>
+      <!--是否一并将页面程序-CSS HTML JS等打包-->
+      <resource>
+        <directory>${pageSourceDir}</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+        <excludes>
+          <exclude>WEB-INF/*</exclude>
+        </excludes>
+        <targetPath>${project.build.directory}/${build.finalName}</targetPath>
+        <!-- 是否替换资源中的属性 -->
+        <filtering>false</filtering>
+      </resource>
+    </resources>
   </build>
 </project>
